@@ -40,4 +40,4 @@ The pink card uses navy text because white on `#ED33B9` is 3.64:1, under AA at t
 
 Do not invent a summary. Use the line Jake wrote. Local Sound is a placeholder: the public copy does not use that name, and the file says so. Leave it until Jake writes the line.
 
-Run `npm run build` before pushing. A visual change needs screenshots.
+Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. Skip screenshots. When the Vercel preview is ready, add the preview URL of each changed page to the pull request and the report.

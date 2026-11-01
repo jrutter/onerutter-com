@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BuildCard } from "@/components/build-card";
+import { NoteList } from "@/components/note-list";
 import { Timeline } from "@/components/timeline";
+import { getPublishedNotes } from "@/lib/notes";
 import { getFeaturedProjects } from "@/lib/projects";
 import { homeYears } from "@/lib/story";
 import { profiles, siteDescription, siteUrl } from "@/lib/site";
@@ -35,6 +37,7 @@ const personJsonLd = {
 
 export default function HomePage() {
   const featured = getFeaturedProjects();
+  const latestNotes = getPublishedNotes().slice(0, 3);
 
   return (
     <main id="content">
@@ -94,6 +97,19 @@ export default function HomePage() {
             </Link>
           </p>
         </section>
+
+        {latestNotes.length > 0 ? (
+          <section className="block" aria-labelledby="notes-heading">
+            <p className="kicker">Notes</p>
+            <h2 id="notes-heading">Latest notes</h2>
+            <NoteList notes={latestNotes} />
+            <p className="more">
+              <Link className="text-link" href="/notes">
+                All notes →
+              </Link>
+            </p>
+          </section>
+        ) : null}
       </div>
     </main>
   );

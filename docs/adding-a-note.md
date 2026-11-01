@@ -21,7 +21,7 @@ draft: true                 # true hides it on production; false publishes it
 
 4. Write the body in Markdown (headings, paragraphs, lists, links). Images used by a note go in `content/notes/images/` and are referenced with a relative path. The body is set in Source Serif 4.
 5. Leave `draft: true` unless Jake has asked for the note to go live in that pull request. A draft shows during `npm run dev` and on a Vercel preview deployment, with a banner. Production HTML, `/feed.xml`, and `/sitemap.xml` omit it.
-6. Open a pull request. Include the title, date, summary, and whether it is still a draft. Run `npm run build` before pushing.
+6. Open a pull request. Include the title, date, summary, and whether it is still a draft. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. Skip screenshots. When the Vercel preview deploy is ready, add the preview URL of each changed page to the pull request and the report, including the note (`https://<preview-host>/notes/<slug>`).
 7. Publishing is a deliberate edit: set `draft: false`. Merging a file that is still `draft: true` does not publish it.
 
 Write about technology, the apps, or something Jake is exploring. Do not invent biographical facts. If a sentence needs a personal claim that is not already on the site, mark it as a placeholder or ask.
