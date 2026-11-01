@@ -111,13 +111,9 @@ export default async function TripPage({
             <MDXRemote source={trip.body} />
           </div>
         ) : null}
-        {trip.photos.length > 0 ? (
-          <section aria-label="Photographs">
-            <TripGallery photos={trip.photos} startAt={startAt} />
-          </section>
-        ) : (
-          <p className="travel-pending">Photos coming soon</p>
-        )}
+        <section aria-label="Photographs">
+          <TripGallery photos={trip.photos} startAt={startAt} />
+        </section>
         <p className="back">
           <Link className="text-link" href="/travel">
             ← All trips
