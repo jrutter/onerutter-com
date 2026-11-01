@@ -71,7 +71,7 @@ Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`liv
 
 Adding a trip is one new file. Copy `content/trips/_template/index.mdx` to `content/trips/<slug>/index.mdx`. The folder name is the URL: `2025-france` is `/travel/2025-france`, `2017-dublin` is `/travel/2017-dublin`. Use lowercase kebab-case. Folders whose names start with `_` are ignored. No other file, list, or component has to change.
 
-`title` and `draft` are required. Dates, the intro, place, country, and photographs are optional. The build fails if `draft` is missing, a date is not `YYYY-MM-DD` or `YYYY-MM`, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
+`title` and `draft` are required. A published trip also needs `places`. Dates, the intro, place, country, and photographs are optional. The build fails if `draft` is missing, a published trip has no `places`, a date is not `YYYY-MM-DD` or `YYYY-MM`, a coordinate has more than two decimal places, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
 
 A dated trip:
 
@@ -81,8 +81,15 @@ title: France
 startDate: "2025-06-05"   # YYYY-MM-DD, quoted so YAML does not turn it into a Date
 endDate: "2025-06-21"
 draft: false              # true hides it on production and in the sitemap
+places:                   # One marker per place. Country or city centroid, never a street address.
+  - name: France
+    country: France       # Tints this country. A city uses its country's name.
+    lat: 46.23
+    lng: 2.21
 ---
 ```
+
+`places` is how the map at the top of `/travel` is drawn. `name` is the marker. `lat` and `lng` are a country centroid, a capital, or a region centre, written to two decimal places. A trip such as Amsterdam / Iceland lists one entry per place. The same place on a later trip uses the same name, country, and coordinates, and the marker counts the visits. `country` is the country to tint. If that name is not in `lib/map-countries.ts` yet, add its Natural Earth id there. A territory smaller than the map still gets a marker.
 
 Dates unknown. The timeline shows the year only, with no month or day. `order` is required then, and lower comes first within that year. Leave a `# TODO:` next to the missing dates.
 
@@ -100,7 +107,7 @@ The page shows the month and year of the start, such as June 2025. Days stay in 
 
 `title` is the name on the timeline, written the way Jake gave it (`France`, `Amsterdam / Iceland`). Leave `summary` out when there is no intro to write. `place` and `country` are optional; the timeline shows `place` only when it adds something the title does not. A trip that crosses New Year is grouped under `year` when that field is set, otherwise under the year of `startDate`.
 
-`/travel` is a vertical timeline, newest year first. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`. The small line under the introduction, such as “29 trips since 2009”, is counted from the published trips. Drafts are left out of that count.
+`/travel` opens with a static world map, then a line such as “31 trips · 15 countries since 2009”, counted from the published trips. Drafts are left out of that count and off the map. The timeline under that is newest year first. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`. A marker’s links scroll to that trip in the timeline.
 
 With no photographs, the entry still shows the name and the dates, plus a quiet “Photos coming soon”. With no photographs, no summary, and no body, the name is text, not a link, and there is no album page to 404. Add a summary, a paragraph, or at least one photograph and `/travel/<slug>` appears. The sitemap lists that page only then.
 
