@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { TravelMap } from "@/components/travel-map";
 import { draftsAreVisible } from "@/lib/drafts";
 import {
   formatTripWhen,
@@ -11,6 +12,7 @@ import {
   tripHasPage,
 } from "@/lib/trips";
 import type { Trip } from "@/lib/trips";
+import { buildTravelMap } from "@/lib/world-map";
 
 export const metadata: Metadata = {
   title: "Travel",
@@ -28,6 +30,7 @@ export default async function TravelPage() {
   const trips = await getVisibleTrips();
   const years = groupTripsByYear(trips);
   const stats = publishedTripStats(trips);
+  const map = stats ? buildTravelMap(trips) : null;
   const showingDrafts = draftsAreVisible() && trips.some((trip) => trip.draft);
 
   return (
@@ -39,12 +42,15 @@ export default async function TravelPage() {
           <p className="deck">
             The offline analog alongside the digital nomad life. Music, discovering new things and places, and travel.
           </p>
-          {stats ? (
-            <p className="travel-stat">
-              {stats.count} {stats.count === 1 ? "trip" : "trips"} since {stats.since}
-            </p>
-          ) : null}
         </header>
+        {map ? <TravelMap model={map} /> : null}
+        {stats ? (
+          <p className="travel-stat">
+            {stats.count} {stats.count === 1 ? "trip" : "trips"}
+            {" · "}
+            {stats.countries} {stats.countries === 1 ? "country" : "countries"} since {stats.since}
+          </p>
+        ) : null}
 
         {trips.length === 0 ? (
           <p className="lede">Published trips will show up here.</p>
@@ -83,7 +89,7 @@ function TripEntry({ trip, preload }: { trip: Trip; preload: boolean }) {
   const showPlace = Boolean(trip.place) && trip.place !== trip.title;
 
   return (
-    <li className="travel-entry">
+    <li id={trip.slug} className="travel-entry">
       <h3>{linked ? <Link href={`/travel/${trip.slug}`}>{trip.title}</Link> : trip.title}</h3>
       <p className="travel-meta">
         {showPlace ? (

@@ -1,0 +1,20 @@
+---
+description: Visual design, Lab card colors, and the contact form
+globs: app/**,components/**
+alwaysApply: false
+---
+
+Design tokens are in `app/globals.css`. Outfit (`next/font` in `app/layout.tsx`) is the interface font. Source Serif 4 is only for `.prose` body text (notes, and trip MDX). Page background is warm paper `#F3EEE6`. Thames green is `#1E4A42` (deep `#14352F`). Clay is `#C45C32` (deep `#8E3B22`). Ink is `#1B1714`. Light only. Focus rings use clay. `prefers-reduced-motion: reduce` disables animation and transitions. The static reference is `mockups/`. Do not add a dark mode, a component library, or a new font.
+
+Lab cards (`components/lab-card.tsx`, styles in `app/globals.css`):
+
+- navy `#0A1045` with white text
+- cyan `#00C2D1`, yellow `#F9E900`, peach `#F6AF65`, pink `#ED33B9`, all with navy `#0A1045` text
+
+White on `#ED33B9` is 3.64:1, under AA at card size. Navy on pink is 4.92:1. Keep navy text on the pink card. New project slugs need an entry in `toneBySlug`, or they rotate through those five tones. Home build cards are a separate treatment in `components/build-card.tsx` (paper, ink, clay) and are mapped only for the three featured slugs.
+
+Story copy in `app/story/page.tsx` is Jake's wording. Do not rewrite it, and do not add a planned move.
+
+`/hello` posts to the Resend server action in `app/hello/actions.ts`. Required env vars: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`. The honeypot input is `hp_field`; a filled honeypot returns success and does not send. The page must still render when the env vars are missing.
+
+Skip screenshots on every pull request. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report.
