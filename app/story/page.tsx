@@ -72,7 +72,7 @@ export default function StoryPage() {
             <p>Travel is a huge part of who I am — the offline analog alongside digital nomad.</p>
             <p>
               That is why I build things like Tails over Thames, a plane-spotting app for one spot in London; Mind the
-              Timetable, for trains; Three Today; and Local Sound, a music app.
+              Timetable, for trains; and Three Today.
             </p>
             <p className="more">
               <Link className="text-link" href="/travel">
@@ -92,7 +92,7 @@ export default function StoryPage() {
               sentences were drafted for this layout. Please rewrite anything that doesn&apos;t sound like you.
             </p>
           </aside>
-          <Timeline years={storyYears} />
+          <Timeline years={[...storyYears].toReversed()} />
         </section>
 
         <section className="block" aria-labelledby="work-heading">

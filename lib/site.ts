@@ -3,7 +3,7 @@ export const siteUrl = "https://onerutter.com";
 export const siteName = "Jake Rutter";
 
 export const siteDescription =
-  "VP, DTC Engineering & Applied AI at SharkNinja. Twenty years on ecommerce for brands including SharkNinja, The North Face, Vans, and Priceline. Building small apps on the side from Barnes, London.";
+  "I lead DTC engineering at SharkNinja, and I stay ahead by building, tinkering, and learning something new every week.";
 
 export const profiles = [
   { href: "https://www.linkedin.com/in/jakerutter/", label: "LinkedIn" },

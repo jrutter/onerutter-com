@@ -101,5 +101,3 @@ photos:
 Images can also sit beside `index.mdx` and be referenced as `01.jpg`. The site serves those from `/trip-photos/<slug>/` after the same GPS check. Prefer the script and `public/travel/<slug>/`.
 
 `npm run build` rejects a trip image that still contains GPS EXIF or GPS in XMP. Run the script rather than copying a phone photograph into the repo.
-
-`content/trips/sample-album/`, `sample-strip/`, and `sample-markers/` are draft layout samples (three color fields each), produced by `node scripts/generate-sample-album.mjs`. They are not photographs and not trips Jake took. Leave them `draft: true`.

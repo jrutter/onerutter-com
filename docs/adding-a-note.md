@@ -3,7 +3,7 @@
 Notes are MDX files in the repo. There is no CMS. Copy the template and open a pull request.
 
 1. Copy `content/notes/_template.mdx` to `content/notes/<slug>.mdx`.
-2. The filename is the URL. `content/notes/building-in-the-margins.mdx` is `/notes/building-in-the-margins`. Use lowercase kebab-case. Do not put the date in the filename. Files that start with `_` are ignored.
+2. The filename is the URL. `content/notes/having-fun-with-grokbot.mdx` is `/notes/having-fun-with-grokbot`. Use lowercase kebab-case. Do not put the date in the filename. Files that start with `_` are ignored.
 3. Fill the frontmatter. `title`, `date`, `summary`, `tags`, and `draft` are required. The build fails if one is missing or the wrong type.
 
 ```yaml
@@ -25,7 +25,5 @@ draft: true                 # true hides it on production; false publishes it
 7. Publishing is a deliberate edit: set `draft: false`. Merging a file that is still `draft: true` does not publish it.
 
 Write about technology, the apps, or something Jake is exploring. Do not invent biographical facts. If a sentence needs a personal claim that is not already on the site, mark it as a placeholder or ask.
-
-The two files already in `content/notes/` are placeholder drafts. They are not Jake's writing.
 
 A tag page is `/notes/tag/<tag>`. A tag with no visible notes is a 404.

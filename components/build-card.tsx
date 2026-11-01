@@ -2,9 +2,10 @@ import type { Project } from "@/lib/projects";
 import { hostLabel } from "@/lib/projects";
 
 type Variant = "paper" | "ink" | "clay";
-type Mark = "three" | "lines" | "plane";
+type Mark = "three" | "lines" | "plane" | "a";
 
 const presentation: Record<string, { variant: Variant; mark: Mark }> = {
+  "agentic-checkout-index": { variant: "ink", mark: "a" },
   "tails-over-thames": { variant: "clay", mark: "plane" },
   "three-today": { variant: "paper", mark: "three" },
   "mind-the-timetable": { variant: "ink", mark: "lines" },
@@ -13,6 +14,7 @@ const presentation: Record<string, { variant: Variant; mark: Mark }> = {
 
 function MarkIcon({ mark }: { mark: Mark }) {
   if (mark === "three") return "3";
+  if (mark === "a") return "A";
   if (mark === "lines") {
     return (
       <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -36,9 +38,11 @@ export function BuildCard({ project }: { project: Project }) {
       <span className="build-mark" aria-hidden="true">
         <MarkIcon mark={look.mark} />
       </span>
-      <span className="kicker">{project.kicker ?? project.title}</span>
-      <span className="wordmark-product">{project.title}</span>
-      <span className="build-title">{project.cardTitle ?? project.title}</span>
+      {project.kicker ? <span className="kicker">{project.kicker}</span> : null}
+      <span className={project.kicker ? "wordmark-product" : "wordmark-product wordmark-solo"}>
+        {project.title}
+      </span>
+      {project.cardTitle ? <span className="build-title">{project.cardTitle}</span> : null}
       <span className="build-sub">{project.cardSummary ?? project.summary}</span>
       <span className="build-go">{hostLabel(project.url)} →</span>
     </a>

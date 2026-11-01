@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { profiles } from "@/lib/site";
 
 export function SiteFooter() {
@@ -7,7 +8,7 @@ export function SiteFooter() {
         <p className="footer-name">Jake Rutter</p>
         <p className="footer-place">Barnes, London</p>
         <p className="footer-mail">
-          <a href="mailto:jake@onerutter.com">jake@onerutter.com</a>
+          <Link href="/hello">Say hello</Link>
         </p>
         <ul className="footer-links">
           {profiles.map((profile) => (
