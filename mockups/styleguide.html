@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Style guide — Jake Rutter mockup</title>
+  <meta name="description" content="Color, type, and components for the onerutter.com design mockup.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="index.html"><i aria-hidden="true"></i>Jake Rutter</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="story.html">Story</a>
+        <a href="projects.html">Lab</a>
+        <a href="blog.html">Notes</a>
+        <a class="hello" href="mailto:jake@onerutter.com">Say hello</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="wrap">
+      <header class="page-head">
+        <p class="kicker">Mockup only</p>
+        <h1 class="title">Style guide</h1>
+        <p class="deck">Paper, Thames green, and clay. Outfit for the interface. Source Serif 4 when a note is long enough to read. This page is not part of the public site.</p>
+      </header>
+
+      <section class="guide-section" aria-labelledby="color-heading">
+        <h2 id="color-heading">Color</h2>
+        <p class="guide-lead">Warm paper, like the reference, with a river green and a clay accent instead of that site's coral and orange. Text on paper uses Ink or Ink soft. Clay is for kickers, the current-page mark, and the dashed “needs Jake” boxes.</p>
+        <ul class="swatches">
+          <li style="--swatch:#F3EEE6"><strong>Paper</strong><code>#F3EEE6</code><small>Page background</small></li>
+          <li style="--swatch:#E7E0D4"><strong>Paper deep</strong><code>#E7E0D4</code><small>Bands, code chips</small></li>
+          <li style="--swatch:#FBF7F1"><strong>Cream</strong><code>#FBF7F1</code><small>Text on dark cards</small></li>
+          <li style="--swatch:#1B1714; --swatch-ink:#FBF7F1"><strong>Ink</strong><code>#1B1714</code><small>Headlines, body</small></li>
+          <li style="--swatch:#3F3A36; --swatch-ink:#FBF7F1"><strong>Ink soft</strong><code>#3F3A36</code><small>Secondary text</small></li>
+          <li style="--swatch:#5C564E; --swatch-ink:#FBF7F1"><strong>Muted</strong><code>#5C564E</code><small>Meta, captions</small></li>
+          <li style="--swatch:#1E4A42; --swatch-ink:#FBF7F1"><strong>Thames</strong><code>#1E4A42</code><small>Links in notes, live pill</small></li>
+          <li style="--swatch:#14352F; --swatch-ink:#FBF7F1"><strong>Thames deep</strong><code>#14352F</code><small>Gradient start</small></li>
+          <li style="--swatch:#C45C32; --swatch-ink:#FBF7F1"><strong>Clay</strong><code>#C45C32</code><small>Kickers, focus</small></li>
+          <li style="--swatch:#8E3B22; --swatch-ink:#FBF7F1"><strong>Clay deep</strong><code>#8E3B22</code><small>Hello link, labels</small></li>
+          <li style="--swatch:#E2A15A"><strong>Gold</strong><code>#E2A15A</code><small>Kicker on dark cards</small></li>
+          <li style="--swatch:#F6E2C4"><strong>Gold soft</strong><code>#F6E2C4</code><small>Draft banner</small></li>
+        </ul>
+      </section>
+
+      <section class="guide-section" aria-labelledby="type-heading">
+        <h2 id="type-heading">Type scale</h2>
+        <p class="guide-lead">Outfit throughout the chrome, in the same job Be Vietnam Pro does on the reference: a large geometric sans, tight leading, slight negative tracking. Source Serif 4 is reserved for the body of a note.</p>
+        <table class="scale-table">
+          <thead>
+            <tr><th>Role</th><th>Size</th><th>Weight</th><th>Line</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Display</td><td>clamp(40px, 6.2vw, 76px)</td><td>Outfit 600</td><td>1.05</td></tr>
+            <tr><td>Page title</td><td>clamp(40px, 5.4vw, 68px)</td><td>Outfit 600</td><td>1.05</td></tr>
+            <tr><td>Section title</td><td>clamp(32px, 4vw, 44px)</td><td>Outfit 600</td><td>1.12</td></tr>
+            <tr><td>Product wordmark</td><td>clamp(26px, 2.2vw, 32px)</td><td>Outfit 800</td><td>1</td></tr>
+            <tr><td>Note body</td><td>21px, 19px on a phone</td><td>Source Serif 400</td><td>1.6</td></tr>
+            <tr><td>Story body</td><td>18–19px</td><td>Outfit 400</td><td>1.55</td></tr>
+            <tr><td>Deck</td><td>clamp(18px, 2vw, 22px)</td><td>Outfit 400</td><td>1.45</td></tr>
+            <tr><td>Kicker</td><td>12px, tracking 0.16em</td><td>Outfit 700</td><td>1</td></tr>
+            <tr><td>Meta</td><td>13–14px</td><td>Outfit 400</td><td>1.45</td></tr>
+          </tbody>
+        </table>
+        <div class="specimen">
+          <span class="specimen-label">Display</span>
+          <p class="display">Hi, I'm Jake.</p>
+        </div>
+        <div class="specimen">
+          <span class="specimen-label">Page title</span>
+          <p class="title">A little about me</p>
+        </div>
+        <div class="specimen">
+          <span class="specimen-label">Section</span>
+          <p class="h2">Things I'm building, testing, and learning from.</p>
+        </div>
+        <div class="specimen">
+          <span class="specimen-label">Kicker</span>
+          <p class="kicker">Barnes, London</p>
+        </div>
+        <div class="specimen">
+          <span class="specimen-label">Note body · Source Serif 4</span>
+          <p class="prose" style="margin-top:0">A note should feel like writing, not another marketing block. Sixty-six characters is the measure. Drafts wear a gold banner so a placeholder cannot be mistaken for Jake.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="space-heading">
+        <h2 id="space-heading">Spacing</h2>
+        <p class="guide-lead">An 8-point scale: 8, 12, 16, 20, 28, 32, 36, 48, 56, 64, 80, 96. Content column is 1120px. Side gutters are 32px, 20px on a phone. Sections stack with 96px between them, 56px on a phone. The header is 76px, sticky, with a light blur. Story text stays under 68 characters. A note stays under 66.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="components-heading">
+        <h2 id="components-heading">Components</h2>
+        <p class="guide-lead">Text links, not filled buttons. Status is a small pill. Anything Jake still has to write sits in a dashed clay box, including on the finished pages.</p>
+
+        <div class="specimen">
+          <span class="specimen-label">Text links</span>
+          <p class="hero-links">
+            <a href="story.html">→ The story</a>
+            <a href="mailto:jake@onerutter.com">jake@onerutter.com</a>
+          </p>
+        </div>
+
+        <div class="specimen">
+          <span class="specimen-label">Pills</span>
+          <div class="row">
+            <span class="pill pill-live">Live</span>
+            <span class="pill pill-building">Building</span>
+            <span class="pill pill-placeholder">No link yet</span>
+            <span class="pill pill-draft">Draft</span>
+          </div>
+        </div>
+
+        <div class="specimen">
+          <span class="specimen-label">Needs Jake</span>
+          <aside class="needs">
+            <span class="needs-label">Needs Jake</span>
+            <p>One short paragraph. Used for the 2027 move, Local Sound, and anywhere a fact exists but the sentence does not.</p>
+          </aside>
+        </div>
+
+        <div class="specimen">
+          <span class="specimen-label">Draft banner</span>
+          <p class="draft-banner"><strong>Placeholder draft.</strong> Shown on any note with draft set to true, when a preview is allowed to render it.</p>
+        </div>
+
+        <div class="specimen">
+          <span class="specimen-label">Tags and chips</span>
+          <ul class="chips">
+            <li class="chip">Next.js / React</li>
+            <li class="chip">Pickleball</li>
+          </ul>
+          <ul class="tags" style="margin-top: 14px">
+            <li><a class="tag" href="blog.html">building</a></li>
+            <li><a class="tag" href="blog.html">side-projects</a></li>
+          </ul>
+        </div>
+
+        <div class="specimen">
+          <span class="specimen-label">Year row</span>
+          <ol class="timeline">
+            <li>
+              <div class="when"><time datetime="2011">2011</time><span>The book</span></div>
+              <p>Smashing jQuery, for Wiley. The dot sits on a hairline. The coming year uses a filled dot.</p>
+            </li>
+            <li class="is-next">
+              <div class="when"><time datetime="2027">2027</time><span>Next</span></div>
+              <p>Filled dot. The year is ahead of us.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="specimen">
+          <span class="specimen-label">Material cards</span>
+          <div class="builds">
+            <a class="build build-paper" href="https://three-today.com">
+              <span class="build-mark" aria-hidden="true">3</span>
+              <span class="kicker">Three slots</span>
+              <span class="wordmark-product">Three Today</span>
+              <span class="build-title">Three things. Every day.</span>
+              <span class="build-sub">Paper card. Lift 3px on hover.</span>
+              <span class="build-go">Visit →</span>
+            </a>
+            <a class="build build-ink" href="https://mindthetimetable.com">
+              <span class="build-mark" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h20M4 14h14M4 20h17"/></svg>
+              </span>
+              <span class="kicker">Thames ink</span>
+              <span class="wordmark-product">Dark card</span>
+              <span class="build-title">A second material.</span>
+              <span class="build-sub">Used so three featured builds don't look like one repeated component.</span>
+              <span class="build-go">Visit →</span>
+            </a>
+            <a class="build build-clay" href="https://tradetrek-alpha.vercel.app/">
+              <span class="build-mark" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l6-7 4 4 10-11"/></svg>
+              </span>
+              <span class="kicker">Clay</span>
+              <span class="wordmark-product">Third card</span>
+              <span class="build-title">The warm one.</span>
+              <span class="build-sub">Same radius, shadow, and type as the others. Color does the distinguishing.</span>
+              <span class="build-go">Visit →</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="motion-heading">
+        <h2 id="motion-heading">Motion</h2>
+        <ul class="motion-list">
+          <li>Featured cards lift 3px and deepen the shadow. 200ms, ease.</li>
+          <li>Text links grow a clay underline on hover. No color jump.</li>
+          <li>The header stays put and blurs the paper behind it. It does not hide on scroll.</li>
+          <li><code>prefers-reduced-motion: reduce</code> removes the lift and any future fade.</li>
+          <li>Left out on purpose: particle field, pulsing notification dot, theme crossfade. Those are on the reference and not in this version.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-name">Jake Rutter</p>
+      <p class="footer-place">Style guide for the design review</p>
+      <p class="mock-note">Outfit and Source Serif 4 are included under the SIL Open Font License. License files sit in mockups/fonts.</p>
+    </div>
+  </footer>
+</body>
+</html>
