@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { NoteDates } from "@/components/note-dates";
 import type { Note } from "@/lib/notes";
-import { formatNoteDate } from "@/lib/notes";
 
 export function NoteList({ notes }: { notes: Note[] }) {
   return (
@@ -8,7 +8,7 @@ export function NoteList({ notes }: { notes: Note[] }) {
       {notes.map((note) => (
         <article className="note" key={note.slug}>
           <p className="note-meta">
-            <time dateTime={note.date}>{formatNoteDate(note.date)}</time>
+            <NoteDates date={note.date} updated={note.updated} />
             {note.draft ? <span className="pill pill-draft">Draft</span> : null}
           </p>
           <h2>

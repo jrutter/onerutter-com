@@ -13,10 +13,12 @@ const coverExtensions = new Set([".svg", ".webp", ".jpg", ".jpeg", ".png", ".avi
 export type Note = {
   slug: string;
   title: string;
+  /** The day the note was added, `YYYY-MM-DD`. */
   date: string;
   summary: string;
   tags: string[];
   draft: boolean;
+  /** Optional revision day, `YYYY-MM-DD`. */
   updated?: string;
   image?: string;
   /** Public URL path, such as `/note-covers/example.svg`. The file lives under `public/`. */
@@ -62,6 +64,10 @@ function readNote(fileName: string): Note {
   }
   if (typeof data.draft !== "boolean") {
     throw new Error(`${fileName}: draft must be true or false`);
+  }
+
+  if (data.date == null || data.date === "") {
+    throw new Error(`${fileName}: date is required (the day the note was added, YYYY-MM-DD)`);
   }
 
   const note: Note = {
