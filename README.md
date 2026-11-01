@@ -70,7 +70,7 @@ Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`liv
 
 Adding a trip is one new file. Copy `content/trips/_template/index.mdx` to `content/trips/<slug>/index.mdx`. The folder name is the URL: `2025-france` is `/travel/2025-france`, `2017-dublin` is `/travel/2017-dublin`. Use lowercase kebab-case. Folders whose names start with `_` are ignored. No other file, list, or component has to change.
 
-`title` and `draft` are required. Dates, the intro, place, country, and photographs are optional. The build fails if `draft` is missing, a date is not `YYYY-MM-DD`, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
+`title` and `draft` are required. Dates, the intro, place, country, and photographs are optional. The build fails if `draft` is missing, a date is not `YYYY-MM-DD` or `YYYY-MM`, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
 
 A dated trip:
 
@@ -95,7 +95,7 @@ draft: false
 ---
 ```
 
-One known date is enough. Ireland ends on 12 November 2025 and the start is still open, so the file sets `endDate` only and the line reads “– 12 November 2025”.
+The page shows the month and year of the start, such as June 2025. Days stay in the file and are what the timeline sorts on. A trip that runs into the next month still shows the start month, so 22 June–5 July 2023 reads June 2023. A month with no day is `startDate: "2026-10"`, quoted, and reads October 2026. If only the end date is known, the line uses that month. With no dates at all, the line is the year.
 
 `title` is the name on the timeline, written the way Jake gave it (`France`, `Amsterdam / Iceland`). Leave `summary` out when there is no intro to write. `place` and `country` are optional; the timeline shows `place` only when it adds something the title does not. A trip that crosses New Year is grouped under `year` when that field is set, otherwise under the year of `startDate`.
 

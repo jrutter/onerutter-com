@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const trips = (await getPublishedTrips())
     .filter((trip) => tripHasPage(trip))
     .map((trip) => {
-      const lastModified = trip.endDate ?? trip.startDate;
+      const lastModified = [trip.endDate, trip.startDate].find((value) => value && value.length === 10);
       return {
         url: `${siteUrl}/travel/${trip.slug}`,
         ...(lastModified ? { lastModified } : {}),

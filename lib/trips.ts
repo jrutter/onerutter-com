@@ -39,7 +39,25 @@ function optionalString(value: unknown, file: string, field: string) {
 
 function optionalDate(value: unknown, file: string, field: string) {
   if (value == null || value === "") return undefined;
+  if (typeof value === "string" && /^\d{4}-\d{2}$/.test(value)) {
+    const month = Number(value.slice(5, 7));
+    if (month < 1 || month > 12) throw new Error(`${file}: ${field} must be YYYY-MM or YYYY-MM-DD`);
+    return value;
+  }
   return asDateString(value, file, field);
+}
+
+/** Month-only dates sort as the first of that month. Same-month bounds still overlap. */
+function comparableDate(iso: string) {
+  return iso.length === 7 ? `${iso}-01` : iso;
+}
+
+function dateIsBefore(earlier: string, later: string) {
+  const earlierMonth = earlier.slice(0, 7);
+  const laterMonth = later.slice(0, 7);
+  if (earlierMonth !== laterMonth) return earlierMonth < laterMonth;
+  if (earlier.length === 7 || later.length === 7) return false;
+  return earlier < later;
 }
 
 function optionalYear(value: unknown, file: string) {
@@ -122,7 +140,9 @@ async function readTrip(slug: string): Promise<Trip> {
   const summary = optionalString(data.summary, file, "summary");
   const startDate = optionalDate(data.startDate, file, "startDate");
   const endDate = optionalDate(data.endDate, file, "endDate");
-  if (startDate && endDate && endDate < startDate) throw new Error(`${file}: endDate must be on or after startDate`);
+  if (startDate && endDate && dateIsBefore(endDate, startDate)) {
+    throw new Error(`${file}: endDate must be on or after startDate`);
+  }
   if (typeof data.draft !== "boolean") throw new Error(`${file}: draft must be true or false`);
 
   const year = resolveYear(file, optionalYear(data.year, file), startDate, endDate);
@@ -191,7 +211,9 @@ function tripSlugs() {
 }
 
 function whenKey(trip: Trip) {
-  return trip.startDate ?? trip.endDate ?? null;
+  const iso = trip.startDate ?? trip.endDate;
+  if (!iso) return null;
+  return comparableDate(iso);
 }
 
 function compareTrips(a: Trip, b: Trip) {
@@ -279,42 +301,24 @@ export function tripPhotoIndex(value: string | string[] | undefined, count: numb
   return number - 1;
 }
 
-function monthName(year: number, month: number, style: "long" | "short") {
-  return new Intl.DateTimeFormat("en-GB", { month: style, timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, 1)));
+function monthYear(iso: string) {
+  const year = Number(iso.slice(0, 4));
+  const month = Number(iso.slice(5, 7));
+  const name = new Intl.DateTimeFormat("en-GB", { month: "long", timeZone: "UTC" }).format(
+    new Date(Date.UTC(year, month - 1, 1)),
+  );
+  return `${name} ${year}`;
 }
 
-function dateParts(iso: string) {
-  const [year, month, day] = iso.split("-").map(Number);
-  return { year, month, day };
-}
-
-export function formatTripDates(start: string, end: string) {
-  const a = dateParts(start);
-  const b = dateParts(end);
-  if (start === end) return `${a.day} ${monthName(a.year, a.month, "long")} ${a.year}`;
-  if (a.year === b.year && a.month === b.month) {
-    return `${a.day}–${b.day} ${monthName(a.year, a.month, "long")} ${a.year}`;
-  }
-  if (a.year === b.year) {
-    return `${a.day} ${monthName(a.year, a.month, "short")} – ${b.day} ${monthName(b.year, b.month, "short")} ${a.year}`;
-  }
-  return `${a.day} ${monthName(a.year, a.month, "short")} ${a.year} – ${b.day} ${monthName(b.year, b.month, "short")} ${b.year}`;
-}
-
-/** Full range, an open start or end, or just the year when both dates are unknown. */
+/** Month and year of the start. A trip with only an end date uses that month. Year alone when both are unknown. */
 export function formatTripWhen(trip: Pick<Trip, "startDate" | "endDate" | "year">) {
-  if (trip.startDate && trip.endDate) return formatTripDates(trip.startDate, trip.endDate);
-  if (trip.endDate) {
-    const end = dateParts(trip.endDate);
-    return `– ${end.day} ${monthName(end.year, end.month, "long")} ${end.year}`;
-  }
-  if (trip.startDate) {
-    const start = dateParts(trip.startDate);
-    return `${start.day} ${monthName(start.year, start.month, "long")} ${start.year} –`;
-  }
-  return trip.year;
+  const iso = trip.startDate ?? trip.endDate;
+  if (!iso) return trip.year;
+  return monthYear(iso);
 }
 
 export function tripDateTime(trip: Pick<Trip, "startDate" | "endDate" | "year">) {
-  return trip.startDate ?? trip.endDate ?? trip.year;
+  const iso = trip.startDate ?? trip.endDate;
+  if (!iso) return trip.year;
+  return iso.slice(0, 7);
 }
