@@ -134,8 +134,10 @@ if (written.length > USUAL) {
 console.log("Longest side is at most 2400px. EXIF, XMP, and IPTC — including GPS — are removed.");
 if (skipWatermark) console.log("Watermark skipped.");
 else console.log(`Watermark "${watermarkText}" is burned into the bottom-right corner.`);
-console.log("Next: fill in title, place, country, dates, summary, and a real alt for each photo.");
-console.log("Keep draft: true until Jake wants the album public. Reorder the photos list to change the sequence.");
+console.log("Next: fill in the title and a real alt for each photo. Point cover at one of the src values.");
+console.log("Dates, place, country, and the summary can stay blank. Add the photos list to the existing index.mdx if the trip is already there.");
+console.log("A trip with no photographs yet is only that one file. This script is for when the photographs are ready.");
+console.log("Keep draft: true until Jake wants the trip public. Reorder the photos list to change the sequence.");
 
 function parseArgs(argv) {
   let watermarkText = DEFAULT_WATERMARK;

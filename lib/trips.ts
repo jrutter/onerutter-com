@@ -13,13 +13,17 @@ export type Trip = {
   title: string;
   place: string;
   country: string;
-  startDate: string;
-  endDate: string;
+  /** Year the timeline groups under. Derived from the dates unless `year` is set. */
+  year: string;
+  startDate?: string;
+  endDate?: string;
   summary: string;
   draft: boolean;
-  cover: TripPhoto;
+  cover?: TripPhoto;
   photos: TripPhoto[];
   body: string;
+  /** Sequence within a year when both dates are unknown. Lower comes first. */
+  order?: number;
 };
 
 function requiredString(value: unknown, file: string, field: string) {
@@ -27,12 +31,60 @@ function requiredString(value: unknown, file: string, field: string) {
   return value.trim();
 }
 
+function optionalString(value: unknown, file: string, field: string) {
+  if (value == null || value === "") return "";
+  if (typeof value !== "string") throw new Error(`${file}: ${field} must be a string`);
+  return value.trim();
+}
+
+function optionalDate(value: unknown, file: string, field: string) {
+  if (value == null || value === "") return undefined;
+  return asDateString(value, file, field);
+}
+
+function optionalYear(value: unknown, file: string) {
+  if (value == null || value === "") return undefined;
+  const year = typeof value === "number" && Number.isInteger(value) ? String(value) : value;
+  if (typeof year === "string" && /^\d{4}$/.test(year)) return year;
+  throw new Error(`${file}: year must be YYYY`);
+}
+
+function optionalOrder(value: unknown, file: string) {
+  if (value == null || value === "") return undefined;
+  if (typeof value === "number" && Number.isInteger(value) && value >= 1) return value;
+  throw new Error(`${file}: order must be a whole number, 1 or greater`);
+}
+
+function resolveYear(file: string, explicit: string | undefined, startDate?: string, endDate?: string) {
+  const startYear = startDate?.slice(0, 4);
+  const endYear = endDate?.slice(0, 4);
+  if (!explicit) {
+    const derived = startYear ?? endYear;
+    if (!derived) throw new Error(`${file}: set year when startDate and endDate are unknown`);
+    return derived;
+  }
+  if (startYear && endYear && startYear === endYear && explicit !== startYear) {
+    throw new Error(`${file}: year ${explicit} does not match the dates in ${startYear}`);
+  }
+  if (startYear && !endYear && explicit !== startYear) {
+    throw new Error(`${file}: year ${explicit} does not match startDate`);
+  }
+  if (endYear && !startYear && explicit !== endYear) {
+    throw new Error(`${file}: year ${explicit} does not match endDate`);
+  }
+  if (startYear && endYear && startYear !== endYear && explicit !== startYear && explicit !== endYear) {
+    throw new Error(`${file}: year must be ${startYear} or ${endYear} when the trip crosses New Year`);
+  }
+  return explicit;
+}
+
 type PhotoInput = { src: string; alt: string; caption?: string };
 
 function readPhotos(value: unknown, file: string): PhotoInput[] {
+  if (value == null) return [];
   if (!Array.isArray(value)) throw new Error(`${file}: photos must be a list`);
-  if (value.length < 1 || value.length > 10) {
-    throw new Error(`${file}: photos must be 1 to 10 (found ${value.length}). Three is the usual album.`);
+  if (value.length > 10) {
+    throw new Error(`${file}: photos must be 10 or fewer (found ${value.length}). Three is the usual album.`);
   }
 
   return value.map((item, index) => {
@@ -65,14 +117,19 @@ async function readTrip(slug: string): Promise<Trip> {
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
   const title = requiredString(data.title, file, "title");
-  const place = requiredString(data.place, file, "place");
-  const country = requiredString(data.country, file, "country");
-  const summary = requiredString(data.summary, file, "summary");
-  const coverSrc = requiredString(data.cover, file, "cover");
-  const startDate = asDateString(data.startDate, file, "startDate");
-  const endDate = asDateString(data.endDate, file, "endDate");
-  if (endDate < startDate) throw new Error(`${file}: endDate must be on or after startDate`);
+  const place = optionalString(data.place, file, "place");
+  const country = optionalString(data.country, file, "country");
+  const summary = optionalString(data.summary, file, "summary");
+  const startDate = optionalDate(data.startDate, file, "startDate");
+  const endDate = optionalDate(data.endDate, file, "endDate");
+  if (startDate && endDate && endDate < startDate) throw new Error(`${file}: endDate must be on or after startDate`);
   if (typeof data.draft !== "boolean") throw new Error(`${file}: draft must be true or false`);
+
+  const year = resolveYear(file, optionalYear(data.year, file), startDate, endDate);
+  const order = optionalOrder(data.order, file);
+  if (!startDate && !endDate && order == null) {
+    throw new Error(`${file}: set order when dates are unknown, so the trip has a place in ${year}`);
+  }
 
   const inputs = readPhotos(data.photos, file);
   const seen = new Set<string>();
@@ -96,23 +153,32 @@ async function readTrip(slug: string): Promise<Trip> {
     });
   }
 
-  const coverPath = resolveTripImage(slug, coverSrc).filePath;
-  const cover = loaded.find((item) => item.filePath === coverPath)?.photo;
-  if (!cover) throw new Error(`${file}: cover must be the src of one of the photos`);
-  const photos = loaded.map((item) => item.photo);
+  let cover: TripPhoto | undefined;
+  if (loaded.length === 0) {
+    if (data.cover != null && String(data.cover).trim() !== "") {
+      throw new Error(`${file}: cover is set but there are no photos`);
+    }
+  } else {
+    const coverSrc = requiredString(data.cover, file, "cover");
+    const coverPath = resolveTripImage(slug, coverSrc).filePath;
+    cover = loaded.find((item) => item.filePath === coverPath)?.photo;
+    if (!cover) throw new Error(`${file}: cover must be the src of one of the photos`);
+  }
 
   return {
     slug,
     title,
     place,
     country,
+    year,
     startDate,
     endDate,
     summary,
     draft: data.draft,
     cover,
-    photos,
+    photos: loaded.map((item) => item.photo),
     body: content.trim(),
+    order,
   };
 }
 
@@ -124,17 +190,36 @@ function tripSlugs() {
     .map((entry) => entry.name);
 }
 
+function whenKey(trip: Trip) {
+  return trip.startDate ?? trip.endDate ?? null;
+}
+
+function compareTrips(a: Trip, b: Trip) {
+  if (a.year !== b.year) return a.year < b.year ? 1 : -1;
+  const aWhen = whenKey(a);
+  const bWhen = whenKey(b);
+  if (aWhen && bWhen && aWhen !== bWhen) return aWhen < bWhen ? 1 : -1;
+  if (aWhen && !bWhen) return -1;
+  if (!aWhen && bWhen) return 1;
+  if (!aWhen && !bWhen) {
+    const aOrder = a.order ?? Number.MAX_SAFE_INTEGER;
+    const bOrder = b.order ?? Number.MAX_SAFE_INTEGER;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+  } else {
+    const aEnd = a.endDate ?? "";
+    const bEnd = b.endDate ?? "";
+    if (aEnd !== bEnd) return aEnd < bEnd ? 1 : -1;
+  }
+  return a.title.localeCompare(b.title);
+}
+
 async function readAllTrips() {
   const slugs = tripSlugs();
   for (const slug of slugs) {
     if (!isTripSlug(slug)) throw new Error(`content/trips/${slug} must be lowercase kebab-case`);
   }
   const trips = await Promise.all(slugs.map((slug) => readTrip(slug)));
-  return trips.sort((a, b) => {
-    if (a.startDate !== b.startDate) return a.startDate < b.startDate ? 1 : -1;
-    if (a.endDate !== b.endDate) return a.endDate < b.endDate ? 1 : -1;
-    return a.title.localeCompare(b.title);
-  });
+  return trips.sort(compareTrips);
 }
 
 let cached: Promise<Trip[]> | null = null;
@@ -164,13 +249,24 @@ export async function getVisibleTrip(slug: string) {
   return trip;
 }
 
+/** An album page exists once there is something to read or a photograph to open. */
+export function tripHasPage(trip: Pick<Trip, "photos" | "summary" | "body">) {
+  return trip.photos.length > 0 || trip.summary.trim().length > 0 || trip.body.trim().length > 0;
+}
+
+export function publishedTripStats(trips: Trip[]) {
+  const published = trips.filter((trip) => !trip.draft);
+  if (published.length === 0) return null;
+  const since = published.reduce((min, trip) => (trip.year < min ? trip.year : min), published[0].year);
+  return { count: published.length, since };
+}
+
 export function groupTripsByYear(trips: Trip[]) {
   const groups: { year: string; trips: Trip[] }[] = [];
   for (const trip of trips) {
-    const year = trip.startDate.slice(0, 4);
     const current = groups[groups.length - 1];
-    if (current?.year === year) current.trips.push(trip);
-    else groups.push({ year, trips: [trip] });
+    if (current?.year === trip.year) current.trips.push(trip);
+    else groups.push({ year: trip.year, trips: [trip] });
   }
   return groups;
 }
@@ -183,18 +279,42 @@ export function tripPhotoIndex(value: string | string[] | undefined, count: numb
   return number - 1;
 }
 
-export function formatTripDates(start: string, end: string) {
-  const [startYear, startMonth, startDay] = start.split("-").map(Number);
-  const [endYear, endMonth, endDay] = end.split("-").map(Number);
-  const monthName = (year: number, month: number, style: "long" | "short") =>
-    new Intl.DateTimeFormat("en-GB", { month: style, timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, 1)));
+function monthName(year: number, month: number, style: "long" | "short") {
+  return new Intl.DateTimeFormat("en-GB", { month: style, timeZone: "UTC" }).format(new Date(Date.UTC(year, month - 1, 1)));
+}
 
-  if (start === end) return `${startDay} ${monthName(startYear, startMonth, "long")} ${startYear}`;
-  if (startYear === endYear && startMonth === endMonth) {
-    return `${startDay}–${endDay} ${monthName(startYear, startMonth, "long")} ${startYear}`;
+function dateParts(iso: string) {
+  const [year, month, day] = iso.split("-").map(Number);
+  return { year, month, day };
+}
+
+export function formatTripDates(start: string, end: string) {
+  const a = dateParts(start);
+  const b = dateParts(end);
+  if (start === end) return `${a.day} ${monthName(a.year, a.month, "long")} ${a.year}`;
+  if (a.year === b.year && a.month === b.month) {
+    return `${a.day}–${b.day} ${monthName(a.year, a.month, "long")} ${a.year}`;
   }
-  if (startYear === endYear) {
-    return `${startDay} ${monthName(startYear, startMonth, "short")} – ${endDay} ${monthName(endYear, endMonth, "short")} ${startYear}`;
+  if (a.year === b.year) {
+    return `${a.day} ${monthName(a.year, a.month, "short")} – ${b.day} ${monthName(b.year, b.month, "short")} ${a.year}`;
   }
-  return `${startDay} ${monthName(startYear, startMonth, "short")} ${startYear} – ${endDay} ${monthName(endYear, endMonth, "short")} ${endYear}`;
+  return `${a.day} ${monthName(a.year, a.month, "short")} ${a.year} – ${b.day} ${monthName(b.year, b.month, "short")} ${b.year}`;
+}
+
+/** Full range, an open start or end, or just the year when both dates are unknown. */
+export function formatTripWhen(trip: Pick<Trip, "startDate" | "endDate" | "year">) {
+  if (trip.startDate && trip.endDate) return formatTripDates(trip.startDate, trip.endDate);
+  if (trip.endDate) {
+    const end = dateParts(trip.endDate);
+    return `– ${end.day} ${monthName(end.year, end.month, "long")} ${end.year}`;
+  }
+  if (trip.startDate) {
+    const start = dateParts(trip.startDate);
+    return `${start.day} ${monthName(start.year, start.month, "long")} ${start.year} –`;
+  }
+  return trip.year;
+}
+
+export function tripDateTime(trip: Pick<Trip, "startDate" | "endDate" | "year">) {
+  return trip.startDate ?? trip.endDate ?? trip.year;
 }
