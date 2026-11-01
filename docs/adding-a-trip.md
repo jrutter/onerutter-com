@@ -2,19 +2,15 @@
 
 A trip with no photographs is one new file. Copy `content/trips/_template/index.mdx` to `content/trips/<slug>/index.mdx`. The folder name is the URL: `2025-france` is `/travel/2025-france`. Use lowercase kebab-case. Folders whose names start with `_` are ignored. No other list or component has to change.
 
-`title` and `draft` are required. A published trip (`draft: false`) also needs `places`. Dates, the intro, `place`, `country`, and photographs are optional. The build fails if `draft` is missing, a published trip has no `places`, a date is not `YYYY-MM-DD` or `YYYY-MM`, a coordinate has more than two decimal places, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
+`title` and `draft` are required. `places`, dates, the intro, `place`, `country`, and photographs are optional. The build fails if `draft` is missing, a date is not `YYYY-MM-DD` or `YYYY-MM`, a coordinate has more than two decimal places, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
 
 Do not invent dates, captions, or place names. Use the title Jake gave (`France`, `Amsterdam / Iceland`). Leave `summary` out when there is no intro to write. `place` is an optional string, separate from `places`, and the timeline shows it only when it adds something the title does not.
 
-## Places and the world map
+## Places
 
-`places` is how the map at the top of `/travel` is drawn. One entry per place. `name` is the marker. `country` is the country to tint; a city still names its country, the way Paris uses France. `lat` and `lng` are a country centroid, a capital, or a region centre, written to at most two decimal places. Never a street address, and never the exact spot a photograph was taken.
+`places` is optional. The site stores it and does not draw it. Leave entries that are already in a file. One entry per place: `name`, `country`, `lat`, and `lng`. A city still names its country, the way Paris uses France. `lat` and `lng` are a country centroid, a capital, or a region centre, written to at most two decimal places. Never a street address, and never the exact spot a photograph was taken. Names in one trip are unique, ignoring case. A draft or a published trip may omit the field. When it is present it needs at least one entry.
 
-A trip such as Amsterdam / Iceland lists one entry per place. The same place on a later trip uses the same name, country, and coordinates, and the marker counts the visits. If that `country` is not in `lib/map-countries.ts` yet, add its Natural Earth id there. A territory smaller than the 110m map (the id is `null`, as with Saint Martin) still gets a marker and no country fill. The centroid has to fall inside that country, or the build throws.
-
-Drafts may omit `places`. They are left off the map and out of the trip and country counts.
-
-A dated trip, using the centroid already on the France trip:
+A dated trip, using the centroid already on the France trip. These examples have no photographs, so they stay off `/travel` until a `photos` list is added:
 
 ```yaml
 ---
@@ -49,11 +45,11 @@ places:
 ---
 ```
 
-`/travel` opens with the world map, then a line “N trips · M countries since YEAR”, counted from published trips. M is the number of distinct `places[].country` values. Drafts are left out of that count and off the map. The timeline under that is newest year first. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`. A marker’s links scroll to that trip in the timeline.
+`/travel` is a vertical timeline, newest year first. It lists a trip only when that trip has at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>`. That URL is a 404. `generateStaticParams` does not include it. Adding a `photos` list is enough for the trip to appear on the next build: the index, the sitemap, and the album page pick it up. No other file has to change. The home page does not list trips. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`.
 
-With no photographs, the entry still shows the name and the dates, plus “Photos coming soon”. With no photographs, no summary, and no body, the name is text and there is no album page. Add a summary, a paragraph, or at least one photograph and `/travel/<slug>` appears. The sitemap lists that page only then.
+If nothing has photographs yet, the page keeps the heading and says photographs will show up here. A short list, even a single album, is the timeline on its own.
 
-Leave `draft: true` unless Jake asked for the trip to go live. A draft is listed on `/travel` during `next dev` and on a Vercel preview, and a draft that has photos still shows its strip there. The album URL is a 404 until `draft` is false: `generateStaticParams` returns only published trips, and `dynamicParams` is false, including under `next dev`. Publishing is `draft: false`.
+Leave `draft: true` unless Jake asked for the trip to go live. A draft with photographs is listed on `/travel` during `next dev` and on a Vercel preview. A draft with no photographs is hidden there too. The album URL is a 404 until `draft` is false and the trip has at least one photograph: `generateStaticParams` returns only published trips that have photographs, and `dynamicParams` is false, including under `next dev`. Publishing is `draft: false`.
 
 ## Photographs
 

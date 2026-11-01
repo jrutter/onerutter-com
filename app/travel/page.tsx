@@ -1,18 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { TravelMap } from "@/components/travel-map";
 import { draftsAreVisible } from "@/lib/drafts";
-import {
-  formatTripWhen,
-  getVisibleTrips,
-  groupTripsByYear,
-  publishedTripStats,
-  tripDateTime,
-  tripHasPage,
-} from "@/lib/trips";
+import { formatTripWhen, getVisibleTrips, groupTripsByYear, tripDateTime } from "@/lib/trips";
 import type { Trip } from "@/lib/trips";
-import { buildTravelMap } from "@/lib/world-map";
 
 export const metadata: Metadata = {
   title: "Travel",
@@ -29,8 +20,6 @@ export const metadata: Metadata = {
 export default async function TravelPage() {
   const trips = await getVisibleTrips();
   const years = groupTripsByYear(trips);
-  const stats = publishedTripStats(trips);
-  const map = stats ? buildTravelMap(trips) : null;
   const showingDrafts = draftsAreVisible() && trips.some((trip) => trip.draft);
 
   return (
@@ -43,17 +32,9 @@ export default async function TravelPage() {
             The offline analog alongside the digital nomad life. Music, discovering new things and places, and travel.
           </p>
         </header>
-        {map ? <TravelMap model={map} /> : null}
-        {stats ? (
-          <p className="travel-stat">
-            {stats.count} {stats.count === 1 ? "trip" : "trips"}
-            {" · "}
-            {stats.countries} {stats.countries === 1 ? "country" : "countries"} since {stats.since}
-          </p>
-        ) : null}
 
         {trips.length === 0 ? (
-          <p className="lede">Published trips will show up here.</p>
+          <p className="lede">Photographs will show up here.</p>
         ) : (
           <div className="stack-36">
             {showingDrafts ? (
@@ -85,12 +66,13 @@ export default async function TravelPage() {
 
 function TripEntry({ trip, preload }: { trip: Trip; preload: boolean }) {
   const dates = formatTripWhen(trip);
-  const linked = tripHasPage(trip);
   const showPlace = Boolean(trip.place) && trip.place !== trip.title;
 
   return (
     <li id={trip.slug} className="travel-entry">
-      <h3>{linked ? <Link href={`/travel/${trip.slug}`}>{trip.title}</Link> : trip.title}</h3>
+      <h3>
+        <Link href={`/travel/${trip.slug}`}>{trip.title}</Link>
+      </h3>
       <p className="travel-meta">
         {showPlace ? (
           <>
@@ -102,28 +84,24 @@ function TripEntry({ trip, preload }: { trip: Trip; preload: boolean }) {
         {trip.draft ? <span className="pill pill-draft">Draft</span> : null}
       </p>
       {trip.summary ? <p className="travel-summary">{trip.summary}</p> : null}
-      {trip.photos.length > 0 ? (
-        <ul className="travel-strip">
-          {trip.photos.map((photo, index) => (
-            <li key={photo.src}>
-              <Link className="travel-thumb" href={`/travel/${trip.slug}?photo=${index + 1}`}>
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 760px) 30vw, 280px"
-                  placeholder="blur"
-                  blurDataURL={photo.blurDataURL}
-                  preload={preload && index === 0}
-                  style={{ objectFit: "cover", objectPosition: "right bottom" }}
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="travel-pending">Photos coming soon</p>
-      )}
+      <ul className="travel-strip">
+        {trip.photos.map((photo, index) => (
+          <li key={photo.src}>
+            <Link className="travel-thumb" href={`/travel/${trip.slug}?photo=${index + 1}`}>
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 760px) 30vw, 280px"
+                placeholder="blur"
+                blurDataURL={photo.blurDataURL}
+                preload={preload && index === 0}
+                style={{ objectFit: "cover", objectPosition: "right bottom" }}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
     </li>
   );
 }

@@ -1,14 +1,16 @@
 ---
-description: Trip albums, the places map, photo privacy, and the prepare-trip-photos script
-globs: content/trips/**,scripts/prepare-trip-photos.mjs,components/travel-map.tsx,lib/world-map.ts,lib/map-countries.ts
+description: Trip albums, optional places, photo privacy, and the prepare-trip-photos script
+globs: content/trips/**,scripts/prepare-trip-photos.mjs,app/travel/**,lib/trips.ts
 alwaysApply: false
 ---
 
-A trip is `content/trips/<slug>/index.mdx`. The folder name is the URL. Folders starting with `_` are ignored. Required frontmatter is `title` and `draft`. A published trip (`draft: false`) also needs `places`. Dates, `summary`, `place`, `country`, and `photos` are optional. Do not invent dates, captions, or place names. Use Jake's title wording.
+A trip is `content/trips/<slug>/index.mdx`. The folder name is the URL. Folders starting with `_` are ignored. Required frontmatter is `title` and `draft`. `places`, dates, `summary`, `place`, `country`, and `photos` are optional. Do not invent dates, captions, or place names. Use Jake's title wording.
 
-`places` draws the world map at the top of `/travel` (`components/travel-map.tsx`, `lib/world-map.ts`). Each entry is `name`, `country`, `lat`, and `lng`. `name` is the marker. `country` is the country to tint; a city still names its country (Paris uses France). `lat` and `lng` are a country centroid, a capital, or a region centre, at most two decimal places. Never a street address or the exact spot a photo was taken. The same `name` on another trip must reuse the same `lat`, `lng`, and `country`; the marker counts the visits. `country` must be a key in `lib/map-countries.ts` (add its Natural Earth id when it is missing). `null` there means the territory is smaller than the 110m map: a marker, and no country fill. The centroid must fall inside that country. Drafts may omit `places` and are left off the map.
+`places` is stored and not shown. Each entry is `name`, `country`, `lat`, and `lng`. A city still names its country (Paris uses France). `lat` and `lng` are a country centroid, a capital, or a region centre, at most two decimal places. Never a street address or the exact spot a photo was taken. Names in one trip are unique. A draft or a published trip may omit `places`. Leave existing `places` data in the file.
 
 `place` (singular) is a separate optional string, shown only when it differs from `title`. The public date line is the start month and year (`formatTripWhen` in `lib/trips.ts`). Days stay in the file for sorting and are not displayed. `YYYY-MM` is valid for an unknown day. Quote dates. If both dates are missing, set `year` and `order`.
+
+`/travel` lists only trips with at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>` (404, and excluded from `generateStaticParams`) until `photos` is added. Adding photographs is enough for it to appear. The home page does not list trips.
 
 Photographs: pick the top 3. The maximum is 10. Phone originals stay out of the repo.
 
@@ -19,7 +21,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 
 The script resizes the longest side to at most 2400px, burns `onerutter.com` into the bottom-right (white at 60% opacity) unless `--no-watermark` is set, and strips EXIF, XMP, and IPTC, including GPS. The build (`lib/gps.ts`) rejects a trip image that still has GPS EXIF or GPS in XMP.
 
-`alt` must be a real description. A value starting with `TODO` fails the build. Captions are optional, one line, at most 160 characters. Do not put coordinates or an exact photo location in alt, caption, or body. Leave `draft: true` unless Jake asked to publish. A draft is listed on `/travel` in dev and on preview. Its album URL 404s until `draft` is false, because `generateStaticParams` only returns published trips and `dynamicParams` is false.
+`alt` must be a real description. A value starting with `TODO` fails the build. Captions are optional, one line, at most 160 characters. Do not put coordinates or an exact photo location in alt, caption, or body. Leave `draft: true` unless Jake asked to publish. A draft with photographs is listed on `/travel` in dev and on preview. A draft with no photographs is hidden there too. Its album URL 404s until `draft` is false, because `generateStaticParams` only returns published trips that have photographs and `dynamicParams` is false.
 
 How-to: `docs/adding-a-trip.md`.
 

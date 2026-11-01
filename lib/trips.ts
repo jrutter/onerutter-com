@@ -24,7 +24,7 @@ export type Trip = {
   body: string;
   /** Sequence within a year when both dates are unknown. Lower comes first. */
   order?: number;
-  /** Country or city centroids. Required once the trip is published. */
+  /** Optional country or city centroids. Stored, not shown. */
   places: TripPlace[];
 };
 
@@ -87,11 +87,8 @@ function centroidNumber(value: unknown, file: string, field: string, min: number
   return rounded;
 }
 
-function readPlaces(value: unknown, file: string, draft: boolean): TripPlace[] {
-  if (value == null) {
-    if (draft) return [];
-    throw new Error(`${file}: places is required`);
-  }
+function readPlaces(value: unknown, file: string): TripPlace[] {
+  if (value == null) return [];
   if (!Array.isArray(value) || value.length < 1) {
     throw new Error(`${file}: places must list at least one place`);
   }
@@ -193,7 +190,7 @@ async function readTrip(slug: string): Promise<Trip> {
   if (typeof data.draft !== "boolean") throw new Error(`${file}: draft must be true or false`);
 
   const year = resolveYear(file, optionalYear(data.year, file), startDate, endDate);
-  const places = readPlaces(data.places, file, data.draft === true);
+  const places = readPlaces(data.places, file);
   const order = optionalOrder(data.order, file);
   if (!startDate && !endDate && order == null) {
     throw new Error(`${file}: set order when dates are unknown, so the trip has a place in ${year}`);
@@ -304,33 +301,25 @@ export function getAllTrips() {
   return cached;
 }
 
+/** An album page exists once the trip has at least one photograph. */
+export function tripHasPage(trip: Pick<Trip, "photos">) {
+  return trip.photos.length > 0;
+}
+
 export async function getPublishedTrips() {
-  return (await getAllTrips()).filter((trip) => !trip.draft);
+  return (await getAllTrips()).filter((trip) => !trip.draft && tripHasPage(trip));
 }
 
 export async function getVisibleTrips() {
-  const trips = await getAllTrips();
+  const trips = (await getAllTrips()).filter((trip) => tripHasPage(trip));
   return draftsAreVisible() ? trips : trips.filter((trip) => !trip.draft);
 }
 
 export async function getVisibleTrip(slug: string) {
   const trip = (await getAllTrips()).find((item) => item.slug === slug);
-  if (!trip) return undefined;
+  if (!trip || !tripHasPage(trip)) return undefined;
   if (trip.draft && !draftsAreVisible()) return undefined;
   return trip;
-}
-
-/** An album page exists once there is something to read or a photograph to open. */
-export function tripHasPage(trip: Pick<Trip, "photos" | "summary" | "body">) {
-  return trip.photos.length > 0 || trip.summary.trim().length > 0 || trip.body.trim().length > 0;
-}
-
-export function publishedTripStats(trips: Trip[]) {
-  const published = trips.filter((trip) => !trip.draft);
-  if (published.length === 0) return null;
-  const since = published.reduce((min, trip) => (trip.year < min ? trip.year : min), published[0].year);
-  const countries = new Set(published.flatMap((trip) => trip.places.map((place) => place.country)));
-  return { count: published.length, since, countries: countries.size };
 }
 
 export function groupTripsByYear(trips: Trip[]) {

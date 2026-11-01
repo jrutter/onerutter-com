@@ -28,7 +28,7 @@ npm start
 
 `npm run lint` is ESLint. `npm run typecheck` is `tsc --noEmit`.
 
-Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. A draft trip is listed on `/travel` in those same places and is left off the world map. Its album URL is a 404 until `draft` is false. Drafts are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
+Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. A draft trip with photographs is listed on `/travel` in those same places. A trip with no photographs stays off the index, the sitemap, and its album URL. Drafts are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
 
 The contact form on `/hello` sends through Resend. Variable names are in `.env.example`. Put the values in `.env.local`, which is gitignored. The page still renders without them.
 
@@ -49,6 +49,6 @@ The contact form on `/hello` sends through Resend. Variable names are in `.env.e
 
 ## Where content lives
 
-Notes are `content/notes/*.mdx`. Trips are `content/trips/<slug>/index.mdx`. A published trip includes `places`: country or city centroids at two decimal places, never an exact spot. `/travel` opens with a world map drawn from those places, then the timeline. Lab projects are `content/projects/*.md`. The home row is Agentic Checkout Index, Tails over Thames, and Mind the Timetable.
+Notes are `content/notes/*.mdx`. Trips are `content/trips/<slug>/index.mdx`. `places`, when set, is a country or city centroid at two decimal places, never an exact spot, and is not shown. `/travel` is a timeline of trips that have photographs. Lab projects are `content/projects/*.md`. The home row is Agentic Checkout Index, Tails over Thames, and Mind the Timetable.
 
 Vercel auto-deploys `main` to production. Each pull request gets a preview deployment.
