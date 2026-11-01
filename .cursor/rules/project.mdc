@@ -19,4 +19,4 @@ Content rules:
 - `draft: true` stays out of production HTML, the RSS feed, and the sitemap. Publishing is `draft: false`.
 - Do not add a project, note, or trip Jake has not asked for. The sample notes and `content/trips/sample-*` albums are placeholders.
 
-Canonical URL is `https://onerutter.com` in `lib/site.ts`. It is not an environment variable. Pull requests stay small. UI changes need screenshots.
+Canonical URL is `https://onerutter.com` in `lib/site.ts`. It is not an environment variable. Pull requests stay small. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. Skip screenshots. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report.

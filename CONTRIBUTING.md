@@ -19,7 +19,7 @@ npm run typecheck
 npm run build
 ```
 
-Keep the pull request small and focused. Include screenshots when the UI changes. For a note, name the title, date, summary, and whether it is still a draft. For a trip, say whether the dates, photographs, and draft flag are final.
+Keep the pull request small and focused. Skip screenshots. When the Vercel preview deploy is ready, add the preview URL of each changed page to the pull request and to the report (`https://<preview>/<path>`). For a note, also name the title, date, summary, and whether it is still a draft. For a trip, say whether the dates, photographs, and draft flag are final.
 
 ## Content
 

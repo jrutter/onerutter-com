@@ -17,4 +17,4 @@ Story copy in `app/story/page.tsx` is Jake's wording. Do not rewrite it, and do 
 
 `/hello` posts to the Resend server action in `app/hello/actions.ts`. Required env vars: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`. The honeypot input is `hp_field`; a filled honeypot returns success and does not send. The page must still render when the env vars are missing.
 
-UI pull requests need screenshots. Run `npm run build` before pushing.
+Skip screenshots on every pull request. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report.

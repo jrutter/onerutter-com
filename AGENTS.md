@@ -242,6 +242,6 @@ Vercel, no `vercel.json` and no extra framework config. Production auto-deploys 
 
 ## Pull requests
 
-Keep a pull request small and focused. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. A UI change needs screenshots. A note PR includes the title, date, summary, whether it is still a draft, and the Vercel preview URL straight to the note (`https://<preview>/notes/<slug>`). That link is the review, not screenshots. A trip PR says whether dates, photographs, and `draft` are final. Leave `draft: true` unless Jake asked for that change to go live.
+Keep a pull request small and focused. Before pushing, run `npm run lint`, `npm run typecheck`, and `npm run build`. Skip screenshots. When the Vercel preview deploy is ready, put the preview URL of each changed page in the pull request and in the report (`https://<preview>/<path>`). A note also names the title, date, summary, and whether it is still a draft. A trip also says whether dates, photographs, and `draft` are final. Leave `draft: true` unless Jake asked for that change to go live.
 
 Merging a file that is still `draft: true` does not publish it.

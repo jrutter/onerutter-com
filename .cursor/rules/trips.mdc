@@ -22,3 +22,5 @@ The script resizes the longest side to at most 2400px, burns `onerutter.com` int
 `alt` must be a real description. A value starting with `TODO` fails the build. Captions are optional, one line, at most 160 characters. Do not put coordinates or an exact photo location in alt, caption, or body. Leave `draft: true` unless Jake asked to publish. A draft is listed on `/travel` in dev and on preview. Its album URL 404s until `draft` is false, because `generateStaticParams` only returns published trips and `dynamicParams` is false. `sample-album`, `sample-strip`, and `sample-markers` are generated color fields and stay drafts.
 
 How-to: `docs/adding-a-trip.md`.
+
+Every pull request skips screenshots. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report.
