@@ -1,0 +1,18 @@
+export const siteUrl = "https://onerutter.com";
+
+export const siteName = "Jake Rutter";
+
+export const siteDescription =
+  "VP, DTC Engineering & Applied AI at SharkNinja. Twenty years on ecommerce for brands including SharkNinja, The North Face, Vans, and Priceline. Building small apps on the side from Barnes, London.";
+
+export const profiles = [
+  { href: "https://www.linkedin.com/in/jakerutter/", label: "LinkedIn" },
+  { href: "https://jakerutter.medium.com/", label: "Medium" },
+  { href: "https://jakerutter.substack.com/", label: "Substack" },
+  { href: "https://twitter.com/jakerutter", label: "X" },
+] as const;
+
+export function absoluteUrl(path: string) {
+  if (path.startsWith("http")) return path;
+  return new URL(path, siteUrl).toString();
+}

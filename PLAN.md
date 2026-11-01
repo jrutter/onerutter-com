@@ -1,8 +1,20 @@
-# onerutter.com — plan for review
+# onerutter.com
 
-Nothing is built yet. This is the plan and a static design mockup for Jake to react to before a Next.js app exists.
+Jake approved this plan on 1 Nov 2026. The Next.js app in this repo is the site. Canonical URL: `https://onerutter.com`.
 
-Open the mockups from `mockups/index.html`, or run `python3 -m http.server 4173 --directory mockups` and visit the local URL. Pages: home, story, lab, notes index, one note, and a style guide.
+## Decisions
+
+- Hello headline, as proposed: “Hi, I'm Jake. I lead DTC engineering at SharkNinja, and I build small apps on the side.”
+- Public title: VP, DTC Engineering & Applied AI.
+- Home in Barnes, office in Battersea.
+- Featured builds, in this order: Tails over Thames, Three Today, Mind the Timetable. TradeTrek and the rest stay in the Lab, including Delmarva Community Guide and First Plate Delaware.
+- Notes live at `/notes`. Article body stays in Source Serif 4.
+- Drafts render in local development and on Vercel preview deploys, with a banner. Production, the RSS feed, and the sitemap omit them.
+- Light on operating detail. Team-size, budget, site-count, and conversion figures stay off the page.
+- No portrait, no dark mode, no résumé PDF, no phone number, no GPA, no GitHub link, no analytics.
+- A future return to the US is omitted. Do not add that chapter back.
+- Local Sound and the two sample notes stay as clearly marked placeholders. The year-by-year sentences stay marked “Needs an edit.”
+- Speedwell stays in the published writing-page sentence. Medium and Substack stay in the footer. Whether Speedwell is that Substack is still unconfirmed, and the site does not assert it.
 
 The look takes its pace from [maxclax.com](https://maxclax.com/): a personal page with a very large hello, a few things he actually built, then a life told year by year. The words, names, and colors are Jake's, not Max's.
 
@@ -12,7 +24,7 @@ It is one continuous visit, not a brochure with a hero, a logo wall, and a conta
 
 Type is a geometric sans (Be Vietnam Pro) set very large, with tight leading and a little negative tracking. The headline is a gradient. Body copy around the years is about 20px, so the story is easy to read rather than scanned as bullets. Color is warm paper, black text, and a few product colors (coral, orange, gold, ink). Spacing is generous: the first screen is mostly the sentence. Motion is small. Cards lift a few pixels. The sticky header blurs. A dot pulses next to a new note. `prefers-reduced-motion` is respected. There is a light/dark toggle. He does not use stock photography or a component-library look.
 
-The story works because the years are specific. Consoles, editors, keyboards, the apps he shipped. A reader can feel a person moving through time. The résumé is hidden inside that voice.
+The story works because the years are specific. Consoles, editors, keyboards, the apps he shipped. A reader can feel a life in order. The résumé is hidden inside that voice.
 
 ## What we borrow
 
@@ -32,7 +44,7 @@ The story works because the years are specific. Consoles, editors, keyboards, th
 - Inner page titles use the same family at a slightly smaller clamp, in ink, not in the gradient. The gradient is a home-only moment, which is how the reference uses it.
 - Source Serif 4 for the body of a note only, 21px, line-height 1.6, measure about 66 characters. The index stays in Outfit. A note should feel like writing.
 - Kickers are 12px, weight 700, uppercase, tracking `0.16em`, in clay (or gold, on a dark card).
-- If Jake wants the whole site in one sans, drop the serif. That is an open question.
+- Article text uses Source Serif 4. Jake kept that.
 
 ### Color
 
@@ -72,9 +84,9 @@ The home headline gradient runs `#14352F → #1E4A42 → #8E3B22 → #C45C32`. I
 
 ### How the story is told
 
-Years, not job titles in a table. Each entry is a year or a span, a place, and a short paragraph in the first person. Overlaps stay visible, because the freelance studio ran alongside the staff jobs, and the book happened in the middle of Direct Wines. The year still ahead, 2027, uses a filled dot. Everything else uses an open dot on the hairline.
+Years, not job titles in a table. Each entry is a year or a span, a place, and a short paragraph in the first person. Overlaps stay visible, because the freelance studio ran alongside the staff jobs, and the book happened in the middle of Direct Wines. Each year is an open dot on a hairline.
 
-The home page shows seven selected years and links to the full story. The story page is where the employers, the book, and the magazine issues actually get named.
+The home page shows six selected years and links to the full story. The story page is where the employers, the book, and the magazine issues actually get named.
 
 His published about-page paragraphs sit above the timeline, unchanged in substance, so the page opens in a voice that is already his. The timeline sentences under that are new prose built from public facts. They are marked on the page as needing his edit.
 
@@ -180,7 +192,7 @@ A project is the same gesture against `content/projects/`, and it is rarer. The 
 - `NEXT_PUBLIC_SITE_URL` defaults to `https://onerutter.com`. Canonical URLs, Open Graph, and the sitemap use it.
 - SEO that ships with the app, not as an afterthought: unique `title` and `description` per route, Open Graph images (generated with `next/og` from the title and summary, on the paper background), `sitemap.ts`, `robots.ts`, RSS, and JSON-LD `Person` on the home page. Semantic headings, a skip link, visible focus, and the reduced-motion rule already in the mockup.
 - `next/font` for Outfit and Source Serif 4. The mockup vendors the files locally so the screenshots do not depend on a network font. Licenses are in `mockups/fonts/`.
-- Light only, unless Jake asks for the toggle. The paper palette is the design. Dark mode is a second palette, not a filter.
+- Light only. Jake declined a dark-mode toggle.
 - Node 22, matching current Vercel defaults. No environment secrets required for the first deploy.
 
 ## Copy
@@ -210,12 +222,11 @@ From [the lab](https://onerutter-design.vercel.app/side-projects):
 - The Lab intro, the weekly-builds paragraph, and “First build coming soon — check back shortly.”
 - Blurbs, in his order: TradeTrek, StrategicPulse, First Plate Delaware, Send a Spark, Delmarva Community Guide, Tails over Thames, Mind the Timetable, Three Today, and the creative-music line.
 - His tags where he listed them (Next.js, AI/ML, and so on).
-- Links that exist on that page: [TradeTrek](https://tradetrek-alpha.vercel.app/), [Send a Spark](https://send-a-spark.vercel.app/), [Delmarva Community Guide](https://delmarvacommunityguide.com/), [Tails over Thames](https://tails-over-thames.vercel.app), [Mind the Timetable](https://mindthetimetable.com), [Three Today](https://three-today.com). StrategicPulse and First Plate Delaware are “Currently Building” and have no URL. The home cards also use the Mind the Timetable and Three Today lines, lightly split into a title and a supporting sentence. TradeTrek’s home card is a shortening of his blurb and should be checked.
+- Links that exist on that page: [TradeTrek](https://tradetrek-alpha.vercel.app/), [Send a Spark](https://send-a-spark.vercel.app/), [Delmarva Community Guide](https://delmarvacommunityguide.com/), [Tails over Thames](https://tails-over-thames.vercel.app), [Mind the Timetable](https://mindthetimetable.com), [Three Today](https://three-today.com). StrategicPulse and First Plate Delaware are “Currently Building” and have no URL. The home cards are Tails over Thames, Three Today, and Mind the Timetable. Their card lines are his blurbs, split into a title and a supporting sentence.
 
 From Jake, for this project, not from the old sites:
 
-- He lives in Barnes, London. LinkedIn says the London area and the Battersea office. The mockup says both: home in Barnes, office in Battersea.
-- He is moving back to the Boston / New Hampshire area in 2027. The mockup states that and stops. The reason is a dashed box.
+- He lives in Barnes, London. LinkedIn says the London area and the Battersea office. The site says both: home in Barnes, office in Battersea.
 
 Contact already public on the sites: `jake@onerutter.com`, [LinkedIn](https://www.linkedin.com/in/jakerutter/), [Medium](https://jakerutter.medium.com/), [Substack](https://jakerutter.substack.com/), [X](https://twitter.com/jakerutter). The phone number on the 2024 PDF is not used.
 
@@ -234,45 +245,27 @@ Included on purpose, because they are public:
 - VF Corporation, Denver, September 2022–October 2024. Director, Global Front-End Engineering. Team of 22. The North Face, Vans, Timberland, Eastpak, JanSport, Kipling, Napapijri, Smartwool, Altra, Icebreaker, Dickies. Commerce Cloud and Vue/Nuxt, eight languages, 24 locales. Contentsquare, December 2023. ELC peer group, 2024–2025.
 - SharkNinja from January 2025, Senior Director, Global DTC Engineering, Battersea, after a year remote from the US. True Edge, July 2025. LinkedIn lists VP, DTC Engineering & Applied AI from September 2026.
 
-Left out of the mockup on purpose, available if he wants them in: team size and budget figures, the count of Salesforce sites, the Akamai to Cloudflare migration, checkout and retention percentages, the small freelance client domains, and the newsroom’s “30 days” migration line. LinkedIn says six weeks for the Cloudflare move, and the newsroom’s 30 days reads like a different episode. The mockup names neither duration until he picks.
+Left off on purpose, and Jake confirmed the light touch: team size and budget figures, the count of Salesforce sites, the Akamai to Cloudflare cutover, checkout and retention percentages, the small freelance client domains, and the newsroom’s “30 days” line. LinkedIn says six weeks for the Cloudflare cutover, and the newsroom’s 30 days reads like a different episode. The site names neither duration.
 
 The design-site résumé (titles like “Enterprise Retail Company,” and dates that do not match LinkedIn) is not a source for the timeline.
 
-### Proposed
+### Approved
 
-- Home headline: “Hi, I'm Jake. I lead DTC engineering at SharkNinja, and I build small apps on the side.” It is a condensation of the lab page (“stay hands-on”) and the VP title. It is not a sentence he has published. The current sites open with “Digital Technology Leader & Strategic Innovator,” which is a poor fit at 76px. The mockup labels the line as proposed.
-- Nav words: Story, Lab, Notes. Lab and the page title “The Lab” are his. “Notes” is the proposed name for the new blog, closer to a personal site than “Writing.” The URL plan is `/notes`.
-- Which three builds are featured: Three Today, Mind the Timetable, TradeTrek. Three Today and Mind the Timetable are the clearest public products. TradeTrek is one of the two he names in the about page as AI work, and it has a URL. StrategicPulse is the other, and it has no URL yet.
+- Home headline: “Hi, I'm Jake. I lead DTC engineering at SharkNinja, and I build small apps on the side.”
+- Nav: Story, Lab, Notes. URLs `/story`, `/lab`, `/notes`.
+- Featured builds: Tails over Thames, Three Today, Mind the Timetable.
 - “Selected years” as the home timeline label.
-- Monograms on the three home cards (a 3, a few rules, a spark line). They are not the real app icons. If he has icons, they replace these.
+- Monograms on the three home cards (a plane, a 3, a few rules). They are not the real app icons. Real icons can replace them later.
 
-### Empty, Jake writes
+### Still placeholder
 
-- Why the 2027 move, and how personal that paragraph should be.
-- Local Sound. The lab page does not use that name. It says “A creative music app” and gives no link. The name is from this project brief.
-- Both sample notes. They are drafts and they say so. They exist so the index and the article page can be reviewed. They should be deleted or replaced before launch.
-- Any home headline he would rather have instead of the proposal.
+- Local Sound. The public lab page does not use that name. It says “A creative music app” and gives no link. The name is from the project brief. The Lab shows a dashed box until Jake writes the line and, when it exists, a URL.
+- Both sample notes in `content/notes`. They are `draft: true` and say so on the page. Replace or delete them before treating the notes section as his writing.
+- The year-by-year sentences. Facts are public. The wording is drafted and marked “Needs an edit.”
 
-## Open questions
+## How to view it
 
-Answer these and the build can start without another round of invention.
-
-1. **Public title.** Use “VP, DTC Engineering & Applied AI” as the current line? LinkedIn still also shows Senior Director as current, which looks like an unclosed role. Confirm the string that should appear in the first screen.
-2. **Voice of the hello.** Keep the proposed headline, stay with “Digital Technology Leader & Strategic Innovator,” or send a sentence in your own words.
-3. **How much operating detail** belongs on a personal page: team size, the portfolio figure, site counts, conversion numbers. The mockup leaves them out.
-4. **2027.** Confirm “Boston and New Hampshire area” is the public wording, and write the paragraph. Say if the move should be a single line with no reason.
-5. **Barnes and Battersea.** Home in Barnes, office in Battersea. Is that the line?
-6. **Featured three.** Three Today, Mind the Timetable, and TradeTrek. Swap StrategicPulse in, or choose a different three.
-7. **Lab list.** Include Delmarva Community Guide and First Plate Delaware, which are on the current lab page and were not in the original short list? Any URL yet for StrategicPulse, First Plate, or Local Sound? Is “Local Sound” the name, and what is the one-sentence description?
-8. **Notes.** Call the section Notes (`/notes`) or Blog (`/blog`)? Keep drafts off production and visible only on preview deploys, as this plan recommends? All-sans, or serif for the article body?
-9. **Speedwell.** The writing page says “follow me on Medium and Speedwell,” and the sites link a Substack. Is Speedwell that Substack?
-10. **Photo, dark mode, résumé.** The mockup is type-only and light-only. Use the portrait from the current site? Add a dark toggle? Link a résumé only after a new PDF exists?
-11. **What stays off the site.** The phone number on the PDF, GPA, client metrics, anything about family. GitHub: public profiles disagree (`jakerutter` and `jrutter`). Which one, or neither?
-12. **Domain.** When this is real, does it replace onerutter.com, and does onerutter-design.vercel.app redirect here? Any analytics to keep, or none?
-
-## How to view the mockups
-
-Static HTML and CSS in `mockups/`. Shared styles are `mockups/styles.css`. This is not the Next.js app.
+The site is the Next.js app. `npm run dev` serves it locally. Static HTML in `mockups/` is the approved design reference.
 
 - `mockups/index.html` — home
 - `mockups/story.html` — story
