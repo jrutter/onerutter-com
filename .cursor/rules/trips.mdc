@@ -1,0 +1,22 @@
+---
+description: Trip albums, photo privacy, and the prepare-trip-photos script
+globs: content/trips/**,scripts/prepare-trip-photos.mjs
+alwaysApply: false
+---
+
+A trip is `content/trips/<slug>/index.mdx`. The folder name is the URL. Folders starting with `_` are ignored. Required frontmatter is `title` and `draft`. Dates, `summary`, `place`, `country`, and `photos` are optional. Do not invent dates, captions, or place names. Use Jake's title wording.
+
+`place` is shown only when it is set and it differs from `title`. The public date line is the start month and year (`formatTripWhen` in `lib/trips.ts`). Days stay in the file for sorting and are not displayed. `YYYY-MM` is valid for an unknown day. Quote dates. If both dates are missing, set `year` and `order`.
+
+Photographs: pick the top 3. The maximum is 10. Phone originals stay out of the repo.
+
+```bash
+node scripts/prepare-trip-photos.mjs <slug> <folder-of-photos>
+node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
+```
+
+The script resizes the longest side to at most 2400px, burns `onerutter.com` into the bottom-right (white at 60% opacity) unless `--no-watermark` is set, and strips EXIF, XMP, and IPTC, including GPS. The build (`lib/gps.ts`) rejects a trip image that still has GPS EXIF or GPS in XMP.
+
+`alt` must be a real description. A value starting with `TODO` fails the build. Captions are optional, one line, at most 160 characters. Do not put coordinates or an exact photo location in alt, caption, or body. Leave `draft: true` unless Jake asked to publish. A draft is listed on `/travel` in dev and on preview. Its album URL 404s until `draft` is false, because `generateStaticParams` only returns published trips and `dynamicParams` is false. `sample-album`, `sample-strip`, and `sample-markers` are generated color fields and stay drafts.
+
+How-to: `docs/adding-a-trip.md`.
