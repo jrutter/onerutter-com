@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Timeline } from "@/components/timeline";
 import { storyYears } from "@/lib/story";
 
@@ -59,6 +60,27 @@ export default function StoryPage() {
             AI at the core, not as an afterthought.
           </p>
         </div>
+
+        <section className="block" aria-labelledby="draws-heading">
+          <p className="kicker">Small apps</p>
+          <h2 id="draws-heading">What draws me in</h2>
+          <div className="essay stack-28">
+            <p>
+              I&apos;ve always been fascinated with hyper local apps like JamBase and Bandsintown. I love music and
+              discovering new things, places and travel.
+            </p>
+            <p>Travel is a huge part of who I am — the offline analog alongside digital nomad.</p>
+            <p>
+              That is why I build things like Tails over Thames, a plane-spotting app for one spot in London; Mind the
+              Timetable, for trains; Three Today; and Local Sound, a music app.
+            </p>
+            <p className="more">
+              <Link className="text-link" href="/travel">
+                See my travels →
+              </Link>
+            </p>
+          </div>
+        </section>
 
         <section className="block" aria-labelledby="path-heading">
           <p className="kicker">Career</p>
