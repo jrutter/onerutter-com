@@ -432,7 +432,6 @@ h2,
   margin-top: 96px;
 }
 
-.stack-20 { margin-top: 20px; }
 .stack-28 { margin-top: 28px; }
 .stack-36 { margin-top: 36px; }
 
@@ -570,36 +569,6 @@ h2,
   color: var(--ink-soft);
 }
 
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-top: 28px;
-}
-
-.step-num {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  color: var(--clay);
-}
-
-.steps h3 {
-  margin: 0 0 8px;
-  font-size: 22px;
-  letter-spacing: -0.02em;
-  font-weight: 600;
-}
-
-.steps p {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 16px;
-  line-height: 1.5;
-}
-
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -615,33 +584,6 @@ h2,
   padding: 8px 12px;
   font-size: 14px;
   color: var(--ink-soft);
-}
-
-.pull {
-  margin: 8px 0 0;
-  max-width: 16ch;
-  font-family: var(--serif);
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--thames);
-}
-
-.plain-list {
-  margin: 16px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.plain-list li + li {
-  margin-top: 8px;
-}
-
-.plain-list li {
-  color: var(--ink-soft);
-  font-size: 17px;
-  line-height: 1.45;
 }
 
 .project {
@@ -960,7 +902,6 @@ h2,
 
 @media (max-width: 900px) {
   .builds,
-  .steps,
   .swatches {
     grid-template-columns: 1fr 1fr;
   }
@@ -994,7 +935,6 @@ h2,
   }
 
   .builds,
-  .steps,
   .swatches,
   .timeline li,
   .project {
