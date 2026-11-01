@@ -183,7 +183,7 @@ Required: `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `
 
 `featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is Agentic Checkout Index (`homeOrder` 1), Tails over Thames (2), and Mind the Timetable (3). Three Today and Bangers & Postcodes stay on `/lab` with `featured: false`. Home card materials and monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary (no separate card lines) on the ink card. Do not add a project Jake has not named.
 
-Lab cards (`components/lab-card.tsx`) use a stable tone per slug. A new slug falls back to navy, cyan, yellow, peach, pink, repeating with its index. Status text comes from `statusLabel`: Live, Building, or “No link yet”. A card with a `url` is a link. A card without one is an article.
+Lab cards (`components/lab-card.tsx`) take a tone from `labTones`: navy, yellow, pink, cyan, peach, in list order. The same tone is never side by side or stacked in one column on the 4-, 3-, 2-, or 1-column grids. A new project needs no color entry. Status text comes from `statusLabel`: Live, Building, or “No link yet”. A card with a `url` is a link. A card without one is an article.
 
 Palette, in `app/globals.css`:
 

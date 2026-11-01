@@ -2,7 +2,7 @@
 
 Lab entries are Markdown files in `content/projects/`. Add one only when Jake has named the project. The loader is `lib/projects.ts`. The Lab page lists every file except names that start with `_`, sorted by `order`.
 
-Copy an existing file to `content/projects/<slug>.md`. The filename is the slug used for the card color.
+Copy an existing file to `content/projects/<slug>.md`. The filename is the slug.
 
 ```yaml
 ---
@@ -26,7 +26,7 @@ Status labels on the card are Live, Building, and “No link yet” (`placeholde
 
 The home row is a separate treatment. It is Agentic Checkout Index (1), Tails over Thames (2), and Mind the Timetable (3). Three Today and Bangers & Postcodes stay on `/lab`. Their paper, ink, and clay materials and the monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary. Putting `featured: true` on another project adds a home card, and an unmapped slug falls back to the paper card with a “3” monogram. Do that only when Jake asks, and give the new slug its own entry in `presentation`.
 
-Lab card colors are assigned in `toneBySlug` inside `components/lab-card.tsx`. Add the new slug there. If you skip it, the card rotates through navy, cyan, yellow, peach, and pink based on its index.
+Lab card colors come from `labTones` in `components/lab-card.tsx`, in list order: navy, yellow, pink, cyan, peach. The same color is never side by side or stacked in one column on a 1-, 2-, 3-, or 4-column grid. Do not assign a color per slug. A project inserted earlier in the list can change the colors of the cards after it.
 
 | Tone | Background | Text |
 | --- | --- | --- |

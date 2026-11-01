@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LabCard, labTone } from "@/components/lab-card";
+import { LabCard, labTones } from "@/components/lab-card";
 import { getProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 export default function LabPage() {
   const projects = getProjects();
+  const tones = labTones(projects.length);
 
   return (
     <main id="content">
@@ -36,7 +37,7 @@ export default function LabPage() {
         <ul className="lab-grid">
           {projects.map((project, index) => (
             <li key={project.slug}>
-              <LabCard project={project} tone={labTone(project.slug, index)} />
+              <LabCard project={project} tone={tones[index]} />
             </li>
           ))}
         </ul>
