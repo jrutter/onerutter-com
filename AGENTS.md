@@ -74,7 +74,7 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 
 | URL | Source | What it shows |
 | --- | --- | --- |
-| `/` | `app/page.tsx` | Hello, three featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
+| `/` | `app/page.tsx` | Hello, four featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
 | `/story` | `app/story/page.tsx` | Published about paragraphs, “What draws me in”, full timeline, working style, interests, school. |
 | `/lab` | `app/lab/page.tsx` | Every project in `content/projects/`, as color cards. |
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
@@ -183,7 +183,7 @@ Projects are `content/projects/*.md`, loaded by `lib/projects.ts`. How-to: [docs
 
 Required: `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags` (array of strings), `featured` (boolean), `order` (number). Optional: `url` (absolute; omit when there is nothing to link), `homeOrder`, `kicker`, `cardTitle`, `cardSummary`. A featured project must have a `url`. The build fails otherwise.
 
-`featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is the three Jake chose: Tails over Thames (`homeOrder` 1), Three Today (2), Mind the Timetable (3). Home card materials and monograms are hardcoded in `components/build-card.tsx` for those three slugs. Do not add a project Jake has not named.
+`featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is Tails over Thames (`homeOrder` 1), Three Today (2), Mind the Timetable (3), and Bangers & Postcodes (4). Home card materials and monograms are hardcoded in `components/build-card.tsx` for those slugs. Do not add a project Jake has not named.
 
 Lab cards (`components/lab-card.tsx`) use a stable tone per slug. A new slug falls back to navy, cyan, yellow, peach, pink, repeating with its index. Status text comes from `statusLabel`: Live, Building, or “No link yet”. A card with a `url` is a link. A card without one is an article.
 

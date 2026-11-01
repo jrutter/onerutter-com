@@ -18,6 +18,7 @@ const toneBySlug: Record<string, LabTone> = {
   "three-today": "peach",
   "mood-machine": "pink",
   "local-sound": "navy",
+  "bangers-and-postcodes": "cyan",
 };
 
 export function labTone(slug: string, index: number): LabTone {

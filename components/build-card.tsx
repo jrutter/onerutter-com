@@ -8,6 +8,7 @@ const presentation: Record<string, { variant: Variant; mark: Mark }> = {
   "tails-over-thames": { variant: "clay", mark: "plane" },
   "three-today": { variant: "paper", mark: "three" },
   "mind-the-timetable": { variant: "ink", mark: "lines" },
+  "bangers-and-postcodes": { variant: "paper", mark: "lines" },
 };
 
 function MarkIcon({ mark }: { mark: Mark }) {
