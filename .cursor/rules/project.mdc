@@ -14,7 +14,7 @@ Content rules:
 
 - Do not mention a planned move. A future return to the US stays off the site.
 - Do not invent trip details, captions, place names, or biographical facts.
-- Do not expose exact photo locations. No coordinates and no GPS in committed images.
+- Do not expose exact photo locations. GPS stays out of committed images. `places` coordinates are country or city centroids at two decimal places, never a street or a photo spot.
 - Keep Jake's wording for the story copy in `app/story/page.tsx`. The timeline in `lib/story.ts` is marked “Needs an edit”; do not silently rewrite it.
 - `draft: true` stays out of production HTML, the RSS feed, and the sitemap. Publishing is `draft: false`.
 - Do not add a project, note, or trip Jake has not asked for. The sample notes and `content/trips/sample-*` albums are placeholders.

@@ -28,7 +28,7 @@ npm start
 
 `npm run lint` is ESLint. `npm run typecheck` is `tsc --noEmit`.
 
-Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. A draft trip is listed on `/travel` in those same places. Its album URL is a 404 until `draft` is false. Drafts are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
+Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. A draft trip is listed on `/travel` in those same places and is left off the world map. Its album URL is a 404 until `draft` is false. Drafts are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
 
 The contact form on `/hello` sends through Resend. Variable names are in `.env.example`. Put the values in `.env.local`, which is gitignored. The page still renders without them.
 
@@ -49,6 +49,6 @@ The contact form on `/hello` sends through Resend. Variable names are in `.env.e
 
 ## Where content lives
 
-Notes are `content/notes/*.mdx`. Trips are `content/trips/<slug>/index.mdx`. Lab projects are `content/projects/*.md`. The home row is the three Jake chose: Tails over Thames, Three Today, and Mind the Timetable.
+Notes are `content/notes/*.mdx`. Trips are `content/trips/<slug>/index.mdx`. A published trip includes `places`: country or city centroids at two decimal places, never an exact spot. `/travel` opens with a world map drawn from those places, then the timeline. Lab projects are `content/projects/*.md`. The home row is the three Jake chose: Tails over Thames, Three Today, and Mind the Timetable.
 
 Vercel auto-deploys `main` to production. Each pull request gets a preview deployment.

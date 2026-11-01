@@ -31,6 +31,7 @@ Versions are the ones installed from `package-lock.json`.
 | ESLint | 9.39.5 | `eslint-config-next` 16.4.3 (`eslint.config.mjs`). |
 | MDX | `gray-matter` 4.0.3, `next-mdx-remote` 6.0.0 | Notes and trips are read at build time with `gray-matter`, rendered with `next-mdx-remote/rsc`. |
 | sharp | 0.35.5 | Trip photo resize, watermark, and the GPS check. |
+| Map | `d3-geo` 3.1.1, `topojson-client` 3.1.0, `world-atlas` 2.0.2 | Static world map on `/travel`. |
 
 `PLAN.md` specifies Node 22 (current Vercel default). This repo has no `engines` field. There is no test script.
 
@@ -39,7 +40,7 @@ Versions are the ones installed from `package-lock.json`.
 ```bash
 npm install
 npm run dev       # next dev. Prints its own URL.
-npm run build     # next build. Fails on bad frontmatter or a trip photo that still has GPS.
+npm run build     # next build. Fails on bad frontmatter, a published trip with no places, a centroid finer than two decimals, or a trip photo that still has GPS.
 npm start         # next start, after a build.
 npm run lint      # eslint
 npm run typecheck # tsc --noEmit
@@ -59,11 +60,11 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 | Path | What it is |
 | --- | --- |
 | `app/` | Routes, `layout.tsx`, `globals.css`. |
-| `components/` | Header, footer, cards, note list, timeline, trip gallery, contact form. |
+| `components/` | Header, footer, cards, note list, timeline, trip gallery, travel map, contact form. |
 | `content/notes/` | One `.mdx` file per note. `_template.mdx` is ignored. |
 | `content/projects/` | One `.md` file per Lab project. |
 | `content/trips/<slug>/` | `index.mdx` per trip. Folders starting with `_` are ignored. |
-| `lib/` | Loaders and site copy helpers. |
+| `lib/` | Loaders, the world map (`world-map.ts`, `map-countries.ts`, `map-types.ts`), and site copy helpers. |
 | `public/travel/<slug>/` | Prepared JPEGs. Phone originals do not belong here. |
 | `scripts/` | `prepare-trip-photos.mjs`, `generate-sample-album.mjs`. |
 | `mockups/` | Approved static HTML reference. Not served by Next. |
@@ -79,7 +80,7 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
 | `/notes/[slug]` | `app/notes/[slug]/page.tsx` | One note. Slug is the filename. |
 | `/notes/tag/[tag]` | `app/notes/tag/[tag]/page.tsx` | Notes with that tag. A tag with no visible notes is a 404. |
-| `/travel` | `app/travel/page.tsx` | Vertical timeline, newest year first. |
+| `/travel` | `app/travel/page.tsx` | World map of published places, then a vertical timeline, newest year first. |
 | `/travel/[slug]` | `app/travel/[slug]/page.tsx` | Album, only when the trip has a summary, a body, or at least one photo. Other slugs 404. `dynamicParams` is `false`. |
 | `/hello` | `app/hello/page.tsx` | Contact form. Header label is “Say hello”. |
 | `/feed.xml` | `app/feed.xml/route.ts` | RSS 2.0 of published notes. |
@@ -91,7 +92,7 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 
 - Do not mention a planned move. `PLAN.md` records that a future return to the US stays off the site. Do not add that chapter.
 - Do not invent trip details, captions, place names, or biographical facts. If a sentence needs a personal claim that is not already on the site, leave a placeholder or ask.
-- Do not put exact photo locations in alt text, captions, body copy, or metadata. No coordinates, no GPS. The build rejects a trip image that still has GPS.
+- Do not put exact photo locations in alt text, captions, body copy, or image metadata. The build rejects a trip image that still has GPS. The only coordinates in the repo are `places` centroids: a country, capital, or region centre, at most two decimal places. Never a street address or the spot a photograph was taken.
 - Keep Jake's wording for the story. The about paragraphs and the “What draws me in” section in `app/story/page.tsx` are his. The year-by-year sentences in `lib/story.ts` are drafted and marked “Needs an edit” on the page. Do not silently rewrite either.
 - Drafts stay out of production. `draft: true` is omitted from production HTML, `/feed.xml` (notes), and `/sitemap.xml`. Publishing is an explicit `draft: false`.
 - The two files in `content/notes/` are placeholder drafts. They are not Jake's writing. `content/trips/sample-album/`, `sample-strip/`, and `sample-markers/` are generated color fields, not trips he took. Leave them `draft: true`.
@@ -135,8 +136,9 @@ Checked in `lib/trips.ts`:
 | `year` | Required only when both dates are absent. Otherwise derived from the dates. A trip that crosses New Year uses `year` when set, and that year must be the start year or the end year. |
 | `order` | Required only when both dates are absent. Integer ≥ 1. Lower comes first within that year. |
 | `summary` | Optional. Leave it out when there is nothing to write. |
-| `place` | Optional. The timeline and the album show it only when it is set and it is not the same as `title`. |
-| `country` | Optional. Kicker on the album page. |
+| `place` | Optional string. The timeline and the album show it only when it is set and it is not the same as `title`. This is not the map. |
+| `country` | Optional string. Kicker on the album page. This is not the map. |
+| `places` | Required when `draft` is false. A draft may omit it. Each entry is `name`, `country`, `lat`, `lng`. `name` is the marker. `country` is the country to tint; a city still names its country (Paris uses France). `lat` and `lng` are a country centroid, a capital, or a region centre, at most two decimal places (`lat` from -90 to 90, `lng` from -180 to 180). Never a street address or an exact photo spot. At least one entry when the field is present. Names in one trip are unique, case-insensitive. |
 | `photos` | Optional. Omit the list when there are no photographs. At most 10. Three is the usual set. |
 | `cover` | Required when `photos` is set, and it must be one of those `src` values. Forbidden when there are no photos. |
 
@@ -144,7 +146,11 @@ Each photo needs `src` and `alt`. `alt` must be a real description; a value that
 
 The public date line is the month and year of `startDate`, from `formatTripWhen`. Days stay in the file and are what the sort uses. They are not shown. A trip that runs into the next month still shows the start month, so 22 June–5 July 2023 reads June 2023. `startDate: "2026-10"` reads October 2026. If only `endDate` is set, that month is used. With no dates, the line is the year.
 
-`/travel` groups by year, newest year first. Within a year, dated trips are newest first. A missing start date sorts by the end date. Undated trips follow, by `order`. The line “N trips since YEAR” counts published trips only.
+`/travel` opens with a static world map (`components/travel-map.tsx`). `buildTravelMap` in `lib/world-map.ts` draws Natural Earth 110m countries (`world-atlas`) with a `d3-geo` Natural Earth projection. Visited countries are tinted. Each `places` entry is a dot. The same `name` on another trip must reuse the same `lat`, `lng`, and `country`, and the marker counts the visits. Dots closer than 6px share one tooltip; each still has its own dot. Tooltip links scroll to that trip’s `id` on the timeline. Drafts are left off the map.
+
+A `country` string has to be a key of `lib/map-countries.ts`. Add its Natural Earth numeric id there when a trip names a country the map does not know yet. `null` means the territory is smaller than the 110m shapes (Saint Martin): it gets a marker and no country fill. A centroid has to fall inside that country’s shape, or the build throws.
+
+Under the map, the line is “N trips · M countries since YEAR”, counted from published trips. M is the number of distinct `places[].country` values. The timeline under that is newest year first. Within a year, dated trips are newest first. A missing start date sorts by the end date. Undated trips follow, by `order`.
 
 With no photographs, the timeline still shows the name and the date, plus “Photos coming soon”. With no photographs, no summary, and no body, the name is plain text and there is no album page. Add a summary, a paragraph, or one photograph and `/travel/<slug>` exists. The sitemap lists that page only then.
 

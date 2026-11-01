@@ -2,11 +2,19 @@
 
 A trip with no photographs is one new file. Copy `content/trips/_template/index.mdx` to `content/trips/<slug>/index.mdx`. The folder name is the URL: `2025-france` is `/travel/2025-france`. Use lowercase kebab-case. Folders whose names start with `_` are ignored. No other list or component has to change.
 
-`title` and `draft` are required. Dates, the intro, `place`, `country`, and photographs are optional. The build fails if `draft` is missing, a date is not `YYYY-MM-DD` or `YYYY-MM`, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
+`title` and `draft` are required. A published trip (`draft: false`) also needs `places`. Dates, the intro, `place`, `country`, and photographs are optional. The build fails if `draft` is missing, a published trip has no `places`, a date is not `YYYY-MM-DD` or `YYYY-MM`, a coordinate has more than two decimal places, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
 
-Do not invent dates, captions, or place names. Use the title Jake gave (`France`, `Amsterdam / Iceland`). Leave `summary` out when there is no intro to write. `place` is optional and the timeline shows it only when it adds something the title does not.
+Do not invent dates, captions, or place names. Use the title Jake gave (`France`, `Amsterdam / Iceland`). Leave `summary` out when there is no intro to write. `place` is an optional string, separate from `places`, and the timeline shows it only when it adds something the title does not.
 
-A dated trip:
+## Places and the world map
+
+`places` is how the map at the top of `/travel` is drawn. One entry per place. `name` is the marker. `country` is the country to tint; a city still names its country, the way Paris uses France. `lat` and `lng` are a country centroid, a capital, or a region centre, written to at most two decimal places. Never a street address, and never the exact spot a photograph was taken.
+
+A trip such as Amsterdam / Iceland lists one entry per place. The same place on a later trip uses the same name, country, and coordinates, and the marker counts the visits. If that `country` is not in `lib/map-countries.ts` yet, add its Natural Earth id there. A territory smaller than the 110m map (the id is `null`, as with Saint Martin) still gets a marker and no country fill. The centroid has to fall inside that country, or the build throws.
+
+Drafts may omit `places`. They are left off the map and out of the trip and country counts.
+
+A dated trip, using the centroid already on the France trip:
 
 ```yaml
 ---
@@ -14,6 +22,11 @@ title: France
 startDate: "2025-06-05"   # YYYY-MM-DD, quoted
 endDate: "2025-06-21"
 draft: false
+places:
+  - name: France
+    country: France
+    lat: 46.23
+    lng: 2.21
 ---
 ```
 
@@ -28,10 +41,15 @@ year: 2026
 order: 1
 # TODO: dates unknown.
 draft: false
+places:
+  - name: Paris
+    country: France
+    lat: 48.86
+    lng: 2.35
 ---
 ```
 
-`/travel` is a vertical timeline, newest year first. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`. The count under the introduction (“N trips since YEAR”) includes published trips only.
+`/travel` opens with the world map, then a line “N trips · M countries since YEAR”, counted from published trips. M is the number of distinct `places[].country` values. Drafts are left out of that count and off the map. The timeline under that is newest year first. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`. A marker’s links scroll to that trip in the timeline.
 
 With no photographs, the entry still shows the name and the dates, plus “Photos coming soon”. With no photographs, no summary, and no body, the name is text and there is no album page. Add a summary, a paragraph, or at least one photograph and `/travel/<slug>` appears. The sitemap lists that page only then.
 
@@ -66,8 +84,13 @@ Use one flag or the other. `--no-watermark` skips the mark. An existing `index.m
 title: France
 startDate: "2025-06-05"
 endDate: "2025-06-21"
-cover: /travel/2025-france/01.jpg
 draft: false
+places:
+  - name: France
+    country: France
+    lat: 46.23
+    lng: 2.21
+cover: /travel/2025-france/01.jpg
 photos:
   - src: /travel/2025-france/01.jpg
     alt: What is in the photograph, for someone who cannot see it.

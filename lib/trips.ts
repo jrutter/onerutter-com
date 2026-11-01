@@ -24,6 +24,15 @@ export type Trip = {
   body: string;
   /** Sequence within a year when both dates are unknown. Lower comes first. */
   order?: number;
+  /** Country or city centroids. Required once the trip is published. */
+  places: TripPlace[];
+};
+
+export type TripPlace = {
+  name: string;
+  country: string;
+  lat: number;
+  lng: number;
 };
 
 function requiredString(value: unknown, file: string, field: string) {
@@ -65,6 +74,44 @@ function optionalYear(value: unknown, file: string) {
   const year = typeof value === "number" && Number.isInteger(value) ? String(value) : value;
   if (typeof year === "string" && /^\d{4}$/.test(year)) return year;
   throw new Error(`${file}: year must be YYYY`);
+}
+
+function centroidNumber(value: unknown, file: string, field: string, min: number, max: number) {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < min || value > max) {
+    throw new Error(`${file}: ${field} must be a number from ${min} to ${max}`);
+  }
+  const rounded = Math.round(value * 100) / 100;
+  if (Math.abs(value - rounded) > 1e-8) {
+    throw new Error(`${file}: ${field} must be a country or city centroid, at most two decimal places`);
+  }
+  return rounded;
+}
+
+function readPlaces(value: unknown, file: string, draft: boolean): TripPlace[] {
+  if (value == null) {
+    if (draft) return [];
+    throw new Error(`${file}: places is required`);
+  }
+  if (!Array.isArray(value) || value.length < 1) {
+    throw new Error(`${file}: places must list at least one place`);
+  }
+  const seen = new Set<string>();
+  return value.map((item, index) => {
+    const label = `place ${index + 1}`;
+    if (!item || typeof item !== "object") throw new Error(`${file}: ${label} must be a mapping`);
+    const record = item as Record<string, unknown>;
+    const name = requiredString(record.name, file, `${label} name`);
+    const country = requiredString(record.country, file, `${label} country`);
+    const key = name.toLowerCase();
+    if (seen.has(key)) throw new Error(`${file}: ${name} is listed twice`);
+    seen.add(key);
+    return {
+      name,
+      country,
+      lat: centroidNumber(record.lat, file, `${label} lat`, -90, 90),
+      lng: centroidNumber(record.lng, file, `${label} lng`, -180, 180),
+    };
+  });
 }
 
 function optionalOrder(value: unknown, file: string) {
@@ -146,6 +193,7 @@ async function readTrip(slug: string): Promise<Trip> {
   if (typeof data.draft !== "boolean") throw new Error(`${file}: draft must be true or false`);
 
   const year = resolveYear(file, optionalYear(data.year, file), startDate, endDate);
+  const places = readPlaces(data.places, file, data.draft === true);
   const order = optionalOrder(data.order, file);
   if (!startDate && !endDate && order == null) {
     throw new Error(`${file}: set order when dates are unknown, so the trip has a place in ${year}`);
@@ -199,6 +247,7 @@ async function readTrip(slug: string): Promise<Trip> {
     photos: loaded.map((item) => item.photo),
     body: content.trim(),
     order,
+    places,
   };
 }
 
@@ -280,7 +329,8 @@ export function publishedTripStats(trips: Trip[]) {
   const published = trips.filter((trip) => !trip.draft);
   if (published.length === 0) return null;
   const since = published.reduce((min, trip) => (trip.year < min ? trip.year : min), published[0].year);
-  return { count: published.length, since };
+  const countries = new Set(published.flatMap((trip) => trip.places.map((place) => place.country)));
+  return { count: published.length, since, countries: countries.size };
 }
 
 export function groupTripsByYear(trips: Trip[]) {
