@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { NoteList } from "@/components/note-list";
+import { NoteCards } from "@/components/note-cards";
 import { getPublishedTags, getVisibleNotes, notesForTag } from "@/lib/notes";
 
 export function generateStaticParams() {
@@ -43,7 +43,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
           </p>
         </header>
         <div className="stack-36">
-          <NoteList notes={notes} />
+          <NoteCards notes={notes} label={`Notes tagged ${tag}`} />
         </div>
       </div>
     </main>
