@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import type { TripPhoto } from "@/lib/trip-types";
 
@@ -32,12 +32,19 @@ function sizesFor(kind: Frame["kind"]) {
   return "(max-width: 760px) calc(100vw - 40px), 780px";
 }
 
-export function TripGallery({ photos }: { photos: TripPhoto[] }) {
-  const [active, setActive] = useState<number | null>(null);
+export function TripGallery({ photos, startAt = null }: { photos: TripPhoto[]; startAt?: number | null }) {
+  const [active, setActive] = useState<number | null>(startAt);
   const triggers = useRef<Array<HTMLButtonElement | null>>([]);
   const restoreFocus = useRef<HTMLElement | null>(null);
   const skipFocusRestore = useRef(true);
   const frames = framesFor(photos.length);
+
+  useEffect(() => {
+    if (startAt == null) return;
+    const node = triggers.current[startAt];
+    restoreFocus.current = node;
+    node?.scrollIntoView({ block: "center" });
+  }, [startAt]);
 
   useEffect(() => {
     if (skipFocusRestore.current) {
@@ -54,7 +61,7 @@ export function TripGallery({ photos }: { photos: TripPhoto[] }) {
 
   return (
     <>
-      <div className="trip-essay">
+      <div className={photos.length === 3 ? "trip-essay trip-essay-three" : "trip-essay"}>
         {frames.map((frame) => {
           if (frame.kind === "pair") {
             return (
@@ -119,7 +126,7 @@ function PhotoFrame({
   onOpen: (index: number) => void;
 }) {
   return (
-    <figure className={`trip-figure trip-figure-${kind}`}>
+    <figure id={`photo-${index + 1}`} className={`trip-figure trip-figure-${kind}`}>
       <button ref={buttonRef} type="button" className="trip-shot" onClick={() => onOpen(index)}>
         <span className="vh">Enlarge</span>
         <Image
@@ -157,6 +164,11 @@ function Lightbox({
   const swipe = useRef<{ x: number; y: number; id: number } | null>(null);
   const swiped = useRef(false);
   const opened = useRef(false);
+  const isClient = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   function show(next: number) {
     if (next < 0 || next >= photos.length) return;
@@ -179,9 +191,10 @@ function Lightbox({
   }, []);
 
   useEffect(() => {
+    if (!isClient) return;
     if (!opened.current) closeRef.current?.focus();
     opened.current = true;
-  }, [index]);
+  }, [index, isClient]);
 
   useEffect(() => {
     const activeEl = document.activeElement;
@@ -224,6 +237,8 @@ function Lightbox({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [index, onClose, onIndex, photos.length]);
+
+  if (!isClient) return null;
 
   return createPortal(
     <div

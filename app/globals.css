@@ -936,72 +936,138 @@ h2,
   border: 0;
 }
 
-.trip-index {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
+.travel-timeline {
+  position: relative;
+  margin: 56px 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.trip-grid {
+.travel-timeline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 148px;
+  width: 2px;
+  background: rgba(30, 74, 66, 0.4);
+}
+
+.travel-year {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 42px 28px;
+  grid-template-columns: 148px minmax(0, 1fr);
+  align-items: start;
 }
 
-.trip-grid h2 {
-  font-size: clamp(26px, 3vw, 34px);
+.travel-year + .travel-year {
+  margin-top: 8px;
 }
 
-.trip-card {
-  display: block;
+.travel-year-label {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 4px 28px 0 0;
+  text-align: right;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--thames-deep);
+}
+
+.travel-year-label::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--thames);
+  box-shadow: 0 0 0 4px var(--paper);
+}
+
+.travel-entries {
+  margin: 0;
+  padding: 0 0 12px;
+  list-style: none;
+}
+
+.travel-entry {
+  position: relative;
+  padding: 0 0 48px 32px;
+}
+
+.travel-entry::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--clay);
+  box-shadow: 0 0 0 4px var(--paper);
+}
+
+.travel-entry h3 {
+  margin: 0;
+  font-size: clamp(26px, 3vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+.travel-entry h3 a {
   color: inherit;
   text-decoration: none;
 }
 
-.trip-feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.72fr);
-  gap: 28px 36px;
-  align-items: end;
-}
-
-.trip-cover {
-  position: relative;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  border-radius: 14px;
-  background: var(--paper-deep);
-}
-
-.trip-feature .trip-cover {
-  aspect-ratio: 16 / 10;
-}
-
-.trip-copy h2 {
-  margin-top: 14px;
-}
-
-.trip-feature .trip-copy h2 {
-  margin-top: 8px;
-}
-
-.trip-card:hover h2 {
+.travel-entry h3 a:hover {
   color: var(--clay-deep);
 }
 
-.trip-place {
+.travel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
   margin: 8px 0 0;
-  color: var(--ink-soft);
-}
-
-.trip-dates {
-  margin: 4px 0 0;
   color: var(--muted);
   font-size: 15px;
 }
 
-.trip-copy .pill {
-  margin-top: 14px;
+.travel-meta .place {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.travel-summary {
+  margin: 10px 0 0;
+  max-width: 46em;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.travel-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.travel-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--paper-deep);
 }
 
 .trip-dateline {
@@ -1062,6 +1128,15 @@ h2,
 
 .trip-pair .trip-figure:nth-child(2) {
   margin-top: 64px;
+}
+
+.trip-essay-three .trip-pair {
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+}
+
+.trip-essay-three .trip-pair .trip-figure:nth-child(2) {
+  margin-top: 28px;
 }
 
 .trip-shot {
@@ -1210,8 +1285,38 @@ h2,
     justify-content: flex-start;
   }
 
-  .trip-feature,
-  .trip-grid,
+  .travel-timeline::before {
+    left: 5px;
+  }
+
+  .travel-year {
+    display: block;
+    padding-left: 28px;
+  }
+
+  .travel-year-label {
+    width: auto;
+    margin: 0 0 16px;
+    padding: 2px 0 0;
+    text-align: left;
+    font-size: 22px;
+  }
+
+  .travel-year-label::after {
+    right: auto;
+    left: -27px;
+    top: 5px;
+  }
+
+  .travel-entry {
+    padding-left: 0;
+    padding-bottom: 36px;
+  }
+
+  .travel-entry::before {
+    left: -27px;
+  }
+
   .trip-pair {
     grid-template-columns: 1fr;
   }
@@ -1222,7 +1327,8 @@ h2,
     margin: 0;
   }
 
-  .trip-pair .trip-figure:nth-child(2) {
+  .trip-pair .trip-figure:nth-child(2),
+  .trip-essay-three .trip-pair .trip-figure:nth-child(2) {
     margin-top: 0;
   }
 

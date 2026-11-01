@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { draftsAreVisible } from "@/lib/drafts";
-import { formatTripDates, getVisibleTrips } from "@/lib/trips";
+import { formatTripDates, getVisibleTrips, groupTripsByYear } from "@/lib/trips";
+import type { Trip } from "@/lib/trips";
 
 export const metadata: Metadata = {
   title: "Travel",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 export default async function TravelPage() {
   const trips = await getVisibleTrips();
-  const [feature, ...rest] = trips;
+  const years = groupTripsByYear(trips);
   const showingDrafts = draftsAreVisible() && trips.some((trip) => trip.draft);
 
   return (
@@ -39,19 +40,23 @@ export default async function TravelPage() {
             {showingDrafts ? (
               <p className="proposed">
                 Draft albums are visible in local development and on preview deploys. Production leaves them out of the
-                site and the sitemap. The sample album is a layout placeholder, not a trip.
+                site and the sitemap. The sample albums are layout placeholders, not trips.
               </p>
             ) : null}
-            <div className="trip-index">
-              {feature ? <TripCard trip={feature} feature preload /> : null}
-              {rest.length > 0 ? (
-                <div className="trip-grid">
-                  {rest.map((trip) => (
-                    <TripCard key={trip.slug} trip={trip} />
-                  ))}
-                </div>
-              ) : null}
-            </div>
+            <ol className="travel-timeline">
+              {years.map((group) => (
+                <li key={group.year} className="travel-year">
+                  <h2 className="travel-year-label">
+                    <time dateTime={group.year}>{group.year}</time>
+                  </h2>
+                  <ol className="travel-entries">
+                    {group.trips.map((trip, index) => (
+                      <TripEntry key={trip.slug} trip={trip} preload={group.year === years[0]?.year && index === 0} />
+                    ))}
+                  </ol>
+                </li>
+              ))}
+            </ol>
           </div>
         )}
       </div>
@@ -59,40 +64,39 @@ export default async function TravelPage() {
   );
 }
 
-function TripCard({
-  trip,
-  feature = false,
-  preload = false,
-}: {
-  trip: Awaited<ReturnType<typeof getVisibleTrips>>[number];
-  feature?: boolean;
-  preload?: boolean;
-}) {
+function TripEntry({ trip, preload }: { trip: Trip; preload: boolean }) {
   const dates = formatTripDates(trip.startDate, trip.endDate);
 
   return (
-    <Link className={feature ? "trip-card trip-feature" : "trip-card"} href={`/travel/${trip.slug}`}>
-      <div className="trip-cover">
-        <Image
-          src={trip.cover.src}
-          alt=""
-          fill
-          sizes={feature ? "(max-width: 760px) calc(100vw - 40px), 680px" : "(max-width: 760px) calc(100vw - 40px), 500px"}
-          placeholder="blur"
-          blurDataURL={trip.cover.blurDataURL}
-          preload={preload}
-          style={{ objectFit: "cover" }}
-        />
-      </div>
-      <div className="trip-copy">
-        <p className="kicker">{trip.country}</p>
-        <h2>{trip.title}</h2>
-        <p className="trip-place">{trip.place}</p>
-        <p className="trip-dates">
-          <time dateTime={trip.startDate}>{dates}</time>
-        </p>
+    <li className="travel-entry">
+      <h3>
+        <Link href={`/travel/${trip.slug}`}>{trip.title}</Link>
+      </h3>
+      <p className="travel-meta">
+        <span className="place">{trip.place}</span>
+        <span aria-hidden="true">·</span>
+        <time dateTime={trip.startDate}>{dates}</time>
         {trip.draft ? <span className="pill pill-draft">Draft</span> : null}
-      </div>
-    </Link>
+      </p>
+      <p className="travel-summary">{trip.summary}</p>
+      <ul className="travel-strip">
+        {trip.photos.map((photo, index) => (
+          <li key={photo.src}>
+            <Link className="travel-thumb" href={`/travel/${trip.slug}?photo=${index + 1}`}>
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 760px) 30vw, 280px"
+                placeholder="blur"
+                blurDataURL={photo.blurDataURL}
+                preload={preload && index === 0}
+                style={{ objectFit: "cover", objectPosition: "right bottom" }}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </li>
   );
 }

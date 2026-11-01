@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { TripGallery } from "@/components/trip-gallery";
-import { formatTripDates, getPublishedTrips, getVisibleTrip } from "@/lib/trips";
+import { formatTripDates, getPublishedTrips, getVisibleTrip, tripPhotoIndex } from "@/lib/trips";
 import { siteUrl } from "@/lib/site";
 
 export async function generateStaticParams() {
@@ -41,10 +41,18 @@ export async function generateMetadata({
   };
 }
 
-export default async function TripPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function TripPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ photo?: string | string[] }>;
+}) {
   const { slug } = await params;
+  const { photo } = await searchParams;
   const trip = await getVisibleTrip(slug);
   if (!trip) notFound();
+  const startAt = tripPhotoIndex(photo, trip.photos.length);
 
   const dates = formatTripDates(trip.startDate, trip.endDate);
   const galleryJsonLd = {
@@ -66,7 +74,7 @@ export default async function TripPage({ params }: { params: Promise<{ slug: str
         {trip.draft ? (
           <p className="draft-banner" role="status">
             <strong>Sample draft.</strong> These frames are generated colour fields, not photographs, and this is not a
-            trip Jake took. It shows the album: intro, ten-or-fewer pictures, captions, and the full-screen view.
+            trip Jake took. It shows the album: intro, the photographs (usually three), captions, and the full-screen view.
           </p>
         ) : null}
         <header className="page-head">
@@ -86,7 +94,7 @@ export default async function TripPage({ params }: { params: Promise<{ slug: str
           </div>
         ) : null}
         <section aria-label="Photographs">
-          <TripGallery photos={trip.photos} />
+          <TripGallery photos={trip.photos} startAt={startAt} />
         </section>
         <p className="back">
           <Link className="text-link" href="/travel">

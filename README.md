@@ -70,7 +70,7 @@ Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`liv
 
 Trip albums are folders. An assistant adds one from photographs Jake sends. Do not commit the originals. Phone photographs carry GPS in EXIF, and sometimes in XMP, and a file in `public/` is world-readable.
 
-1. Pick at most 10 photographs. Put only those files in one folder (JPEG, PNG, WebP, HEIC, TIFF, or AVIF). Rename them if the filename order is not the order Jake wants. Nested folders are ignored.
+1. Pick your top 3 photographs. Up to 10 is allowed when three is not enough. Put only those files in one folder (JPEG, PNG, WebP, HEIC, TIFF, or AVIF). Rename them if the filename order is not the order Jake wants. Nested folders are ignored.
 2. Run:
 
 ```bash
@@ -81,11 +81,12 @@ node scripts/prepare-trip-photos.mjs <slug> <folder-of-photos>
 
 - Writes `public/travel/<slug>/01.jpg`, `02.jpg`, and so on.
 - Scales so the longest side is at most 2400 pixels, and does not enlarge a smaller file. That covers the album column and a full-screen view on a typical retina laptop without shipping a 4000-pixel phone original.
-- Bakes in orientation, then saves a progressive JPEG at quality 82 with EXIF, XMP, and IPTC removed, including GPS.
+- Burns `onerutter.com` into the bottom-right corner: white at 60% opacity, a soft shadow, with the type and the margin about 2.5% of the image width. Change the words with `--watermark "other text"`, or skip it with `--no-watermark`.
+- Bakes in orientation, then saves a progressive JPEG at quality 82 with EXIF, XMP, and IPTC removed, including GPS. The watermark is pixels, not metadata.
 - Refuses to keep a file if any of that metadata survives.
 - Creates `content/trips/<slug>/index.mdx` with `draft: true` when that file does not exist yet. It will not overwrite an existing album.
 
-3. Fill the frontmatter. The build fails if a required field is missing, a date is not `YYYY-MM-DD`, there are more than 10 photos, or `cover` is not one of the photo `src` values. `alt` cannot stay `TODO`.
+3. Fill the frontmatter. The build fails if a required field is missing, a date is not `YYYY-MM-DD`, there are zero photos or more than 10, or `cover` is not one of the photo `src` values. `alt` cannot stay `TODO`. Three photographs is the layout the timeline and the album are designed around.
 
 ```yaml
 ---
@@ -104,7 +105,7 @@ photos:
 ---
 ```
 
-Album order is the `photos` list, newest trip first on `/travel` by `startDate`. A caption is optional and must be a single line of at most 160 characters.
+`/travel` is a vertical timeline, newest first, grouped by the year of `startDate`. Each entry shows the name, place, dates, the summary, and the photographs. A thumbnail opens `/travel/<slug>?photo=2` (1-based) on that frame. Album order is the `photos` list. A caption is optional and must be a single line of at most 160 characters.
 
 Images can also sit beside `index.mdx` and be referenced as `01.jpg` (no leading slash). The site serves those from `/trip-photos/<slug>/` after the same GPS check. Prefer the script and `public/travel/<slug>/`.
 
@@ -114,6 +115,6 @@ Images can also sit beside `index.mdx` and be referenced as `01.jpg` (no leading
 
 The build also rejects a trip image that still contains GPS EXIF or GPS in XMP, including one that was resized somewhere else. Run the script rather than copying a phone photograph into the repo.
 
-`content/trips/sample-album/` is a draft layout sample. Its pictures are generated colour fields from `node scripts/generate-sample-album.mjs`, not photographs and not one of Jake's trips. Replace it. Do not set that file to `draft: false`.
+`content/trips/sample-album/`, `sample-strip/`, and `sample-markers/` are draft layout samples in three different years, three colour fields each. They are produced by `node scripts/generate-sample-album.mjs`, which draws the fields and then runs the prepare script so the corner watermark is the real one. They are not photographs and not trips Jake took. Replace them. Do not set those files to `draft: false`.
 
 A copy-ready frontmatter file also lives at `content/trips/_template/index.mdx`. Folders whose names start with `_` are ignored.

@@ -32,7 +32,7 @@ type PhotoInput = { src: string; alt: string; caption?: string };
 function readPhotos(value: unknown, file: string): PhotoInput[] {
   if (!Array.isArray(value)) throw new Error(`${file}: photos must be a list`);
   if (value.length < 1 || value.length > 10) {
-    throw new Error(`${file}: photos must contain 1 to 10 items (found ${value.length})`);
+    throw new Error(`${file}: photos must be 1 to 10 (found ${value.length}). Three is the usual album.`);
   }
 
   return value.map((item, index) => {
@@ -162,6 +162,25 @@ export async function getVisibleTrip(slug: string) {
   if (!trip) return undefined;
   if (trip.draft && !draftsAreVisible()) return undefined;
   return trip;
+}
+
+export function groupTripsByYear(trips: Trip[]) {
+  const groups: { year: string; trips: Trip[] }[] = [];
+  for (const trip of trips) {
+    const year = trip.startDate.slice(0, 4);
+    const current = groups[groups.length - 1];
+    if (current?.year === year) current.trips.push(trip);
+    else groups.push({ year, trips: [trip] });
+  }
+  return groups;
+}
+
+export function tripPhotoIndex(value: string | string[] | undefined, count: number) {
+  const raw = Array.isArray(value) ? value[0] : value;
+  if (!raw || !/^\d+$/.test(raw)) return null;
+  const number = Number(raw);
+  if (number < 1 || number > count) return null;
+  return number - 1;
 }
 
 export function formatTripDates(start: string, end: string) {
