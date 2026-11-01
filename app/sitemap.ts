@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPublishedNotes, getPublishedTags } from "@/lib/notes";
 import { siteUrl } from "@/lib/site";
-import { getPublishedTrips } from "@/lib/trips";
+import { getPublishedTrips, tripHasPage } from "@/lib/trips";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = ["", "/story", "/lab", "/notes", "/travel"].map((path) => ({
@@ -13,10 +13,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: note.updated ?? note.date,
   }));
 
-  const trips = (await getPublishedTrips()).map((trip) => ({
-    url: `${siteUrl}/travel/${trip.slug}`,
-    lastModified: trip.endDate,
-  }));
+  const trips = (await getPublishedTrips())
+    .filter((trip) => tripHasPage(trip))
+    .map((trip) => {
+      const lastModified = [trip.endDate, trip.startDate].find((value) => value && value.length === 10);
+      return {
+        url: `${siteUrl}/travel/${trip.slug}`,
+        ...(lastModified ? { lastModified } : {}),
+      };
+    });
 
   const tags = getPublishedTags().map((tag) => ({
     url: `${siteUrl}/notes/tag/${tag}`,
