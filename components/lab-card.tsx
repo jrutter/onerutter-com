@@ -10,14 +10,11 @@ const toneBySlug: Record<string, LabTone> = {
   "agentic-checkout-index": "navy",
   tradetrek: "cyan",
   strategicpulse: "yellow",
-  "first-plate-delaware": "peach",
   "send-a-spark": "pink",
-  "delmarva-community-guide": "navy",
   "tails-over-thames": "cyan",
   "mind-the-timetable": "yellow",
   "three-today": "peach",
   "mood-machine": "pink",
-  "local-sound": "navy",
   "bangers-and-postcodes": "cyan",
 };
 

@@ -7,13 +7,13 @@ Jake approved this plan on 1 Nov 2026. The Next.js app in this repo is the site.
 - Hello headline, as proposed: “Hi, I'm Jake. I lead DTC engineering at SharkNinja, and I build small apps on the side.”
 - Public title: VP, DTC Engineering & Applied AI.
 - Home in Barnes, office in Battersea.
-- Featured builds, in this order: Tails over Thames, Three Today, Mind the Timetable. TradeTrek and the rest stay in the Lab, including Delmarva Community Guide and First Plate Delaware.
+- Featured builds, in this order: Tails over Thames, Three Today, Mind the Timetable. TradeTrek and the rest stay in the Lab. Delmarva Community Guide, First Plate Delaware, and Local Sound are not on the site.
 - Notes live at `/notes`. Article body stays in Source Serif 4.
 - Drafts render in local development and on Vercel preview deploys, with a banner. Production, the RSS feed, and the sitemap omit them.
 - Light on operating detail. Team-size, budget, site-count, and conversion figures stay off the page.
 - No portrait, no dark mode, no résumé PDF, no phone number, no GPA, no GitHub link, no analytics.
 - A future return to the US is omitted. Do not add that chapter back.
-- Local Sound and the two sample notes stay as clearly marked placeholders. The year-by-year sentences stay marked “Needs an edit.”
+- The year-by-year sentences stay marked “Needs an edit.”
 - Speedwell stays in the published writing-page sentence. Medium and Substack stay in the footer. Whether Speedwell is that Substack is still unconfirmed, and the site does not assert it.
 
 The look takes its pace from [maxclax.com](https://maxclax.com/): a personal page with a very large hello, a few things he actually built, then a life told year by year. The words, names, and colors are Jake's, not Max's.
@@ -98,7 +98,7 @@ Principles come after the life, and only the ones he already published: “Progr
 | --- | --- | --- |
 | `/` | Wordmark | Hello, three featured builds, a short timeline, the book, contact. |
 | `/story` | Story | The about prose, the full year-by-year, working style, interests, school. |
-| `/lab` | Lab | Every side project from the current lab page, plus Local Sound as a placeholder. |
+| `/lab` | Lab | Side projects from the lab page. Delmarva Community Guide, First Plate Delaware, and Local Sound are not included. |
 | `/notes` | Notes | Index of notes. Drafts are badged and, on production, omitted. |
 | `/notes/[slug]` | — | One note. Slug is the filename. |
 | `/notes/tag/[tag]` | — | Notes with that tag. Same row as the index. Empty tag is a normal empty state, not a 404. |
@@ -169,7 +169,7 @@ order: 80
 ---
 ```
 
-`url` is omitted when there is nothing to link. `status: placeholder` is what Local Sound is today. `featured: true` puts it on the home row, and the home row is capped at three. `order` follows the current lab page. `year` is optional and stays off until Jake supplies it. Launch years are not in the public lab copy, so the plan does not invent them.
+`url` is omitted when there is nothing to link. `status: placeholder` is a card with no link yet. `featured: true` puts it on the home row. `order` follows the lab page. `year` is optional and stays off until Jake supplies it. Launch years are not in the public lab copy, so the plan does not invent them.
 
 ### How an assistant adds a note
 
@@ -228,7 +228,7 @@ From Jake, for this project, not from the old sites:
 
 - He lives in Barnes, London. LinkedIn says the London area and the Battersea office. The site says both: home in Barnes, office in Battersea.
 
-Contact already public on the sites: `jake@onerutter.com`, [LinkedIn](https://www.linkedin.com/in/jakerutter/), [Medium](https://jakerutter.medium.com/), [Substack](https://jakerutter.substack.com/), [X](https://twitter.com/jakerutter). The phone number on the 2024 PDF is not used.
+Contact on the site is the /hello form. Profiles: [LinkedIn](https://www.linkedin.com/in/jakerutter/), [Medium](https://jakerutter.medium.com/), [Substack](https://jakerutter.substack.com/), [X](https://twitter.com/jakerutter). The phone number on the 2024 PDF is not used.
 
 ### Drafted for this layout
 
@@ -242,7 +242,7 @@ Included on purpose, because they are public:
 - 2003–2009 staff roles: Sellsonic, MusiKube, JupiterMedia, LifeMed / dLife.com, Cullinane, Vertrue, Priceline, FanBoom.com (evenings, closed for lack of funding), RemoTV.
 - B.S. Visual Communications, Westwood College of Technology Online, 2005–2007. The PDF also says GPA 3.8 and Dean’s List every semester. That is not on the mockup.
 - Direct Wines, 2009–2022, Norwalk, plus Theale for the last few months: senior web designer through VP of Digital User Experience and VP of Global Front-End Engineering. .NET to Oracle ATG, Mobify, React checkout, Optimizely, Contentful (six weeks to two), Next.js and CommerceTools. WSET Level 2 (2015). eCornell Technology Leadership certificate (2022).
-- VF Corporation, Denver, September 2022–October 2024. Director, Global Front-End Engineering. Team of 22. The North Face, Vans, Timberland, Eastpak, JanSport, Kipling, Napapijri, Smartwool, Altra, Icebreaker, Dickies. Commerce Cloud and Vue/Nuxt, eight languages, 24 locales. Contentsquare, December 2023. ELC peer group, 2024–2025.
+- VF Corporation, Connecticut and Delaware, September 2022–October 2024. Director, Global Front-End Engineering. Team of 22. The North Face, Vans, Timberland, Eastpak, JanSport, Kipling, Napapijri, Smartwool, Altra, Icebreaker, Dickies. Commerce Cloud and Vue/Nuxt, eight languages, 24 locales. Contentsquare, December 2023. ELC peer group, 2024–2025.
 - SharkNinja from January 2025, Senior Director, Global DTC Engineering, Battersea, after a year remote from the US. True Edge, July 2025. LinkedIn lists VP, DTC Engineering & Applied AI from September 2026.
 
 Left off on purpose, and Jake confirmed the light touch: team size and budget figures, the count of Salesforce sites, the Akamai to Cloudflare cutover, checkout and retention percentages, the small freelance client domains, and the newsroom’s “30 days” line. LinkedIn says six weeks for the Cloudflare cutover, and the newsroom’s 30 days reads like a different episode. The site names neither duration.
@@ -259,8 +259,6 @@ The design-site résumé (titles like “Enterprise Retail Company,” and dates
 
 ### Still placeholder
 
-- Local Sound. The public lab page does not use that name. It says “A creative music app” and gives no link. The name is from the project brief. The Lab shows a dashed box until Jake writes the line and, when it exists, a URL.
-- Both sample notes in `content/notes`. They are `draft: true` and say so on the page. Replace or delete them before treating the notes section as his writing.
 - The year-by-year sentences. Facts are public. The wording is drafted and marked “Needs an edit.”
 
 ## How to view it

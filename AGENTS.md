@@ -52,7 +52,6 @@ Trip photographs:
 node scripts/prepare-trip-photos.mjs <slug> <folder-of-photos>
 node scripts/prepare-trip-photos.mjs <slug> <folder> --watermark "onerutter.com"
 node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
-node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not real trips.
 ```
 
 ## Directory map
@@ -66,7 +65,7 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 | `content/trips/<slug>/` | `index.mdx` per trip. Folders starting with `_` are ignored. |
 | `lib/` | Loaders, the world map (`world-map.ts`, `map-countries.ts`, `map-types.ts`), and site copy helpers. |
 | `public/travel/<slug>/` | Prepared JPEGs. Phone originals do not belong here. |
-| `scripts/` | `prepare-trip-photos.mjs`, `generate-sample-album.mjs`. |
+| `scripts/` | `prepare-trip-photos.mjs`. |
 | `mockups/` | Approved static HTML reference. Not served by Next. |
 | `docs/` | How-tos for notes, trips, and Lab projects. |
 
@@ -74,8 +73,8 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 
 | URL | Source | What it shows |
 | --- | --- | --- |
-| `/` | `app/page.tsx` | Hello, four featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
-| `/story` | `app/story/page.tsx` | Published about paragraphs, “What draws me in”, full timeline, working style, interests, school. |
+| `/` | `app/page.tsx` | Hello, five featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
+| `/story` | `app/story/page.tsx` | Published about paragraphs, “What draws me in”, full timeline (newest year first), working style, interests, school. |
 | `/lab` | `app/lab/page.tsx` | Every project in `content/projects/`, as color cards. |
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
 | `/notes/[slug]` | `app/notes/[slug]/page.tsx` | One note. Slug is the filename. |
@@ -93,9 +92,9 @@ node scripts/generate-sample-album.mjs   # redraws the three sample albums. Not 
 - Do not mention a planned move. `PLAN.md` records that a future return to the US stays off the site. Do not add that chapter.
 - Do not invent trip details, captions, place names, or biographical facts. If a sentence needs a personal claim that is not already on the site, leave a placeholder or ask.
 - Do not put exact photo locations in alt text, captions, body copy, or image metadata. The build rejects a trip image that still has GPS. The only coordinates in the repo are `places` centroids: a country, capital, or region centre, at most two decimal places. Never a street address or the spot a photograph was taken.
-- Keep Jake's wording for the story. The about paragraphs and the “What draws me in” section in `app/story/page.tsx` are his. The year-by-year sentences in `lib/story.ts` are drafted and marked “Needs an edit” on the page. Do not silently rewrite either.
+- Keep Jake's wording for the story. The about paragraphs and the “What draws me in” section in `app/story/page.tsx` are his. The year-by-year sentences in `lib/story.ts` are drafted and marked “Needs an edit” on the page. Do not silently rewrite either. The story page lists those entries newest year first.
 - Drafts stay out of production. `draft: true` is omitted from production HTML, `/feed.xml` (notes), and `/sitemap.xml`. Publishing is an explicit `draft: false`.
-- The two files in `content/notes/` are placeholder drafts. They are not Jake's writing. `content/trips/sample-album/`, `sample-strip/`, and `sample-markers/` are generated color fields, not trips he took. Leave them `draft: true`.
+- Do not publish an email address or a `mailto:` link. `/hello` is how to reach Jake.
 - Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. No portrait, dark mode, résumé PDF, phone number, GPA, GitHub link, or analytics.
 
 Drafts render when `lib/drafts.ts` says so: `SHOW_DRAFTS=true`, or `VERCEL_ENV=preview`, or `NODE_ENV` is not `production` (local `npm run dev`). A production build (`npm run build` / `npm start`, and the Vercel production deploy) omits them.
@@ -104,7 +103,7 @@ Drafts render when `lib/drafts.ts` says so: `SHOW_DRAFTS=true`, or `VERCEL_ENV=p
 
 ## Notes
 
-Path: `content/notes/<slug>.mdx`. The filename is the URL (`building-in-the-margins.mdx` → `/notes/building-in-the-margins`). Lowercase kebab-case. No date in the filename. A file whose name starts with `_` is ignored. Copy `content/notes/_template.mdx`. How-to: [docs/adding-a-note.md](docs/adding-a-note.md).
+Path: `content/notes/<slug>.mdx`. The filename is the URL (`having-fun-with-grokbot.mdx` → `/notes/having-fun-with-grokbot`). Lowercase kebab-case. No date in the filename. A file whose name starts with `_` is ignored. Copy `content/notes/_template.mdx`. How-to: [docs/adding-a-note.md](docs/adding-a-note.md).
 
 Required frontmatter, checked in `lib/notes.ts`. The build throws if one is missing or the wrong type.
 
@@ -183,7 +182,7 @@ Projects are `content/projects/*.md`, loaded by `lib/projects.ts`. How-to: [docs
 
 Required: `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags` (array of strings), `featured` (boolean), `order` (number). Optional: `url` (absolute; omit when there is nothing to link), `homeOrder`, `kicker`, `cardTitle`, `cardSummary`. A featured project must have a `url`. The build fails otherwise.
 
-`featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is Tails over Thames (`homeOrder` 1), Three Today (2), Mind the Timetable (3), and Bangers & Postcodes (4). Home card materials and monograms are hardcoded in `components/build-card.tsx` for those slugs. Do not add a project Jake has not named.
+`featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is Agentic Checkout Index (`homeOrder` 1), Tails over Thames (2), Three Today (3), Mind the Timetable (4), and Bangers & Postcodes (5). Home card materials and monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary (no separate card lines) on the ink card. Do not add a project Jake has not named.
 
 Lab cards (`components/lab-card.tsx`) use a stable tone per slug. A new slug falls back to navy, cyan, yellow, peach, pink, repeating with its index. Status text comes from `statusLabel`: Live, Building, or “No link yet”. A card with a `url` is a link. A card without one is an article.
 
@@ -223,7 +222,7 @@ Light only (`color-scheme: light`). Home headline is the gradient from Thames de
 
 ## Contact form
 
-“Say hello” goes to `/hello`. `components/contact-form.tsx` posts to the server action `sendHello` in `app/hello/actions.ts`, which sends through the Resend API (`https://api.resend.com/emails`). Nothing about the recipient or the sender is stored in the repo.
+“Say hello” goes to `/hello`. That form is the only public contact path. The pages, the footer, and JSON-LD do not publish an email address. `components/contact-form.tsx` posts to the server action `sendHello` in `app/hello/actions.ts`, which sends through the Resend API (`https://api.resend.com/emails`). Nothing about the recipient or the sender is stored in the repo.
 
 | Variable | Required | What it is |
 | --- | --- | --- |

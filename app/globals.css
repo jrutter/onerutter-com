@@ -310,6 +310,15 @@ h2,
   line-height: 1;
 }
 
+.wordmark-solo {
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.wordmark-solo + .build-sub {
+  margin-top: 14px;
+}
+
 .build-title,
 .build-sub,
 .build-go {

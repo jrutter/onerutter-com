@@ -34,7 +34,7 @@ export const homeYears: YearEntry[] = [
   {
     when: "2022",
     datetime: "2022",
-    place: "Denver",
+    place: "Connecticut and Delaware",
     text: "VF Corporation, through 2024. Global front end for The North Face, Vans, Timberland, and the wider group.",
   },
   {
@@ -98,7 +98,7 @@ export const storyYears: YearEntry[] = [
   {
     when: "2022–2024",
     datetime: "2022",
-    place: "VF Corporation, Denver",
+    place: "VF Corporation, Connecticut and Delaware",
     text: "Director, Global Front-End Engineering, eCommerce. Twenty-two front-end engineers across North America and Europe, for The North Face, Vans, Timberland, Eastpak, JanSport, Kipling, Napapijri, Smartwool, Altra, Icebreaker, and Dickies. The North Face, Vans, and Timberland went onto Salesforce Commerce Cloud and a Vue and Nuxt front end, across eight languages and 24 locales. Contentsquare certified, December 2023. An ELC engineering peer group from 2024 into 2025.",
   },
   {

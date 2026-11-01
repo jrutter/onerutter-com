@@ -59,7 +59,7 @@ export default async function TravelPage() {
             {showingDrafts ? (
               <p className="proposed">
                 Draft albums are visible in local development and on preview deploys. Production leaves them out of the
-                site and the sitemap. The sample albums are layout placeholders, not trips.
+                site and the sitemap.
               </p>
             ) : null}
             <ol className="travel-timeline">

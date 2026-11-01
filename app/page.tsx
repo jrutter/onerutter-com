@@ -20,7 +20,6 @@ const personJsonLd = {
   "@type": "Person",
   name: "Jake Rutter",
   url: siteUrl,
-  email: "mailto:jake@onerutter.com",
   jobTitle: "VP, DTC Engineering & Applied AI",
   worksFor: {
     "@type": "Organization",
@@ -55,7 +54,7 @@ export default function HomePage() {
           <p className="hero-links">
             <Link href="/story">→ The story</Link>
             <Link href="/lab">→ The lab</Link>
-            <a href="mailto:jake@onerutter.com">jake@onerutter.com</a>
+            <Link href="/hello">Say hello</Link>
           </p>
         </section>
 

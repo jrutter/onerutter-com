@@ -4,6 +4,7 @@ summary: A weekly scan of 358 US and UK retailers, ranked on how ready they are 
 status: live
 url: https://agent-checkout-index.vercel.app
 tags: []
-featured: false
+featured: true
 order: 5
+homeOrder: 1
 ---

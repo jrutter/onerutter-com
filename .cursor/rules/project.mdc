@@ -15,8 +15,9 @@ Content rules:
 - Do not mention a planned move. A future return to the US stays off the site.
 - Do not invent trip details, captions, place names, or biographical facts.
 - Do not expose exact photo locations. GPS stays out of committed images. `places` coordinates are country or city centroids at two decimal places, never a street or a photo spot.
-- Keep Jake's wording for the story copy in `app/story/page.tsx`. The timeline in `lib/story.ts` is marked “Needs an edit”; do not silently rewrite it.
+- Keep Jake's wording for the story copy in `app/story/page.tsx`. The timeline in `lib/story.ts` is marked “Needs an edit”; do not silently rewrite it. The story page lists those entries newest year first.
 - `draft: true` stays out of production HTML, the RSS feed, and the sitemap. Publishing is `draft: false`.
-- Do not add a project, note, or trip Jake has not asked for. The sample notes and `content/trips/sample-*` albums are placeholders.
+- Do not add a project, note, or trip Jake has not asked for.
+- Do not publish an email address or a `mailto:` link. `/hello` is how to reach Jake.
 
 Canonical URL is `https://onerutter.com` in `lib/site.ts`. It is not an environment variable. Pull requests stay small. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. Skip screenshots. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report.

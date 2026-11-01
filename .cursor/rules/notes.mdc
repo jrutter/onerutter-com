@@ -10,6 +10,6 @@ Required frontmatter: `title` (string), `date` (`YYYY-MM-DD`, quoted), `summary`
 
 Leave `draft: true` unless Jake asked for the note to go live in that pull request. Drafts render in `next dev` and on Vercel preview, and they are omitted from production, `/feed.xml`, and `/sitemap.xml`.
 
-Write about technology, the apps, or something Jake is exploring. Do not invent biographical facts. The placeholder files already in `content/notes/` are not Jake's writing. How-to: `docs/adding-a-note.md`. Full schema: `AGENTS.md`.
+Write about technology, the apps, or something Jake is exploring. Do not invent biographical facts. How-to: `docs/adding-a-note.md`. Full schema: `AGENTS.md`.
 
 Every pull request skips screenshots. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report. A note’s URL is `https://<preview>/notes/<slug>`. Also name the title, date, summary, and whether it is still a draft.
