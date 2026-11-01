@@ -8,6 +8,8 @@ export { draftsAreVisible };
 
 const notesDir = path.join(process.cwd(), "content/notes");
 
+const coverExtensions = new Set([".svg", ".webp", ".jpg", ".jpeg", ".png", ".avif", ".gif"]);
+
 export type Note = {
   slug: string;
   title: string;
@@ -17,8 +19,31 @@ export type Note = {
   draft: boolean;
   updated?: string;
   image?: string;
+  /** Public URL path, such as `/note-covers/example.svg`. The file lives under `public/`. */
+  cover?: string;
+  coverAlt?: string;
   body: string;
 };
+
+function readCover(fileName: string, value: unknown) {
+  if (typeof value !== "string" || !value.startsWith("/") || value.includes("\\") || value.includes("?") || value.includes("#")) {
+    throw new Error(`${fileName}: cover must be a path under public/, starting with /`);
+  }
+  const extension = path.extname(value).toLowerCase();
+  if (!coverExtensions.has(extension)) {
+    throw new Error(`${fileName}: cover must be an svg, webp, jpg, png, avif, or gif`);
+  }
+  const publicDir = path.resolve(process.cwd(), "public");
+  const resolved = path.resolve(publicDir, value.slice(1));
+  const relative = path.relative(publicDir, resolved);
+  if (relative.startsWith("..") || path.isAbsolute(relative)) {
+    throw new Error(`${fileName}: cover must be a path under public/`);
+  }
+  if (!fs.existsSync(resolved)) {
+    throw new Error(`${fileName}: cover file not found at public${value}`);
+  }
+  return value;
+}
 
 function readNote(fileName: string): Note {
   const filePath = path.join(notesDir, fileName);
@@ -53,6 +78,16 @@ function readNote(fileName: string): Note {
   if (data.image != null) {
     if (typeof data.image !== "string") throw new Error(`${fileName}: image must be a path`);
     note.image = data.image;
+  }
+  if (data.cover != null) note.cover = readCover(fileName, data.cover);
+  if (data.coverAlt != null) {
+    if (typeof data.coverAlt !== "string" || !data.coverAlt.trim()) {
+      throw new Error(`${fileName}: coverAlt must be a non-empty string`);
+    }
+    note.coverAlt = data.coverAlt.trim();
+  }
+  if (note.coverAlt && !note.cover) {
+    throw new Error(`${fileName}: coverAlt needs a cover`);
   }
 
   return note;
@@ -97,6 +132,17 @@ export function getVisibleTags() {
 
 export function notesForTag(tag: string, notes: Note[]) {
   return notes.filter((note) => note.tags.includes(tag));
+}
+
+/** About a minute per 200 words, never under a minute. */
+export function readingMinutes(body: string) {
+  const words = body.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+export function formatReadingTime(body: string) {
+  const minutes = readingMinutes(body);
+  return `${minutes} min read`;
 }
 
 export function formatNoteDate(date: string, month: "short" | "long" = "short") {

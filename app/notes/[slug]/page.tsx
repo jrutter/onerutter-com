@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { formatNoteDate, getPublishedNotes, getVisibleNote } from "@/lib/notes";
-import { siteUrl } from "@/lib/site";
+import { NoteCover } from "@/components/note-cover";
+import { formatNoteDate, formatReadingTime, getPublishedNotes, getVisibleNote } from "@/lib/notes";
+import { absoluteUrl, siteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
   return getPublishedNotes().map((note) => ({ slug: note.slug }));
@@ -48,6 +49,7 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
     description: note.summary,
     url: `${siteUrl}/notes/${note.slug}`,
     author: { "@type": "Person", name: "Jake Rutter", url: siteUrl },
+    ...(note.cover ? { image: absoluteUrl(note.cover) } : {}),
   };
 
   return (
@@ -62,8 +64,20 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
             summary, body, and tags.
           </p>
         ) : null}
+        {note.cover ? (
+          <figure className="note-hero">
+            <NoteCover
+              note={note}
+              sizes="(max-width: 760px) calc(100vw - 40px), 1120px"
+              preload
+              alt={note.coverAlt ?? note.title}
+            />
+          </figure>
+        ) : null}
         <p className="note-meta">
           <time dateTime={note.date}>{formatNoteDate(note.date, "long")}</time>
+          <span aria-hidden="true">·</span>
+          <span>{formatReadingTime(note.body)}</span>
           {note.draft ? <span className="pill pill-draft">Draft</span> : null}
         </p>
         <h1 className="title">{note.title}</h1>

@@ -6,7 +6,9 @@ alwaysApply: false
 
 Notes are MDX files. Copy `content/notes/_template.mdx` to `content/notes/<slug>.mdx`. The filename is the URL slug: lowercase kebab-case, no date in the name. Files starting with `_` are ignored by `lib/notes.ts`.
 
-Required frontmatter: `title` (string), `date` (`YYYY-MM-DD`, quoted), `summary` (string), `tags` (array of strings, lowercase, hyphenated), `draft` (boolean). Optional: `updated`, `image`. The build fails if a required field is missing or the wrong type.
+Required frontmatter: `title` (string), `date` (`YYYY-MM-DD`, quoted), `summary` (string), `tags` (array of strings, lowercase, hyphenated), `draft` (boolean). Optional: `updated`, `image`, `cover`, `coverAlt`. The build fails if a required field is missing or the wrong type.
+
+`cover` is a path under `public/` starting with `/` (svg, webp, jpg, png, avif, or gif). The file has to exist. `coverAlt` describes that picture and is only valid together with `cover`. The notes index shows `cover` on the card. A note without one gets a colour pattern from its title and tags. The note page shows `cover` at the top, and the social card uses it.
 
 Leave `draft: true` unless Jake asked for the note to go live in that pull request. Drafts render in `next dev` and on Vercel preview, and they are omitted from production, `/feed.xml`, and `/sitemap.xml`.
 

@@ -115,10 +115,14 @@ Required frontmatter, checked in `lib/notes.ts`. The build throws if one is miss
 | `draft` | Boolean. |
 | `updated` | Optional `YYYY-MM-DD`. |
 | `image` | Optional path string. The loader stores it. The social card (`app/notes/[slug]/opengraph-image.tsx`) is generated from the title and does not read this field. |
+| `cover` | Optional path under `public/`, starting with `/`. An svg, webp, jpg, png, avif, or gif that already exists. Shown on the notes index, at the top of the note, and as that note’s Open Graph image. |
+| `coverAlt` | Optional string. Describes `cover`. Only valid when `cover` is set. The note page uses the title when this is omitted. |
 
 Body is Markdown/MDX: headings, paragraphs, lists, links. Note images go in `content/notes/images/` and are referenced with a relative path. The article body uses Source Serif 4 at 21px / 1.6, measure about 66 characters. Headings inside a note stay in Outfit.
 
-Sort is newest `date` first, then title. Dates on the page use `en-GB` via `formatNoteDate`.
+Sort is newest `date` first, then title. Dates on the page use `en-GB` via `formatNoteDate`. Reading time is about one minute per 200 words.
+
+`/notes` leads with the newest note as a large card (cover, title, summary, date, reading time, tags), then a two-column grid on wide screens and one column on small screens. Tag chips filter with `?tag=`. A note with no `cover` gets a colour pattern from its title and tags, using the Lab palette. Drafts stay off that grid in production.
 
 ## Trips
 

@@ -16,8 +16,12 @@ tags:                       # lowercase, hyphenated when a tag is more than one 
 draft: true                 # true hides it on production; false publishes it
 # updated: "2026-11-02"     # optional
 # image: ./images/example.png  # optional; the generated social card does not read this
+# cover: /note-covers/example.svg  # optional file in public/
+# coverAlt: What the picture shows.  # optional; describe cover when it is set
 ---
 ```
+
+`cover` is optional. It is a path under `public/`, starting with `/`, for an svg, webp, jpg, png, avif, or gif that is already in the repo. The notes index uses it on the card. The note page shows it at the top. The social card uses that picture. Without `cover`, the index draws a colour pattern from the title and tags, and the social card stays the generated title card. `coverAlt` describes the picture. Leave it out only when there is no `cover`. The build fails if the file is missing, the path leaves `public/`, or `coverAlt` is set on its own.
 
 4. Write the body in Markdown (headings, paragraphs, lists, links). Images used by a note go in `content/notes/images/` and are referenced with a relative path. The body is set in Source Serif 4.
 5. Leave `draft: true` unless Jake has asked for the note to go live in that pull request. A draft shows during `npm run dev` and on a Vercel preview deployment, with a banner. Production HTML, `/feed.xml`, and `/sitemap.xml` omit it.
