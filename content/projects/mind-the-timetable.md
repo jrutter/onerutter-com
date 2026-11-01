@@ -1,6 +1,6 @@
 ---
 title: Mind the Timetable
-summary: A timetable for the Richmond to Waterloo corridor. South Western Railway, TfL buses, and Thames Clippers in one place — trains as the operators publish them, and live predictions for the boats.
+summary: I built this so I can quickly find my way around.
 status: live
 url: https://mindthetimetable.com
 tags: []
@@ -8,6 +8,5 @@ featured: true
 order: 70
 homeOrder: 3
 kicker: Trains, buses, boats
-cardTitle: Richmond to Waterloo, without the guesswork.
-cardSummary: South Western Railway, TfL buses, and Thames Clippers in one place — trains as the operators publish them, and live predictions for the boats.
+cardSummary: I built this so I can quickly find my way around.
 ---
