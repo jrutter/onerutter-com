@@ -1,0 +1,13 @@
+---
+description: Authoring notes in content/notes and keeping drafts unpublished
+globs: content/notes/**
+alwaysApply: false
+---
+
+Notes are MDX files. Copy `content/notes/_template.mdx` to `content/notes/<slug>.mdx`. The filename is the URL slug: lowercase kebab-case, no date in the name. Files starting with `_` are ignored by `lib/notes.ts`.
+
+Required frontmatter: `title` (string), `date` (`YYYY-MM-DD`, quoted), `summary` (string), `tags` (array of strings, lowercase, hyphenated), `draft` (boolean). Optional: `updated`, `image`. The build fails if a required field is missing or the wrong type.
+
+Leave `draft: true` unless Jake asked for the note to go live in that pull request. Drafts render in `next dev` and on Vercel preview, and they are omitted from production, `/feed.xml`, and `/sitemap.xml`.
+
+Write about technology, the apps, or something Jake is exploring. Do not invent biographical facts. The existing notes are placeholder drafts, not Jake's writing. How-to: `docs/adding-a-note.md`. Full schema: `AGENTS.md`.
