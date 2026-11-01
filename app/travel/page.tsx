@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { draftsAreVisible } from "@/lib/drafts";
-import { formatTripDates, getVisibleTrips, groupTripsByYear } from "@/lib/trips";
+import {
+  formatTripWhen,
+  getVisibleTrips,
+  groupTripsByYear,
+  publishedTripStats,
+  tripDateTime,
+  tripHasPage,
+} from "@/lib/trips";
 import type { Trip } from "@/lib/trips";
 
 export const metadata: Metadata = {
@@ -20,6 +27,7 @@ export const metadata: Metadata = {
 export default async function TravelPage() {
   const trips = await getVisibleTrips();
   const years = groupTripsByYear(trips);
+  const stats = publishedTripStats(trips);
   const showingDrafts = draftsAreVisible() && trips.some((trip) => trip.draft);
 
   return (
@@ -31,6 +39,11 @@ export default async function TravelPage() {
           <p className="deck">
             The offline analog alongside the digital nomad life. Music, discovering new things and places, and travel.
           </p>
+          {stats ? (
+            <p className="travel-stat">
+              {stats.count} {stats.count === 1 ? "trip" : "trips"} since {stats.since}
+            </p>
+          ) : null}
         </header>
 
         {trips.length === 0 ? (
@@ -65,38 +78,46 @@ export default async function TravelPage() {
 }
 
 function TripEntry({ trip, preload }: { trip: Trip; preload: boolean }) {
-  const dates = formatTripDates(trip.startDate, trip.endDate);
+  const dates = formatTripWhen(trip);
+  const linked = tripHasPage(trip);
+  const showPlace = Boolean(trip.place) && trip.place !== trip.title;
 
   return (
     <li className="travel-entry">
-      <h3>
-        <Link href={`/travel/${trip.slug}`}>{trip.title}</Link>
-      </h3>
+      <h3>{linked ? <Link href={`/travel/${trip.slug}`}>{trip.title}</Link> : trip.title}</h3>
       <p className="travel-meta">
-        <span className="place">{trip.place}</span>
-        <span aria-hidden="true">·</span>
-        <time dateTime={trip.startDate}>{dates}</time>
+        {showPlace ? (
+          <>
+            <span className="place">{trip.place}</span>
+            <span aria-hidden="true">·</span>
+          </>
+        ) : null}
+        <time dateTime={tripDateTime(trip)}>{dates}</time>
         {trip.draft ? <span className="pill pill-draft">Draft</span> : null}
       </p>
-      <p className="travel-summary">{trip.summary}</p>
-      <ul className="travel-strip">
-        {trip.photos.map((photo, index) => (
-          <li key={photo.src}>
-            <Link className="travel-thumb" href={`/travel/${trip.slug}?photo=${index + 1}`}>
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 760px) 30vw, 280px"
-                placeholder="blur"
-                blurDataURL={photo.blurDataURL}
-                preload={preload && index === 0}
-                style={{ objectFit: "cover", objectPosition: "right bottom" }}
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {trip.summary ? <p className="travel-summary">{trip.summary}</p> : null}
+      {trip.photos.length > 0 ? (
+        <ul className="travel-strip">
+          {trip.photos.map((photo, index) => (
+            <li key={photo.src}>
+              <Link className="travel-thumb" href={`/travel/${trip.slug}?photo=${index + 1}`}>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 760px) 30vw, 280px"
+                  placeholder="blur"
+                  blurDataURL={photo.blurDataURL}
+                  preload={preload && index === 0}
+                  style={{ objectFit: "cover", objectPosition: "right bottom" }}
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="travel-pending">Photos coming soon</p>
+      )}
     </li>
   );
 }
