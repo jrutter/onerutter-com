@@ -11,7 +11,7 @@ Lab cards (`components/lab-card.tsx`, styles in `app/globals.css`):
 - navy `#0A1045` with white text
 - cyan `#00C2D1`, yellow `#F9E900`, peach `#F6AF65`, pink `#ED33B9`, all with navy `#0A1045` text
 
-White on `#ED33B9` is 3.64:1, under AA at card size. Navy on pink is 4.92:1. Keep navy text on the pink card. New project slugs need an entry in `toneBySlug`, or they rotate through those five tones. Home build cards are a separate treatment in `components/build-card.tsx` (paper, ink, clay) and are mapped for each featured slug.
+White on `#ED33B9` is 3.64:1, under AA at card size. Navy on pink is 4.92:1. Keep navy text on the pink card. Tones come from `labTones` in list order (navy, yellow, pink, cyan, peach), checked so the same color is never adjacent on the lab grid. Home build cards are a separate treatment in `components/build-card.tsx` (paper, ink, clay) and are mapped for each featured slug.
 
 Story copy in `app/story/page.tsx` is Jake's wording. Do not rewrite it, and do not add a planned move.
 
