@@ -85,36 +85,7 @@ export default function StoryPage() {
         <section className="block" aria-labelledby="path-heading">
           <p className="kicker">Career</p>
           <h2 id="path-heading">Year by year</h2>
-          <aside className="needs stack-20">
-            <span className="needs-label">Needs an edit</span>
-            <p>
-              Roles and dates below come from public LinkedIn, the 2024 resume, and the about and writing pages. The
-              sentences were drafted for this layout. Please rewrite anything that doesn&apos;t sound like you.
-            </p>
-          </aside>
           <Timeline years={[...storyYears].toReversed()} />
-        </section>
-
-        <section className="block" aria-labelledby="work-heading">
-          <p className="kicker">How I like to work</p>
-          <h2 id="work-heading">Progress over perfection</h2>
-          <div className="steps">
-            <article>
-              <span className="step-num">01</span>
-              <h3>Understand the problem</h3>
-              <p>What is the problem you are trying to solve. Start with why.</p>
-            </article>
-            <article>
-              <span className="step-num">02</span>
-              <h3>Design an MVP</h3>
-              <p>What are the possible solutions, and what can we build quickly to get some answers?</p>
-            </article>
-            <article>
-              <span className="step-num">03</span>
-              <h3>Test and learn</h3>
-              <p>Is this solving the problem statement? Take the learnings and go through it again.</p>
-            </article>
-          </div>
         </section>
 
         <section className="block" aria-labelledby="interests-heading">
@@ -131,15 +102,6 @@ export default function StoryPage() {
             In my spare time, I like to spend time with friends and family, listen to music, play guitar, read books,
             play pickleball, and I love exploring.
           </p>
-        </section>
-
-        <section className="block" aria-labelledby="school-heading">
-          <h2 id="school-heading">School</h2>
-          <ul className="plain-list">
-            <li>B.S. Visual Communications, Westwood College of Technology Online, 2005–2007</li>
-            <li>A.A.S. Web Design and Management, Champlain College, Burlington, Vermont, 2001–2003</li>
-          </ul>
-          <blockquote className="pull">Progress over perfection.</blockquote>
         </section>
       </div>
     </main>
