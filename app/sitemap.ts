@@ -3,7 +3,7 @@ import { getPublishedNotes, getPublishedTags } from "@/lib/notes";
 import { siteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/story", "/lab", "/notes"].map((path) => ({
+  const staticRoutes = ["", "/story", "/lab", "/notes", "/hello"].map((path) => ({
     url: `${siteUrl}${path || "/"}`,
   }));
 

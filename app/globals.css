@@ -724,6 +724,127 @@ h2,
   line-height: 1.5;
 }
 
+.hello-form {
+  display: grid;
+  gap: 18px;
+  max-width: 36rem;
+  margin-top: 36px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--ink);
+  font: inherit;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.field textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--clay);
+}
+
+.field-error {
+  margin: 0;
+  color: var(--clay-deep);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.hello-form button {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--clay-deep);
+  color: var(--cream);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hello-form button:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.form-alert {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--gold-soft);
+  color: #5c3a12;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.form-success {
+  max-width: 36rem;
+  margin-top: 36px;
+  padding: 28px 32px;
+  border-radius: 16px;
+  background: var(--paper-deep);
+}
+
+.form-success:focus {
+  outline: none;
+}
+
+.form-success:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+}
+
+.form-success p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.form-success .kicker {
+  margin-bottom: 10px;
+  color: var(--clay);
+}
+
+.form-success .more {
+  margin-top: 18px;
+}
+
+.company-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .prose-page .title {
   max-width: 18ch;
   margin-top: 12px;
@@ -981,6 +1102,14 @@ h2,
 
   .hero-links {
     font-size: 18px;
+  }
+
+  .hello-form button {
+    justify-self: stretch;
+  }
+
+  .form-success {
+    padding: 22px 18px;
   }
 
   .prose p,

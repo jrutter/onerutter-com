@@ -25,6 +25,7 @@ Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run
 - `/` home
 - `/story`
 - `/lab`
+- `/hello`
 - `/notes`
 - `/notes/[slug]`
 - `/notes/tag/[tag]`
@@ -63,3 +64,17 @@ Write about technology, the apps, or something Jake is exploring. Do not invent 
 The two files already in `content/notes/` are placeholder drafts. Replace them. Do not treat them as Jake's writing.
 
 Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags`, `featured`, and `order`. `url` is omitted when there is nothing to link. `featured: true` plus `homeOrder` puts a project on the home row. The home row is the three Jake chose: Tails over Thames, Three Today, and Mind the Timetable.
+
+## Contact form
+
+“Say hello” in the header goes to `/hello`. The form posts to a server action, which sends the note through [Resend](https://resend.com). Nothing about the recipient or the sender is stored in the repo.
+
+Set these three variables in Vercel for Production and Preview. The page still renders when they are missing. A submit then shows a friendly error instead of throwing.
+
+| Variable | What it is |
+| --- | --- |
+| `RESEND_API_KEY` | API key from Resend. |
+| `CONTACT_TO_EMAIL` | Address that receives the note. `name@domain` or `Name <name@domain>`. |
+| `CONTACT_FROM_EMAIL` | Sender Resend will accept. Same shape as `CONTACT_TO_EMAIL`. The domain has to be verified in Resend. |
+
+Locally, put the same names in `.env.local`. That file is gitignored. Do not commit the values.

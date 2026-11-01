@@ -28,9 +28,9 @@ export function SiteHeader() {
               </Link>
             );
           })}
-          <a className="hello" href="mailto:jake@onerutter.com">
+          <Link className="hello" href="/hello" aria-current={path === "/hello" ? "page" : undefined}>
             Say hello
-          </a>
+          </Link>
         </nav>
       </div>
     </header>
