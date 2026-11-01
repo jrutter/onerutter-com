@@ -1,18 +1,22 @@
 ---
 title: Title of the note
-date: "2026-11-01"
+date: "2026-11-01"   # the day the note was added. YYYY-MM-DD, quoted
 summary: One or two sentences. This is the index line, the RSS description, and the social card.
 tags:
   - technology
 draft: true
-# updated: "2026-11-02"   # optional, when the note was revised
+cover: /note-covers/this-file-name.svg   # illustrated SVG in public/note-covers/
+coverAlt: What the illustration shows.
+# updated: "2026-11-02"   # optional revision day. The page then also shows “Updated …”
 # image: ./images/example.png   # optional; the generated social card does not read this
-# cover: /note-covers/example.svg   # optional image in public/, shown on the index and the note
-# coverAlt: What the picture shows.   # optional; describe cover when it is set
 ---
 
 The filename is the URL slug: `content/notes/this-file-name.mdx` becomes `/notes/this-file-name`.
 
-Do not put a date in the filename. Keep `draft: true` until Jake wants it public. A draft is visible in local development and on Vercel preview deploys, and it is left out of production, the RSS feed, and the sitemap.
+Do not put a date in the filename. `date` is the day the note was added. The site shows it as “Added 1 Nov 2026”.
+
+Every new note ships with an illustrated SVG at `public/note-covers/<slug>.svg`, in the site’s style (flat shapes, the Lab and paper palette, like the covers already in that folder), and with `cover` and `coverAlt` in the frontmatter.
+
+Keep `draft: true` until Jake wants it public. A draft is visible in local development and on Vercel preview deploys, and it is left out of production, the RSS feed, and the sitemap.
 
 Write about technology, one of the apps, or something Jake is exploring. Do not invent biographical facts. If a sentence needs a personal claim that is not already published, mark it as a placeholder or ask.

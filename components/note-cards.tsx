@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { NoteCover } from "@/components/note-cover";
+import { NoteDates } from "@/components/note-dates";
 import type { Note } from "@/lib/notes";
-import { formatNoteDate, formatReadingTime } from "@/lib/notes";
+import { formatReadingTime } from "@/lib/notes";
 
 const featureSizes = "(max-width: 760px) calc(100vw - 40px), 640px";
 const cardSizes = "(max-width: 760px) calc(100vw - 40px), 540px";
@@ -21,10 +22,10 @@ function NoteTags({ tags }: { tags: string[] }) {
   );
 }
 
-function NoteFacts({ note, longDate = false }: { note: Note; longDate?: boolean }) {
+function NoteFacts({ note }: { note: Note }) {
   return (
     <p className="note-meta">
-      <time dateTime={note.date}>{formatNoteDate(note.date, longDate ? "long" : "short")}</time>
+      <NoteDates date={note.date} updated={note.updated} />
       <span aria-hidden="true">·</span>
       <span>{formatReadingTime(note.body)}</span>
       {note.draft ? <span className="pill pill-draft">Draft</span> : null}

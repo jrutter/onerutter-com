@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { NoteCover } from "@/components/note-cover";
-import { formatNoteDate, formatReadingTime, getPublishedNotes, getVisibleNote } from "@/lib/notes";
+import { NoteDates } from "@/components/note-dates";
+import { formatReadingTime, getPublishedNotes, getVisibleNote } from "@/lib/notes";
 import { absoluteUrl, siteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -75,7 +76,7 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
           </figure>
         ) : null}
         <p className="note-meta">
-          <time dateTime={note.date}>{formatNoteDate(note.date, "long")}</time>
+          <NoteDates date={note.date} updated={note.updated} />
           <span aria-hidden="true">·</span>
           <span>{formatReadingTime(note.body)}</span>
           {note.draft ? <span className="pill pill-draft">Draft</span> : null}
