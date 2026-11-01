@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="520" viewBox="0 0 440 520" role="img">
+  <title>A wine bottle beside a phone showing a checkout</title>
+  <defs>
+    <filter id="carve" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="15" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="cut"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="1" seed="6" result="grain"/>
+      <feComponentTransfer in="grain" result="grainA"><feFuncA type="discrete" tableValues="0 0 0 0.3 0.58"/></feComponentTransfer>
+      <feComposite in="grainA" in2="cut" operator="in" result="speck"/>
+      <feBlend in="cut" in2="speck" mode="multiply"/>
+    </filter>
+    <pattern id="tooth" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="6" r="0.6" fill="#0A1045" opacity="0.14"/>
+      <circle cx="18" cy="20" r="0.5" fill="#C45C32" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="440" height="520" fill="#F3EEE6"/>
+  <rect width="440" height="520" fill="url(#tooth)"/>
+  <g filter="url(#carve)">
+    <g fill="none" stroke-linecap="round">
+      <path d="M250 40 C 320 90, 380 20, 460 70" stroke="#C45C32" stroke-width="14"/>
+      <path d="M-16 430 C 60 390, 120 460, 200 420" stroke="#0A1045" stroke-width="12"/>
+    </g>
+    <rect x="118" y="36" width="64" height="40" rx="6" fill="#C45C32"/>
+    <rect x="132" y="72" width="36" height="48" fill="#0A1045"/>
+    <path fill="#0A1045" d="M132 116 C132 116 86 150 86 196 V400 C86 434 110 448 150 448 C190 448 214 434 214 400 V196 C214 150 168 116 168 116 Z"/>
+    <rect x="262" y="150" width="132" height="250" rx="16" fill="#0A1045"/>
+    <rect x="274" y="172" width="108" height="190" fill="#0A1045"/>
+  </g>
+  <g fill="#F3EEE6">
+    <rect x="112" y="248" width="76" height="100" rx="2"/>
+    <rect x="286" y="184" width="84" height="166" rx="4"/>
+  </g>
+  <g fill="#0A1045">
+    <rect x="300" y="200" width="56" height="8"/>
+    <rect x="300" y="218" width="44" height="6"/>
+    <rect x="300" y="240" width="56" height="28"/>
+    <rect x="300" y="278" width="56" height="6"/>
+    <rect x="300" y="292" width="40" height="6"/>
+    <rect x="300" y="314" width="56" height="20" fill="#C45C32"/>
+  </g>
+  <g fill="none" stroke="#F3EEE6" stroke-linecap="round">
+    <path d="M104 180 V360" stroke-width="6"/>
+    <path d="M124 150 V390" stroke-width="3" opacity="0.8"/>
+    <path d="M128 48 h40" stroke-width="3"/>
+  </g>
+  <ellipse cx="160" cy="300" rx="10" ry="4" fill="#F3EEE6"/>
+  <ellipse cx="150" cy="360" rx="8" ry="3" fill="#F3EEE6"/>
+</svg>

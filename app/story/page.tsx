@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Timeline } from "@/components/timeline";
+import { storyArt, storyHeader } from "@/lib/story-art";
 import { storyYears } from "@/lib/story";
 
 export const metadata: Metadata = {
@@ -34,6 +36,17 @@ export default function StoryPage() {
   return (
     <main id="content">
       <div className="wrap">
+        <figure className="story-hero">
+          <Image
+            src={storyHeader.src}
+            alt={storyHeader.alt}
+            width={storyHeader.width}
+            height={storyHeader.height}
+            unoptimized
+            preload
+            sizes="(max-width: 760px) calc(100vw - 40px), 1120px"
+          />
+        </figure>
         <header className="page-head">
           <p className="kicker">Story</p>
           <h1 className="title">A little about me</h1>
@@ -92,7 +105,7 @@ export default function StoryPage() {
               sentences were drafted for this layout. Please rewrite anything that doesn&apos;t sound like you.
             </p>
           </aside>
-          <Timeline years={[...storyYears].toReversed()} />
+          <Timeline years={[...storyYears].toReversed()} art={storyArt} />
         </section>
 
         <section className="block" aria-labelledby="work-heading">

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" role="img">
+  <title>A sailboat with two sails on the water</title>
+  <defs>
+    <filter id="carve" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="cut"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="1" seed="21" result="grain"/>
+      <feComponentTransfer in="grain" result="grainA"><feFuncA type="discrete" tableValues="0 0 0 0.32 0.62"/></feComponentTransfer>
+      <feComposite in="grainA" in2="cut" operator="in" result="speck"/>
+      <feBlend in="cut" in2="speck" mode="multiply"/>
+    </filter>
+    <pattern id="tooth" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="6" r="0.6" fill="#0A1045" opacity="0.14"/>
+      <circle cx="18" cy="20" r="0.5" fill="#C45C32" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="400" fill="#F3EEE6"/>
+  <rect width="640" height="400" fill="url(#tooth)"/>
+  <g filter="url(#carve)">
+    <g fill="none" stroke-linecap="round">
+      <path d="M-20 70 C 80 20, 140 110, 230 60" stroke="#C45C32" stroke-width="16"/>
+      <path d="M430 36 C 520 90, 580 20, 670 70" stroke="#0A1045" stroke-width="12"/>
+      <path d="M500 340 C 580 300, 620 370, 680 330" stroke="#C45C32" stroke-width="14"/>
+    </g>
+    <g fill="none" stroke="#0A1045" stroke-linecap="round">
+      <path d="M-10 300 C 70 278, 130 322, 210 300 S 340 276, 430 308 S 560 332, 660 300" stroke-width="8"/>
+      <path d="M-10 328 C 90 308, 160 350, 250 328 S 390 306, 480 336 S 590 358, 660 328" stroke-width="6"/>
+      <path d="M20 354 C 120 336, 200 372, 300 352 S 460 334, 640 360" stroke-width="5"/>
+    </g>
+    <path fill="#0A1045" d="M78 246 C170 230 230 222 330 224 C450 226 530 244 590 268 L552 314 C430 342 190 338 104 302 Z"/>
+    <path fill="#0A1045" d="M292 306 h30 l6 40 h-42 z"/>
+    <path fill="#0A1045" d="M248 78 h16 v168 h-16 z"/>
+    <path fill="#0A1045" d="M256 86 C310 96 390 150 448 230 L268 236 Z"/>
+    <path fill="#0A1045" d="M248 108 C190 140 120 190 108 232 L244 228 Z"/>
+    <path fill="none" stroke="#C45C32" stroke-width="10" stroke-linecap="round" d="M108 234 H452"/>
+  </g>
+  <g fill="none" stroke="#F3EEE6" stroke-linecap="round">
+    <path d="M256 108 V228" stroke-width="4"/>
+    <path d="M280 120 C320 150 360 190 400 220" stroke-width="3"/>
+    <path d="M300 140 C340 170 380 200 420 222" stroke-width="2.5"/>
+    <path d="M160 160 C190 180 210 200 220 220" stroke-width="2.5"/>
+    <path d="M120 268 C200 258 280 256 360 262" stroke-width="3"/>
+    <path d="M140 286 C240 276 360 278 500 292" stroke-width="2.5"/>
+  </g>
+  <ellipse cx="200" cy="280" rx="10" ry="3.2" fill="#F3EEE6"/>
+  <ellipse cx="470" cy="292" rx="8" ry="2.8" fill="#F3EEE6"/>
+</svg>
