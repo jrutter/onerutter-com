@@ -1,6 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { asDateString } from "@/lib/dates";
+import { draftsAreVisible } from "@/lib/drafts";
+
+export { draftsAreVisible };
 
 const notesDir = path.join(process.cwd(), "content/notes");
 
@@ -15,23 +19,6 @@ export type Note = {
   image?: string;
   body: string;
 };
-
-export function draftsAreVisible() {
-  if (process.env.SHOW_DRAFTS === "true") return true;
-  if (process.env.VERCEL_ENV === "preview") return true;
-  return process.env.NODE_ENV !== "production";
-}
-
-function asDateString(value: unknown, file: string, field: string) {
-  if (value instanceof Date && !Number.isNaN(value.getTime())) {
-    const year = value.getUTCFullYear();
-    const month = String(value.getUTCMonth() + 1).padStart(2, "0");
-    const day = String(value.getUTCDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
-  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
-  throw new Error(`${file}: ${field} must be YYYY-MM-DD`);
-}
 
 function readNote(fileName: string): Note {
   const filePath = path.join(notesDir, fileName);
