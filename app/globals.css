@@ -924,6 +924,264 @@ h2,
   font-weight: 700;
 }
 
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.trip-index {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.trip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 42px 28px;
+}
+
+.trip-grid h2 {
+  font-size: clamp(26px, 3vw, 34px);
+}
+
+.trip-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.trip-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.72fr);
+  gap: 28px 36px;
+  align-items: end;
+}
+
+.trip-cover {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--paper-deep);
+}
+
+.trip-feature .trip-cover {
+  aspect-ratio: 16 / 10;
+}
+
+.trip-copy h2 {
+  margin-top: 14px;
+}
+
+.trip-feature .trip-copy h2 {
+  margin-top: 8px;
+}
+
+.trip-card:hover h2 {
+  color: var(--clay-deep);
+}
+
+.trip-place {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+}
+
+.trip-dates {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.trip-copy .pill {
+  margin-top: 14px;
+}
+
+.trip-dateline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.trip-dateline .place {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.trip-intro {
+  max-width: 36em;
+  margin: 22px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.trip-essay {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  margin-top: 56px;
+}
+
+.trip-figure {
+  margin: 0;
+}
+
+.trip-figure-feature {
+  width: 100%;
+}
+
+.trip-figure-offset-left {
+  width: min(100%, 760px);
+  margin-right: auto;
+}
+
+.trip-figure-offset-right {
+  width: min(100%, 680px);
+  margin-left: auto;
+}
+
+.trip-pair {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.trip-pair .trip-figure:nth-child(2) {
+  margin-top: 64px;
+}
+
+.trip-shot {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.trip-shot img {
+  display: block;
+  border-radius: 14px;
+  background: var(--paper-deep);
+}
+
+.trip-caption {
+  margin: 12px 0 0;
+  max-width: 42ch;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding:
+    max(16px, env(safe-area-inset-top))
+    max(18px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom))
+    max(18px, env(safe-area-inset-left));
+  background: var(--thames-deep);
+  color: var(--paper);
+}
+
+.lightbox-bar,
+.lightbox-moves {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lightbox-count {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lightbox button {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(251, 247, 241, 0.4);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--paper);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lightbox button:hover {
+  border-color: var(--paper);
+}
+
+.lightbox button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.lightbox-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+
+.lightbox-frame {
+  position: relative;
+  width: min(1100px, 100%);
+  height: 100%;
+}
+
+.lightbox-frame img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lightbox-foot {
+  display: grid;
+  gap: 12px;
+}
+
+.lightbox-caption {
+  min-height: 1.4em;
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.4;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .builds,
   .steps,
@@ -947,8 +1205,29 @@ h2,
 
   .nav {
     width: 100%;
-    gap: 12px;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    justify-content: flex-start;
+  }
+
+  .trip-feature,
+  .trip-grid,
+  .trip-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .trip-figure-offset-left,
+  .trip-figure-offset-right {
+    width: 100%;
+    margin: 0;
+  }
+
+  .trip-pair .trip-figure:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .trip-essay {
+    gap: 36px;
   }
 
   .nav a {

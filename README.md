@@ -18,7 +18,7 @@ npm run build
 npm start
 ```
 
-Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. They are omitted from the production site, `/feed.xml`, and `/sitemap.xml`.
+Draft notes and draft trip albums are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. They are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
 
 ## Routes
 
@@ -28,6 +28,8 @@ Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run
 - `/notes`
 - `/notes/[slug]`
 - `/notes/tag/[tag]`
+- `/travel`
+- `/travel/[slug]`
 - `/feed.xml` RSS
 - `/sitemap.xml`
 - `/robots.txt`
@@ -63,3 +65,55 @@ Write about technology, the apps, or something Jake is exploring. Do not invent 
 The two files already in `content/notes/` are placeholder drafts. Replace them. Do not treat them as Jake's writing.
 
 Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags`, `featured`, and `order`. `url` is omitted when there is nothing to link. `featured: true` plus `homeOrder` puts a project on the home row. The home row is the three Jake chose: Tails over Thames, Three Today, and Mind the Timetable.
+
+## Adding a trip
+
+Trip albums are folders. An assistant adds one from photographs Jake sends. Do not commit the originals. Phone photographs carry GPS in EXIF, and sometimes in XMP, and a file in `public/` is world-readable.
+
+1. Pick at most 10 photographs. Put only those files in one folder (JPEG, PNG, WebP, HEIC, TIFF, or AVIF). Rename them if the filename order is not the order Jake wants. Nested folders are ignored.
+2. Run:
+
+```bash
+node scripts/prepare-trip-photos.mjs <slug> <folder-of-photos>
+```
+
+`<slug>` is lowercase kebab-case and becomes the URL: `lisbon-2026` is `/travel/lisbon-2026`. The script:
+
+- Writes `public/travel/<slug>/01.jpg`, `02.jpg`, and so on.
+- Scales so the longest side is at most 2400 pixels, and does not enlarge a smaller file. That covers the album column and a full-screen view on a typical retina laptop without shipping a 4000-pixel phone original.
+- Bakes in orientation, then saves a progressive JPEG at quality 82 with EXIF, XMP, and IPTC removed, including GPS.
+- Refuses to keep a file if any of that metadata survives.
+- Creates `content/trips/<slug>/index.mdx` with `draft: true` when that file does not exist yet. It will not overwrite an existing album.
+
+3. Fill the frontmatter. The build fails if a required field is missing, a date is not `YYYY-MM-DD`, there are more than 10 photos, or `cover` is not one of the photo `src` values. `alt` cannot stay `TODO`.
+
+```yaml
+---
+title: Trip title
+place: City or region
+country: Country
+startDate: "2026-06-01"   # quoted so YAML does not turn it into a Date
+endDate: "2026-06-07"
+cover: /travel/lisbon-2026/01.jpg
+summary: One or two sentences. This is the intro on the album and the social description.
+draft: true
+photos:
+  - src: /travel/lisbon-2026/01.jpg
+    alt: What is in the photograph, for someone who cannot see it.
+    caption: Optional one line. Leave it blank for no caption.
+---
+```
+
+Album order is the `photos` list, newest trip first on `/travel` by `startDate`. A caption is optional and must be a single line of at most 160 characters.
+
+Images can also sit beside `index.mdx` and be referenced as `01.jpg` (no leading slash). The site serves those from `/trip-photos/<slug>/` after the same GPS check. Prefer the script and `public/travel/<slug>/`.
+
+4. Leave `draft: true` unless Jake has asked for the album to go live in that pull request. A draft shows locally and on the Vercel preview, with a banner. It is not in the production HTML or the sitemap.
+5. Open a pull request. Include the title, place, dates, and whether it is still a draft.
+6. Publishing is a deliberate edit: set `draft: false`.
+
+The build also rejects a trip image that still contains GPS EXIF or GPS in XMP, including one that was resized somewhere else. Run the script rather than copying a phone photograph into the repo.
+
+`content/trips/sample-album/` is a draft layout sample. Its pictures are generated colour fields from `node scripts/generate-sample-album.mjs`, not photographs and not one of Jake's trips. Replace it. Do not set that file to `draft: false`.
+
+A copy-ready frontmatter file also lives at `content/trips/_template/index.mdx`. Folders whose names start with `_` are ignored.
