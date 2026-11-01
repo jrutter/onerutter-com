@@ -65,7 +65,7 @@ Write about technology, the apps, or something Jake is exploring. Do not invent 
 
 The two files already in `content/notes/` are placeholder drafts. Replace them. Do not treat them as Jake's writing.
 
-Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags`, `featured`, and `order`. `url` is omitted when there is nothing to link. `featured: true` plus `homeOrder` puts a project on the home row. The home row is the three Jake chose: Tails over Thames, Three Today, and Mind the Timetable.
+Projects live in `content/projects/*.md` with `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags`, `featured`, and `order`. `url` is omitted when there is nothing to link. `featured: true` plus `homeOrder` puts a project on the home row. The home row is Tails over Thames, Three Today, Mind the Timetable, and Bangers & Postcodes.
 
 ## Adding a trip
 
