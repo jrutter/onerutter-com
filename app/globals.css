@@ -490,6 +490,69 @@ h2,
   grid-column: 1 / -1;
 }
 
+.story-hero {
+  margin: 0 0 32px;
+}
+
+.story-hero img,
+.era-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.era {
+  display: flow-root;
+}
+
+.era-art {
+  margin: 0;
+}
+
+.era-float-end .era-art {
+  float: right;
+  width: 200px;
+  margin: 4px 0 12px 22px;
+}
+
+.era-float-start .era-art {
+  float: left;
+  width: 210px;
+  margin: 4px 22px 12px 0;
+}
+
+.era-sink.era-float-end .era-art,
+.era-sink.era-float-start .era-art {
+  margin-top: 28px;
+}
+
+.era-above-end,
+.era-above-start,
+.era-below-end,
+.era-below-start {
+  display: grid;
+  gap: 16px;
+}
+
+.era-above-end .era-art,
+.era-below-end .era-art {
+  width: min(100%, 280px);
+  justify-self: end;
+}
+
+.era-above-start .era-art,
+.era-below-start .era-art {
+  width: min(100%, 320px);
+  justify-self: start;
+}
+
+.era-wide.era-above-end .era-art,
+.era-wide.era-above-start .era-art,
+.era-wide.era-below-end .era-art,
+.era-wide.era-below-start .era-art {
+  width: min(100%, 440px);
+}
+
 .needs {
   border: 1.5px dashed var(--clay);
   background: rgba(196, 92, 50, 0.06);
@@ -1711,6 +1774,22 @@ h2,
 }
 
 @media (max-width: 900px) {
+  .era-float-end .era-art,
+  .era-float-start .era-art,
+  .era-sink.era-float-end .era-art,
+  .era-sink.era-float-start .era-art {
+    float: none;
+    width: min(220px, 72%);
+    margin: 0 0 14px;
+  }
+
+  .era-float-end .era-art,
+  .era-sink.era-float-end .era-art,
+  .era-above-end .era-art,
+  .era-below-end .era-art {
+    margin-left: auto;
+  }
+
   .builds,
   .steps,
   .swatches {
@@ -1807,6 +1886,10 @@ h2,
   .timeline li,
   .project {
     grid-template-columns: 1fr;
+  }
+
+  .era-wide .era-art {
+    width: min(100%, 420px);
   }
 
   .project .pill {

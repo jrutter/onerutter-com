@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="420" viewBox="0 0 560 420" role="img">
+  <title>A browser window beside a diploma</title>
+  <defs>
+    <filter id="carve" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="cut"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="1" seed="4" result="grain"/>
+      <feComponentTransfer in="grain" result="grainA"><feFuncA type="discrete" tableValues="0 0 0 0.3 0.58"/></feComponentTransfer>
+      <feComposite in="grainA" in2="cut" operator="in" result="speck"/>
+      <feBlend in="cut" in2="speck" mode="multiply"/>
+    </filter>
+    <pattern id="tooth" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="9" r="0.6" fill="#0A1045" opacity="0.14"/>
+      <circle cx="19" cy="20" r="0.5" fill="#C45C32" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="560" height="420" fill="#F3EEE6"/>
+  <rect width="560" height="420" fill="url(#tooth)"/>
+  <g filter="url(#carve)">
+    <g fill="none" stroke-linecap="round">
+      <path d="M-10 64 C 70 16, 130 100, 210 48" stroke="#C45C32" stroke-width="14"/>
+      <path d="M360 370 C 440 330, 500 400, 580 350" stroke="#0A1045" stroke-width="12"/>
+    </g>
+    <rect x="36" y="56" width="280" height="210" rx="14" fill="none" stroke="#0A1045" stroke-width="14"/>
+    <path fill="#C45C32" d="M36 56 h280 v34 H36 z"/>
+    <rect x="60" y="112" width="96" height="78" fill="#0A1045"/>
+    <rect x="170" y="112" width="120" height="10" fill="#0A1045"/>
+    <rect x="170" y="132" width="96" height="8" fill="#0A1045"/>
+    <rect x="170" y="150" width="112" height="8" fill="#0A1045"/>
+    <rect x="60" y="206" width="230" height="8" fill="#0A1045"/>
+    <rect x="60" y="224" width="180" height="8" fill="#C45C32"/>
+    <g transform="rotate(7 430 250)">
+      <rect x="332" y="168" width="196" height="140" rx="4" fill="#0A1045"/>
+      <circle cx="430" cy="228" r="26" fill="#C45C32"/>
+      <path fill="#C45C32" d="M408 248 l-10 52 h20 l8-30 8 30 h20 l-12-52 z"/>
+    </g>
+  </g>
+  <g fill="#F3EEE6">
+    <circle cx="62" cy="73" r="5"/>
+    <circle cx="78" cy="73" r="5"/>
+    <circle cx="94" cy="73" r="5"/>
+    <g transform="rotate(7 430 250)">
+      <circle cx="430" cy="228" r="12"/>
+    </g>
+  </g>
+  <g fill="none" stroke="#F3EEE6" stroke-linecap="round">
+    <path d="M48 70 h200" stroke-width="3"/>
+    <path d="M78 132 v48" stroke-width="2.5"/>
+    <path d="M360 200 h140" stroke-width="3" transform="rotate(7 430 250)"/>
+  </g>
+  <ellipse cx="120" cy="160" rx="8" ry="3" fill="#F3EEE6"/>
+</svg>
