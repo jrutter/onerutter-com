@@ -25,6 +25,7 @@ Draft notes and draft trip albums are visible when `NODE_ENV` is not `production
 - `/` home
 - `/story`
 - `/lab`
+- `/hello`
 - `/notes`
 - `/notes/[slug]`
 - `/notes/tag/[tag]`
@@ -146,3 +147,17 @@ Images can also sit beside `index.mdx` and be referenced as `01.jpg` (no leading
 The build rejects a trip image that still contains GPS EXIF or GPS in XMP, including one that was resized somewhere else. Run the script rather than copying a phone photograph into the repo.
 
 `content/trips/sample-album/`, `sample-strip/`, and `sample-markers/` are draft layout samples in three different years, three colour fields each. They are produced by `node scripts/generate-sample-album.mjs`, which draws the fields and then runs the prepare script so the corner watermark is the real one. They are not photographs and not trips Jake took. They stay `draft: true`, so production, the sitemap, and the trip count leave them out.
+
+## Contact form
+
+“Say hello” in the header goes to `/hello`. The form posts to a server action, which sends the note through [Resend](https://resend.com). Nothing about the recipient or the sender is stored in the repo.
+
+Set these three variables in Vercel for Production and Preview. The page still renders when they are missing. A submit then shows a friendly error instead of throwing.
+
+| Variable | What it is |
+| --- | --- |
+| `RESEND_API_KEY` | API key from Resend. |
+| `CONTACT_TO_EMAIL` | Address that receives the note. `name@domain` or `Name <name@domain>`. |
+| `CONTACT_FROM_EMAIL` | Sender Resend will accept. Same shape as `CONTACT_TO_EMAIL`. The domain has to be verified in Resend. |
+
+Locally, put the same names in `.env.local`. That file is gitignored. Do not commit the values.

@@ -4,7 +4,7 @@ import { siteUrl } from "@/lib/site";
 import { getPublishedTrips, tripHasPage } from "@/lib/trips";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticRoutes = ["", "/story", "/lab", "/notes", "/travel"].map((path) => ({
+  const staticRoutes = ["", "/story", "/lab", "/notes", "/hello", "/travel"].map((path) => ({
     url: `${siteUrl}${path || "/"}`,
   }));
 
