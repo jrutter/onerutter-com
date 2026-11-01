@@ -44,13 +44,10 @@ export default function HomePage() {
       <div className="wrap">
         <section className="hero">
           <p className="kicker">Barnes, London</p>
-          <h1 className="display">
-            Hi, I&apos;m Jake Rutter. I lead DTC engineering at SharkNinja, and I stay ahead by building, tinkering, and
-            learning something new every week.
-          </h1>
+          <h1 className="display">Hi, I&apos;m Jake Rutter.</h1>
           <p className="deck">
-            VP, DTC Engineering &amp; Applied AI. Twenty years on ecommerce for brands including SharkNinja, The North
-            Face, Vans, and Priceline.
+            I lead DTC engineering at SharkNinja, and I stay ahead by building, tinkering, and learning something new
+            every week.
           </p>
           <p className="hero-links">
             <Link href="/story">→ The story</Link>
