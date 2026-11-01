@@ -49,6 +49,6 @@ The contact form on `/hello` sends through Resend. Variable names are in `.env.e
 
 ## Where content lives
 
-Notes are `content/notes/*.mdx`. Trips are `content/trips/<slug>/index.mdx`. A published trip includes `places`: country or city centroids at two decimal places, never an exact spot. `/travel` opens with a world map drawn from those places, then the timeline. Lab projects are `content/projects/*.md`. The home row is Agentic Checkout Index, Tails over Thames, Three Today, Mind the Timetable, and Bangers & Postcodes.
+Notes are `content/notes/*.mdx`. Trips are `content/trips/<slug>/index.mdx`. A published trip includes `places`: country or city centroids at two decimal places, never an exact spot. `/travel` opens with a world map drawn from those places, then the timeline. Lab projects are `content/projects/*.md`. The home row is Agentic Checkout Index, Tails over Thames, and Mind the Timetable.
 
 Vercel auto-deploys `main` to production. Each pull request gets a preview deployment.

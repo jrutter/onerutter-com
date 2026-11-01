@@ -45,7 +45,8 @@ export default function HomePage() {
         <section className="hero">
           <p className="kicker">Barnes, London</p>
           <h1 className="display">
-            Hi, I&apos;m Jake. I lead DTC engineering at SharkNinja, and I build small apps on the side.
+            Hi, I&apos;m Jake Rutter. I lead DTC engineering at SharkNinja, and I stay ahead by building, tinkering, and
+            learning something new every week.
           </h1>
           <p className="deck">
             VP, DTC Engineering &amp; Applied AI. Twenty years on ecommerce for brands including SharkNinja, The North

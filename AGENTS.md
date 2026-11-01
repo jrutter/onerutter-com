@@ -73,7 +73,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 
 | URL | Source | What it shows |
 | --- | --- | --- |
-| `/` | `app/page.tsx` | Hello, five featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
+| `/` | `app/page.tsx` | Hello, three featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
 | `/story` | `app/story/page.tsx` | Published about paragraphs, “What draws me in”, full timeline (newest year first), working style, interests, school. |
 | `/lab` | `app/lab/page.tsx` | Every project in `content/projects/`, as color cards. |
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
@@ -182,7 +182,7 @@ Projects are `content/projects/*.md`, loaded by `lib/projects.ts`. How-to: [docs
 
 Required: `title`, `summary`, `status` (`live`, `building`, or `placeholder`), `tags` (array of strings), `featured` (boolean), `order` (number). Optional: `url` (absolute; omit when there is nothing to link), `homeOrder`, `kicker`, `cardTitle`, `cardSummary`. A featured project must have a `url`. The build fails otherwise.
 
-`featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is Agentic Checkout Index (`homeOrder` 1), Tails over Thames (2), Three Today (3), Mind the Timetable (4), and Bangers & Postcodes (5). Home card materials and monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary (no separate card lines) on the ink card. Do not add a project Jake has not named.
+`featured: true` plus `homeOrder` puts a project on the home row, in `homeOrder`. The home row is Agentic Checkout Index (`homeOrder` 1), Tails over Thames (2), and Mind the Timetable (3). Three Today and Bangers & Postcodes stay on `/lab` with `featured: false`. Home card materials and monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary (no separate card lines) on the ink card. Do not add a project Jake has not named.
 
 Lab cards (`components/lab-card.tsx`) use a stable tone per slug. A new slug falls back to navy, cyan, yellow, peach, pink, repeating with its index. Status text comes from `statusLabel`: Live, Building, or “No link yet”. A card with a `url` is a link. A card without one is an article.
 

@@ -4,9 +4,8 @@ summary: Pick a London region, then a postcode, and leave with the local artists
 status: live
 url: https://bangers-and-postcodes.vercel.app
 tags: []
-featured: true
+featured: false
 order: 95
-homeOrder: 5
 kicker: London
 cardTitle: Local artists, venues, and a playlist
 cardSummary: Pick a region, then a postcode.

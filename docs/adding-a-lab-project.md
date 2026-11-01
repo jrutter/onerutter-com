@@ -24,7 +24,7 @@ Required: `title`, `summary`, `status`, `tags` (a list of strings), `featured` (
 
 Status labels on the card are Live, Building, and “No link yet” (`placeholder`). A card with a `url` links out. A card without one is not a link.
 
-The home row is a separate treatment. It is Agentic Checkout Index (1), Tails over Thames (2), Three Today (3), Mind the Timetable (4), and Bangers & Postcodes (5). Their paper, ink, and clay materials and the monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary. Putting `featured: true` on another project adds a home card, and an unmapped slug falls back to the paper card with a “3” monogram. Do that only when Jake asks, and give the new slug its own entry in `presentation`.
+The home row is a separate treatment. It is Agentic Checkout Index (1), Tails over Thames (2), and Mind the Timetable (3). Three Today and Bangers & Postcodes stay on `/lab`. Their paper, ink, and clay materials and the monograms are hardcoded in `components/build-card.tsx` for those slugs. Agentic Checkout Index uses its Lab title and summary. Putting `featured: true` on another project adds a home card, and an unmapped slug falls back to the paper card with a “3” monogram. Do that only when Jake asks, and give the new slug its own entry in `presentation`.
 
 Lab card colors are assigned in `toneBySlug` inside `components/lab-card.tsx`. Add the new slug there. If you skip it, the card rotates through navy, cyan, yellow, peach, and pink based on its index.
 
