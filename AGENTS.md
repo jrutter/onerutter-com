@@ -115,7 +115,7 @@ Required frontmatter, checked in `lib/notes.ts`. The build throws if one is miss
 | `draft` | Boolean. |
 | `updated` | Optional `YYYY-MM-DD`. When it is set, the same places also show “Updated 1 Nov 2026”. |
 | `image` | Optional path string. The loader stores it. The social card (`app/notes/[slug]/opengraph-image.tsx`) is generated from the title and does not read this field. |
-| `cover` | Every new note includes an illustrated SVG at `public/note-covers/<slug>.svg`. Frontmatter is that public path, `/note-covers/<slug>.svg`. Shown on the notes index, at the top of the note, and as that note’s Open Graph image. When `cover` is set, the loader also accepts an existing webp, jpg, png, avif, or gif under `public/`. A new note uses the SVG. |
+| `cover` | Every new note includes an illustrated SVG at `public/note-covers/<slug>.svg`. Frontmatter is that public path, `/note-covers/<slug>.svg`. Shown on the notes index, on the note under the title, added date, and tags, and as that note’s Open Graph image. When `cover` is set, the loader also accepts an existing webp, jpg, png, avif, or gif under `public/`. A new note uses the SVG. |
 | `coverAlt` | A description of the illustration. Set it whenever `cover` is set. The note page uses the title when this is omitted. A new note sets both. |
 
 Body is Markdown/MDX: headings, paragraphs, lists, links. Note images go in `content/notes/images/` and are referenced with a relative path. The article body uses Source Serif 4 at 21px / 1.6, measure about 66 characters. Headings inside a note stay in Outfit.
@@ -123,6 +123,8 @@ Body is Markdown/MDX: headings, paragraphs, lists, links. Note images go in `con
 Sort is newest `date` first, then title. The added date is shown as “Added 1 Nov 2026” (`en-GB`, short month, via `formatNoteDate`) inside a `<time dateTime>` element: on the featured card, the grid cards, tag pages, the top of the note, and the home list. An `updated` date, when set, sits beside it as “Updated 1 Nov 2026”. Reading time is about one minute per 200 words.
 
 Every new note ships with an illustrated SVG cover under `public/note-covers/`, named for the slug, plus `cover` and `coverAlt` in the frontmatter. Draw it in the site’s style: flat shapes on a 1200×750 canvas, using the Lab palette (navy `#0A1045`, cyan `#00C2D1`, yellow `#F9E900`, peach `#F6AF65`, pink `#ED33B9`) with paper `#F3EEE6`, Thames `#1E4A42`, and clay `#C45C32`, the same way the covers already in that folder are drawn.
+
+On the note page the title, the “Added …” date, and the tags sit above the cover. The cover is 21:9 and the reading measure (`66ch`, the same width as `.prose`). `NoteCover` paints a small `onerutter.com` mark in the corner of the picture. The home list turns that mark off.
 
 `/notes` leads with the newest note as a large card (cover, title, summary, added date, reading time, tags), then a two-column grid on wide screens and one column on small screens. Tag chips filter with `?tag=`. A note with no `cover` gets a colour pattern from its title and tags, using the Lab palette. A new note still ships with the SVG. Drafts stay off that grid in production.
 

@@ -65,29 +65,15 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
             summary, body, and tags.
           </p>
         ) : null}
-        {note.cover ? (
-          <figure className="note-hero">
-            <NoteCover
-              note={note}
-              sizes="(max-width: 760px) calc(100vw - 40px), 1120px"
-              preload
-              alt={note.coverAlt ?? note.title}
-            />
-          </figure>
-        ) : null}
+        <h1 className="title">{note.title}</h1>
         <p className="note-meta">
           <NoteDates date={note.date} updated={note.updated} />
           <span aria-hidden="true">·</span>
           <span>{formatReadingTime(note.body)}</span>
           {note.draft ? <span className="pill pill-draft">Draft</span> : null}
         </p>
-        <h1 className="title">{note.title}</h1>
-        <p className="deck">{note.summary}</p>
-        <article className="prose">
-          <MDXRemote source={note.body} />
-        </article>
         {note.tags.length > 0 ? (
-          <ul className="tags stack-28">
+          <ul className="tags">
             {note.tags.map((tag) => (
               <li key={tag}>
                 <Link className="tag" href={`/notes/tag/${tag}`}>
@@ -97,6 +83,20 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
             ))}
           </ul>
         ) : null}
+        {note.cover ? (
+          <figure className="note-hero">
+            <NoteCover
+              note={note}
+              sizes="(max-width: 760px) calc(100vw - 40px), 66ch"
+              preload
+              alt={note.coverAlt ?? note.title}
+            />
+          </figure>
+        ) : null}
+        <p className="deck">{note.summary}</p>
+        <article className="prose">
+          <MDXRemote source={note.body} />
+        </article>
         <p className="back">
           <Link className="text-link" href="/notes">
             ← All notes
