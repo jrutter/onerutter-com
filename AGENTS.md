@@ -73,7 +73,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 | URL | Source | What it shows |
 | --- | --- | --- |
 | `/` | `app/page.tsx` | Hello, three featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
-| `/story` | `app/story/page.tsx` | Published about paragraphs, “What draws me in”, full timeline (newest year first), working style, interests, school. |
+| `/story` | `app/story/page.tsx` | Portrait, published about paragraphs, “What draws me in”, full timeline (newest year first), and interests. |
 | `/lab` | `app/lab/page.tsx` | Every project in `content/projects/`, as color cards. |
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
 | `/notes/[slug]` | `app/notes/[slug]/page.tsx` | One note. Slug is the filename. |
@@ -94,7 +94,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 - Keep Jake's wording for the story. The about paragraphs and the “What draws me in” section in `app/story/page.tsx` are his. The year-by-year sentences in `lib/story.ts` are drafted and marked “Needs an edit” on the page. Do not silently rewrite either. The story page lists those entries newest year first.
 - Drafts stay out of production. `draft: true` is omitted from production HTML, `/feed.xml` (notes), and `/sitemap.xml`. Publishing is an explicit `draft: false`.
 - Do not publish an email address or a `mailto:` link. `/hello` is how to reach Jake.
-- Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. No portrait, dark mode, résumé PDF, phone number, GPA, GitHub link, or analytics.
+- Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. The Story page shows one portrait, `public/jake-rutter.jpg`. No dark mode, résumé PDF, phone number, GPA, GitHub link, or analytics.
 
 Drafts render when `lib/drafts.ts` says so: `SHOW_DRAFTS=true`, or `VERCEL_ENV=preview`, or `NODE_ENV` is not `production` (local `npm run dev`). A production build (`npm run build` / `npm start`, and the Vercel production deploy) omits them.
 
