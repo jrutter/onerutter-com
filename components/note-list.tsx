@@ -23,7 +23,7 @@ export function NoteList({ notes }: { notes: Note[] }) {
         <li key={note.slug}>
           <article className="home-note">
             <div className="home-note-media">
-              <NoteCover note={note} sizes={thumbSizes} alt={coverDescription(note)} />
+              <NoteCover note={note} sizes={thumbSizes} alt={coverDescription(note)} watermark={false} />
             </div>
             <div className="home-note-body">
               <p className="note-meta">
