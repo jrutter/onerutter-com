@@ -108,9 +108,21 @@ export const storyYears: YearEntry[] = [
     text: "Director, Global Front-End Engineering, eCommerce. Twenty-two front-end engineers across North America and Europe, for The North Face, Vans, Timberland, Eastpak, JanSport, Kipling, Napapijri, Smartwool, Altra, Icebreaker, and Dickies. The North Face, Vans, and Timberland went onto Salesforce Commerce Cloud and a Vue and Nuxt front end, across eight languages and 24 locales. Contentsquare certified, December 2023. An ELC engineering peer group from 2024 into 2025.",
   },
   {
+    when: "2023–2025",
+    datetime: "2023",
+    place: "Lewes, Delaware",
+    text: "Two years in Lewes, Delaware.",
+  },
+  {
     when: "2025–",
     datetime: "2025",
     place: "SharkNinja, London",
     text: "Senior Director, Global DTC Engineering from January 2025. I relocated to lead from the Battersea office after a year of remote leadership from the US. The work has been an in-house DTC engineering group, the Salesforce stack across EMEA and North America, and an agent-assisted way of building. SharkNinja recognized that work with a True Edge award in July 2025. In September 2026 the title became VP, DTC Engineering & Applied AI. I live in Barnes.",
+  },
+  {
+    when: "Present",
+    datetime: "2026",
+    place: "",
+    text: "Living abroad for a year, working with agents, and having a blast. SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
   },
 ];
