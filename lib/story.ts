@@ -8,28 +8,16 @@ export type YearEntry = {
 
 export const homeYears: YearEntry[] = [
   {
-    when: "1999–2000",
-    datetime: "1999",
-    place: "Stamford",
-    text: "Two summers on the water, before any of the web jobs. Sail maintenance, then a season teaching on Colgate 26s.",
+    when: "Present",
+    datetime: "2026",
+    place: "",
+    text: "Living abroad for a year, working with agents, and having a blast.",
   },
   {
-    when: "2001",
-    datetime: "2001",
-    place: "Burlington",
-    text: "Champlain College, web design. The year after, Rutter Interactive starts — a freelance studio that runs until 2014.",
-  },
-  {
-    when: "2009",
-    datetime: "2009",
-    place: "Norwalk",
-    text: "Direct Wines. Designer, then director, then VP, through 2022. Wine-club ecommerce in the US, the UK, and Australia.",
-  },
-  {
-    when: "2011",
-    datetime: "2011",
-    place: "The book",
-    text: "Smashing jQuery, for Wiley. About three months, 300+ pages, over 5,000 copies.",
+    when: "2025",
+    datetime: "2025",
+    place: "London",
+    text: "SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
   },
   {
     when: "2022",
@@ -38,10 +26,28 @@ export const homeYears: YearEntry[] = [
     text: "VF Corporation, through 2024. Global front end for The North Face, Vans, Timberland, and the wider group.",
   },
   {
-    when: "2025",
-    datetime: "2025",
-    place: "London",
-    text: "SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
+    when: "2011",
+    datetime: "2011",
+    place: "The book",
+    text: "Smashing jQuery, for Wiley. About three months, 300+ pages, over 5,000 copies.",
+  },
+  {
+    when: "2009",
+    datetime: "2009",
+    place: "Norwalk",
+    text: "Direct Wines. Designer, then director, then VP, through 2022. Wine-club ecommerce in the US, the UK, and Australia.",
+  },
+  {
+    when: "2001",
+    datetime: "2001",
+    place: "Burlington",
+    text: "Champlain College, web design. The year after, Rutter Interactive starts — a freelance studio that runs until 2014.",
+  },
+  {
+    when: "1999–2000",
+    datetime: "1999",
+    place: "Stamford",
+    text: "Two summers on the water, before any of the web jobs. Sail maintenance, then a season teaching on Colgate 26s.",
   },
 ];
 
