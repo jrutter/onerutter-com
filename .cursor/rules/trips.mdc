@@ -21,7 +21,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 
 The script resizes the longest side to at most 2400px, burns `onerutter.com` into the bottom-right (white at 60% opacity) unless `--no-watermark` is set, and strips EXIF, XMP, and IPTC, including GPS. The build (`lib/gps.ts`) rejects a trip image that still has GPS EXIF or GPS in XMP.
 
-`alt` must be a real description. A value starting with `TODO` fails the build. Captions are optional, one line, at most 160 characters. Do not put coordinates or an exact photo location in alt, caption, or body. Leave `draft: true` unless Jake asked to publish. A draft with photographs is listed on `/travel` in dev and on preview. A draft with no photographs is hidden there too. Its album URL 404s until `draft` is false, because `generateStaticParams` only returns published trips that have photographs and `dynamicParams` is false.
+`alt` must be a real description. A value starting with `TODO` fails the build. Captions are optional, one line, at most 160 characters. `position` is optional (`top`, `center`, or `bottom`) and sets the 4:3 timeline crop. Omit it to keep `object-position: right bottom` (the watermark). `top` is `center 15%`. The album shows the whole frame and uses the same position only when a photo is cropped. Do not put coordinates or an exact photo location in alt, caption, or body. Leave `draft: true` unless Jake asked to publish. A draft with photographs is listed on `/travel` in dev and on preview. A draft with no photographs is hidden there too. Its album URL 404s until `draft` is false, because `generateStaticParams` only returns published trips that have photographs and `dynamicParams` is false.
 
 How-to: `docs/adding-a-trip.md`.
 

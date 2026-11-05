@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import type { TripPhoto } from "@/lib/trip-types";
+import { tripPhotoObjectPosition, type TripPhoto } from "@/lib/trip-types";
 
 type Frame =
   | { kind: "feature" | "offset-left" | "offset-right"; index: number }
@@ -138,7 +138,11 @@ function PhotoFrame({
           placeholder="blur"
           blurDataURL={photo.blurDataURL}
           preload={preload}
-          style={{ width: "100%", height: "auto" }}
+          style={{
+            width: "100%",
+            height: "auto",
+            objectPosition: tripPhotoObjectPosition(photo.position),
+          }}
         />
       </button>
       {photo.caption ? <figcaption className="trip-caption">{photo.caption}</figcaption> : null}

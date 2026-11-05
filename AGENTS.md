@@ -148,7 +148,9 @@ Checked in `lib/trips.ts`:
 | `photos` | Optional. Omit the list when there are no photographs. At most 10. Three is the usual set. |
 | `cover` | Required when `photos` is set, and it must be one of those `src` values. Forbidden when there are no photos. |
 
-Each photo needs `src` and `alt`. `alt` must be a real description; a value that starts with `TODO` fails the build. `caption` is optional, a single line, at most 160 characters. Album order is the `photos` list. The timeline strip and the album render that whole list. A thumbnail links to `/travel/<slug>?photo=2` (1-based).
+Each photo needs `src` and `alt`. `alt` must be a real description; a value that starts with `TODO` fails the build. `caption` is optional, a single line, at most 160 characters. `position` is optional: `top`, `center`, or `bottom`. Album order is the `photos` list. The timeline strip and the album render that whole list. A thumbnail links to `/travel/<slug>?photo=2` (1-based).
+
+`/travel` thumbnails crop to 4:3 (`object-fit: cover`). With no `position`, `object-position` is `right bottom`, so the watermark stays in frame. `top` is `center 15%`, `center` is `center`, and `bottom` is `right bottom`. The album shows the whole photograph. The gallery image uses the same `object-position`, which only changes the picture when that frame is cropped.
 
 The public date line is the month and year of `startDate`, from `formatTripWhen`. Days stay in the file and are what the sort uses. They are not shown. A trip that runs into the next month still shows the start month, so 22 June–5 July 2023 reads June 2023. `startDate: "2026-10"` reads October 2026. If only `endDate` is set, that month is used. With no dates, the line is the year.
 
@@ -175,7 +177,7 @@ The script:
 - Deletes the output and exits if any of that metadata is still present.
 - Creates `content/trips/<slug>/index.mdx` with `draft: true` and `alt: "TODO"` when that file does not exist. An existing album is left alone. Add the `photos` list to the file that is already there.
 
-`lib/trip-assets.ts` calls `assertNoGps` (`lib/gps.ts`) for every trip image during the build. The build throws if EXIF contains a GPS IFD (`0x8825`) or if XMP matches GPS latitude, longitude, altitude, or position fields. An EXIF block that cannot be parsed also fails the build. Run the script rather than copying a phone photograph into the repo. Thumbnails use `object-position: right bottom` so the watermarked corner stays in frame.
+`lib/trip-assets.ts` calls `assertNoGps` (`lib/gps.ts`) for every trip image during the build. The build throws if EXIF contains a GPS IFD (`0x8825`) or if XMP matches GPS latitude, longitude, altitude, or position fields. An EXIF block that cannot be parsed also fails the build. Run the script rather than copying a phone photograph into the repo. Timeline thumbnails default to `object-position: right bottom` so the watermarked corner stays in frame. Set `position: top` on a photo when that crop should sit near the top (`center 15%`).
 
 ## Lab
 

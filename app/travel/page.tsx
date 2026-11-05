@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { draftsAreVisible } from "@/lib/drafts";
+import { tripPhotoObjectPosition } from "@/lib/trip-types";
 import { formatTripWhen, getVisibleTrips, groupTripsByYear, tripDateTime } from "@/lib/trips";
 import type { Trip } from "@/lib/trips";
 
@@ -96,7 +97,7 @@ function TripEntry({ trip, preload }: { trip: Trip; preload: boolean }) {
                 placeholder="blur"
                 blurDataURL={photo.blurDataURL}
                 preload={preload && index === 0}
-                style={{ objectFit: "cover", objectPosition: "right bottom" }}
+                style={{ objectFit: "cover", objectPosition: tripPhotoObjectPosition(photo.position) }}
               />
             </Link>
           </li>

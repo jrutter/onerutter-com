@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import { asDateString } from "@/lib/dates";
 import { draftsAreVisible } from "@/lib/drafts";
 import { inspectTripImage, isTripSlug, resolveTripImage } from "@/lib/trip-assets";
-import type { TripPhoto } from "@/lib/trip-types";
+import { isTripPhotoPosition, type TripPhoto, type TripPhotoPosition } from "@/lib/trip-types";
 
 const tripsDir = path.join(process.cwd(), "content/trips");
 
@@ -140,7 +140,7 @@ function resolveYear(file: string, explicit: string | undefined, startDate?: str
   return explicit;
 }
 
-type PhotoInput = { src: string; alt: string; caption?: string };
+type PhotoInput = { src: string; alt: string; caption?: string; position?: TripPhotoPosition };
 
 function readPhotos(value: unknown, file: string): PhotoInput[] {
   if (value == null) return [];
@@ -167,7 +167,15 @@ function readPhotos(value: unknown, file: string): PhotoInput[] {
       }
     }
 
-    return { src, alt, caption };
+    let position: TripPhotoPosition | undefined;
+    if (record.position != null && record.position !== "") {
+      if (typeof record.position !== "string" || !isTripPhotoPosition(record.position)) {
+        throw new Error(`${file}: ${label} position must be top, center, or bottom`);
+      }
+      position = record.position;
+    }
+
+    return { src, alt, caption, position };
   });
 }
 
@@ -211,6 +219,7 @@ async function readTrip(slug: string): Promise<Trip> {
         src: resolved.url,
         alt: input.alt,
         caption: input.caption,
+        position: input.position,
         width: facts.width,
         height: facts.height,
         blurDataURL: facts.blurDataURL,
