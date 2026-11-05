@@ -1277,6 +1277,17 @@ h2,
   border-top: 1px solid var(--line);
 }
 
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 40px;
+}
+
+.footer-identity {
+  min-width: 0;
+}
+
 .footer-name {
   margin: 0;
   font-weight: 600;
@@ -1296,8 +1307,9 @@ h2,
 .footer-links {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px 18px;
-  margin: 16px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -1939,6 +1951,18 @@ h2,
 
   .home-note .summary {
     font-size: 15px;
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-links {
+    justify-content: flex-start;
   }
 }
 
