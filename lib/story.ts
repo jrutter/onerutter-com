@@ -11,13 +11,7 @@ export const homeYears: YearEntry[] = [
     when: "Present",
     datetime: "2026",
     place: "",
-    text: "Living abroad for a year, working with agents, and having a blast.",
-  },
-  {
-    when: "2025",
-    datetime: "2025",
-    place: "London",
-    text: "SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
+    text: "Living abroad for a year, working with agents, and having a blast. SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026. Before that, two years in Lewes, Delaware (2023–2025).",
   },
   {
     when: "2022",
