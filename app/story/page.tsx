@@ -47,7 +47,7 @@ export default function StoryPage() {
               alt="Jake Rutter"
               width={800}
               height={800}
-              sizes="(max-width: 760px) 140px, 184px"
+              sizes="(max-width: 760px) 280px, 368px"
               loading="eager"
             />
           </figure>
