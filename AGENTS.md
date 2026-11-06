@@ -73,7 +73,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 | URL | Source | What it shows |
 | --- | --- | --- |
 | `/` | `app/page.tsx` | Hello, three featured builds, six selected years, the book, and up to three latest published notes. JSON-LD `Person`. |
-| `/story` | `app/story/page.tsx` | Published about paragraphs, “What draws me in”, full timeline (newest year first), working style, interests, school. |
+| `/story` | `app/story/page.tsx` | Portrait, published about paragraphs, “What draws me in”, full timeline (newest year first), and interests. |
 | `/lab` | `app/lab/page.tsx` | Every project in `content/projects/`, as color cards. |
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
 | `/notes/[slug]` | `app/notes/[slug]/page.tsx` | One note. Slug is the filename. |
@@ -94,7 +94,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 - Keep Jake's wording for the story. The about paragraphs and the “What draws me in” section in `app/story/page.tsx` are his. The year-by-year sentences in `lib/story.ts` are drafted and marked “Needs an edit” on the page. Do not silently rewrite either. The story page lists those entries newest year first.
 - Drafts stay out of production. `draft: true` is omitted from production HTML, `/feed.xml` (notes), and `/sitemap.xml`. Publishing is an explicit `draft: false`.
 - Do not publish an email address or a `mailto:` link. `/hello` is how to reach Jake.
-- Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. No portrait, dark mode, résumé PDF, phone number, GPA, GitHub link, or analytics.
+- Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. The Story page shows one portrait, `public/jake-rutter.jpg`. No dark mode, résumé PDF, phone number, GPA, GitHub link, or analytics.
 
 Drafts render when `lib/drafts.ts` says so: `SHOW_DRAFTS=true`, or `VERCEL_ENV=preview`, or `NODE_ENV` is not `production` (local `npm run dev`). A production build (`npm run build` / `npm start`, and the Vercel production deploy) omits them.
 
@@ -148,7 +148,9 @@ Checked in `lib/trips.ts`:
 | `photos` | Optional. Omit the list when there are no photographs. At most 10. Three is the usual set. |
 | `cover` | Required when `photos` is set, and it must be one of those `src` values. Forbidden when there are no photos. |
 
-Each photo needs `src` and `alt`. `alt` must be a real description; a value that starts with `TODO` fails the build. `caption` is optional, a single line, at most 160 characters. Album order is the `photos` list. The timeline strip and the album render that whole list. A thumbnail links to `/travel/<slug>?photo=2` (1-based).
+Each photo needs `src` and `alt`. `alt` must be a real description; a value that starts with `TODO` fails the build. `caption` is optional, a single line, at most 160 characters. `position` is optional: `top`, `center`, or `bottom`. Album order is the `photos` list. The timeline strip and the album render that whole list. A thumbnail links to `/travel/<slug>?photo=2` (1-based).
+
+`/travel` thumbnails crop to 4:3 (`object-fit: cover`). With no `position`, `object-position` is `right bottom`, so the watermark stays in frame. `top` is `center 15%`, `center` is `center`, and `bottom` is `right bottom`. The album shows the whole photograph. The gallery image uses the same `object-position`, which only changes the picture when that frame is cropped.
 
 The public date line is the month and year of `startDate`, from `formatTripWhen`. Days stay in the file and are what the sort uses. They are not shown. A trip that runs into the next month still shows the start month, so 22 June–5 July 2023 reads June 2023. `startDate: "2026-10"` reads October 2026. If only `endDate` is set, that month is used. With no dates, the line is the year.
 
@@ -175,7 +177,7 @@ The script:
 - Deletes the output and exits if any of that metadata is still present.
 - Creates `content/trips/<slug>/index.mdx` with `draft: true` and `alt: "TODO"` when that file does not exist. An existing album is left alone. Add the `photos` list to the file that is already there.
 
-`lib/trip-assets.ts` calls `assertNoGps` (`lib/gps.ts`) for every trip image during the build. The build throws if EXIF contains a GPS IFD (`0x8825`) or if XMP matches GPS latitude, longitude, altitude, or position fields. An EXIF block that cannot be parsed also fails the build. Run the script rather than copying a phone photograph into the repo. Thumbnails use `object-position: right bottom` so the watermarked corner stays in frame.
+`lib/trip-assets.ts` calls `assertNoGps` (`lib/gps.ts`) for every trip image during the build. The build throws if EXIF contains a GPS IFD (`0x8825`) or if XMP matches GPS latitude, longitude, altitude, or position fields. An EXIF block that cannot be parsed also fails the build. Run the script rather than copying a phone photograph into the repo. Timeline thumbnails default to `object-position: right bottom` so the watermarked corner stays in frame. Set `position: top` on a photo when that crop should sit near the top (`center 15%`).
 
 ## Lab
 

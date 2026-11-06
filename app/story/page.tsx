@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Timeline } from "@/components/timeline";
 import { storyYears } from "@/lib/story";
@@ -39,26 +40,38 @@ export default function StoryPage() {
           <h1 className="title">A little about me</h1>
         </header>
 
-        <div className="essay stack-28">
-          <p>
-            I&apos;m a seasoned digital technology leader with over two decades of experience in digital marketing,
-            e-commerce, and product engineering. Currently at SharkNinja, I&apos;m passionate about building
-            high-performing teams and leveraging technology — increasingly AI — to create meaningful digital capabilities
-            and experiences.
-          </p>
-          <p>
-            With a solid front-end engineering and user experience foundation, I have held pivotal positions including
-            Director of Global Front End Engineering and VP of Digital User Experience. Throughout my career I have
-            excelled at leading cross-functional teams, migrating platforms, implementing new architectures, and
-            optimizing SDLC processes for global brands like SharkNinja, The North Face, Vans, and Priceline.
-          </p>
-          <p>
-            More recently, I&apos;ve been diving deep into AI — both as a practitioner and a builder. I&apos;ve
-            integrated AI-powered features into production applications, built AI-first products from the ground up, and
-            actively explore how large language models and agentic workflows can unlock new kinds of user experiences. My
-            side projects TradeTrek and StrategicPulse are direct expressions of this interest: real products built with
-            AI at the core, not as an afterthought.
-          </p>
+        <div className="story-intro stack-28">
+          <figure className="story-portrait">
+            <Image
+              src="/jake-rutter.jpg"
+              alt="Jake Rutter"
+              width={800}
+              height={800}
+              sizes="(max-width: 760px) 140px, 184px"
+              loading="eager"
+            />
+          </figure>
+          <div className="essay">
+            <p>
+              I&apos;m a seasoned digital technology leader with over two decades of experience in digital marketing,
+              e-commerce, and product engineering. Currently at SharkNinja, I&apos;m passionate about building
+              high-performing teams and leveraging technology — increasingly AI — to create meaningful digital capabilities
+              and experiences.
+            </p>
+            <p>
+              With a solid front-end engineering and user experience foundation, I have held pivotal positions including
+              Director of Global Front End Engineering and VP of Digital User Experience. Throughout my career I have
+              excelled at leading cross-functional teams, migrating platforms, implementing new architectures, and
+              optimizing SDLC processes for global brands like SharkNinja, The North Face, Vans, and Priceline.
+            </p>
+            <p>
+              More recently, I&apos;ve been diving deep into AI — both as a practitioner and a builder. I&apos;ve
+              integrated AI-powered features into production applications, built AI-first products from the ground up, and
+              actively explore how large language models and agentic workflows can unlock new kinds of user experiences. My
+              side projects TradeTrek and StrategicPulse are direct expressions of this interest: real products built with
+              AI at the core, not as an afterthought.
+            </p>
+          </div>
         </div>
 
         <section className="block" aria-labelledby="draws-heading">

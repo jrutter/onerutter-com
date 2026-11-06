@@ -75,6 +75,17 @@ Use one flag or the other. `--no-watermark` skips the mark. An existing `index.m
 
 3. Point `cover` at one `src` and write a real `alt` for each photo. `alt` cannot stay `TODO`. A caption is optional, a single line of at most 160 characters. Album order is the `photos` list. A thumbnail opens `/travel/<slug>?photo=2` (1-based).
 
+`position` is optional on a photo. The `/travel` strip crops each thumbnail to 4:3. Leave `position` off and that crop stays at the bottom-right, so the watermark remains in the frame. Set it when the crop cuts off the subject:
+
+| `position` | `object-position` |
+| --- | --- |
+| omitted | `right bottom` |
+| `top` | `center 15%` |
+| `center` | `center` |
+| `bottom` | `right bottom` |
+
+Any other value fails the build. The album page shows the whole photograph. The gallery applies the same position, and it changes the picture only when that frame is cropped.
+
 ```yaml
 ---
 title: France
@@ -91,6 +102,7 @@ photos:
   - src: /travel/2025-france/01.jpg
     alt: What is in the photograph, for someone who cannot see it.
     caption: Optional one line. Leave it blank for no caption.
+    # position: top
 ---
 ```
 
