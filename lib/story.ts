@@ -8,28 +8,16 @@ export type YearEntry = {
 
 export const homeYears: YearEntry[] = [
   {
-    when: "1999–2000",
-    datetime: "1999",
-    place: "Stamford",
-    text: "Two summers on the water, before any of the web jobs. Sail maintenance, then a season teaching on Colgate 26s.",
+    when: "Present",
+    datetime: "2026",
+    place: "",
+    text: "Living abroad for a year, working with agents, and having a blast. SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
   },
   {
-    when: "2001",
-    datetime: "2001",
-    place: "Burlington",
-    text: "Champlain College, web design. The year after, Rutter Interactive starts — a freelance studio that runs until 2014.",
-  },
-  {
-    when: "2009",
-    datetime: "2009",
-    place: "Norwalk",
-    text: "Direct Wines. Designer, then director, then VP, through 2022. Wine-club ecommerce in the US, the UK, and Australia.",
-  },
-  {
-    when: "2011",
-    datetime: "2011",
-    place: "The book",
-    text: "Smashing jQuery, for Wiley. About three months, 300+ pages, over 5,000 copies.",
+    when: "2023–2025",
+    datetime: "2023",
+    place: "Lewes, Delaware",
+    text: "Two years in Lewes, Delaware.",
   },
   {
     when: "2022",
@@ -38,10 +26,28 @@ export const homeYears: YearEntry[] = [
     text: "VF Corporation, through 2024. Global front end for The North Face, Vans, Timberland, and the wider group.",
   },
   {
-    when: "2025",
-    datetime: "2025",
-    place: "London",
-    text: "SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
+    when: "2011",
+    datetime: "2011",
+    place: "The book",
+    text: "Smashing jQuery, for Wiley. About three months, 300+ pages, over 5,000 copies.",
+  },
+  {
+    when: "2009",
+    datetime: "2009",
+    place: "Norwalk",
+    text: "Direct Wines. Designer, then director, then VP, through 2022. Wine-club ecommerce in the US, the UK, and Australia.",
+  },
+  {
+    when: "2001",
+    datetime: "2001",
+    place: "Burlington",
+    text: "Champlain College, web design. The year after, Rutter Interactive starts — a freelance studio that runs until 2014.",
+  },
+  {
+    when: "1999–2000",
+    datetime: "1999",
+    place: "Stamford",
+    text: "Two summers on the water, before any of the web jobs. Sail maintenance, then a season teaching on Colgate 26s.",
   },
 ];
 
@@ -102,9 +108,21 @@ export const storyYears: YearEntry[] = [
     text: "Director, Global Front-End Engineering, eCommerce. Twenty-two front-end engineers across North America and Europe, for The North Face, Vans, Timberland, Eastpak, JanSport, Kipling, Napapijri, Smartwool, Altra, Icebreaker, and Dickies. The North Face, Vans, and Timberland went onto Salesforce Commerce Cloud and a Vue and Nuxt front end, across eight languages and 24 locales. Contentsquare certified, December 2023. An ELC engineering peer group from 2024 into 2025.",
   },
   {
+    when: "2023–2025",
+    datetime: "2023",
+    place: "Lewes, Delaware",
+    text: "Two years in Lewes, Delaware.",
+  },
+  {
     when: "2025–",
     datetime: "2025",
     place: "SharkNinja, London",
     text: "Senior Director, Global DTC Engineering from January 2025. I relocated to lead from the Battersea office after a year of remote leadership from the US. The work has been an in-house DTC engineering group, the Salesforce stack across EMEA and North America, and an agent-assisted way of building. SharkNinja recognized that work with a True Edge award in July 2025. In September 2026 the title became VP, DTC Engineering & Applied AI. I live in Barnes.",
+  },
+  {
+    when: "2026",
+    datetime: "2026",
+    place: "Barnes, London",
+    text: "Living abroad for a year, working with agents, and having a blast. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
   },
 ];
