@@ -1,7 +1,11 @@
 import { readFile } from "node:fs/promises";
+import { notFound } from "next/navigation";
+import { travelSectionPublic } from "@/lib/site";
 import { assertTripImage, contentPhotoPath, contentTypeFor } from "@/lib/trip-assets";
 
 export async function GET(_request: Request, context: { params: Promise<{ slug: string; file: string[] }> }) {
+  if (!travelSectionPublic) notFound();
+
   const { slug, file } = await context.params;
   const filePath = contentPhotoPath(slug, file);
   if (!filePath) return new Response(null, { status: 404 });

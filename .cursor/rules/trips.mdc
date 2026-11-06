@@ -10,6 +10,8 @@ A trip is `content/trips/<slug>/index.mdx`. The folder name is the URL. Folders 
 
 `place` (singular) is a separate optional string, shown only when it differs from `title`. The public date line is the start month and year (`formatTripWhen` in `lib/trips.ts`). Days stay in the file for sorting and are not displayed. `YYYY-MM` is valid for an unknown day. Quote dates. If both dates are missing, set `year` and `order`.
 
+Travel is hidden while `travelSectionPublic` in `lib/site.ts` is false. Keep writing trip files. Do not add a public link until that flag is true.
+
 `/travel` lists only trips with at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>` (404, and excluded from `generateStaticParams`) until `photos` is added. Adding photographs is enough for it to appear. The home page does not list trips.
 
 Photographs: pick the top 3. The maximum is 10. Phone originals stay out of the repo.

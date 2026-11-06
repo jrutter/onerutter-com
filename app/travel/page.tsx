@@ -1,24 +1,32 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { draftsAreVisible } from "@/lib/drafts";
+import { travelSectionPublic } from "@/lib/site";
 import { tripPhotoObjectPosition } from "@/lib/trip-types";
 import { formatTripWhen, getVisibleTrips, groupTripsByYear, tripDateTime } from "@/lib/trips";
 import type { Trip } from "@/lib/trips";
 
-export const metadata: Metadata = {
-  title: "Travel",
-  description:
-    "The offline analog alongside the digital nomad life. Music, discovering new things and places, and travel.",
-  alternates: { canonical: "/travel" },
-  openGraph: {
-    url: "https://onerutter.com/travel",
-    title: "Travel — Jake Rutter",
-    description: "The offline analog alongside the digital nomad life.",
-  },
-};
+export function generateMetadata(): Metadata {
+  if (!travelSectionPublic) return { robots: { index: false, follow: false } };
+
+  return {
+    title: "Travel",
+    description:
+      "The offline analog alongside the digital nomad life. Music, discovering new things and places, and travel.",
+    alternates: { canonical: "/travel" },
+    openGraph: {
+      url: "https://onerutter.com/travel",
+      title: "Travel — Jake Rutter",
+      description: "The offline analog alongside the digital nomad life.",
+    },
+  };
+}
 
 export default async function TravelPage() {
+  if (!travelSectionPublic) notFound();
+
   const trips = await getVisibleTrips();
   const years = groupTripsByYear(trips);
   const showingDrafts = draftsAreVisible() && trips.some((trip) => trip.draft);

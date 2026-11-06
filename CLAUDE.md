@@ -17,7 +17,7 @@ Before using a Next.js API, read `node_modules/next/dist/docs/`. The managed blo
 Content rules, in short:
 
 - Do not mention a planned move, and do not invent trip details, captions, or place names.
-- Do not put exact photo locations in copy or metadata. Trip photos go through `node scripts/prepare-trip-photos.mjs`. The build rejects GPS. `places`, when set, is a country or city centroid at two decimal places, never an exact spot, and is not shown. A trip stays off `/travel` until it has photographs.
+- Do not put exact photo locations in copy or metadata. Trip photos go through `node scripts/prepare-trip-photos.mjs`. The build rejects GPS. `places`, when set, is a country or city centroid at two decimal places, never an exact spot, and is not shown. A trip stays off `/travel` until it has photographs. The whole Travel section is hidden while `travelSectionPublic` in `lib/site.ts` is false. Set that flag to true to publish it again. Do not delete trip files to hide them.
 - Keep Jake's wording on the story page. Keep `draft: true` files out of production.
 - Lab card colors are `#0A1045`, `#00C2D1`, `#F9E900`, `#F6AF65`, `#ED33B9`. Pink uses navy text (white on `#ED33B9` fails AA).
 - Contact form env: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`. Honeypot field is `hp_field`.

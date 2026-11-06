@@ -19,5 +19,6 @@ Content rules:
 - `draft: true` stays out of production HTML, the RSS feed, and the sitemap. Publishing is `draft: false`.
 - Do not add a project, note, or trip Jake has not asked for.
 - Do not publish an email address or a `mailto:` link. `/hello` is how to reach Jake.
+- Travel is hidden while `travelSectionPublic` in `lib/site.ts` is false. Do not link to `/travel`. Trip files stay in the repo. Set the flag to true to publish the section again.
 
 Canonical URL is `https://onerutter.com` in `lib/site.ts`. It is not an environment variable. Pull requests stay small. Run `npm run lint`, `npm run typecheck`, and `npm run build` before pushing. Skip screenshots. When the Vercel preview is ready, include the preview URL of each changed page in the pull request and in the report.

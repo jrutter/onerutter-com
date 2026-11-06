@@ -1,5 +1,7 @@
 # Adding a trip
 
+Travel is hidden. `travelSectionPublic` in `lib/site.ts` is `false`, so a trip stays off the public site, the header, and `/sitemap.xml` even after photographs are added. Keep the files in `content/trips/` and `public/travel/`. Set that flag to `true` when Jake wants the section back. Do not delete a trip to hide it.
+
 A trip with no photographs is one new file. Copy `content/trips/_template/index.mdx` to `content/trips/<slug>/index.mdx`. The folder name is the URL: `2025-france` is `/travel/2025-france`. Use lowercase kebab-case. Folders whose names start with `_` are ignored. No other list or component has to change.
 
 `title` and `draft` are required. `places`, dates, the intro, `place`, `country`, and photographs are optional. The build fails if `draft` is missing, a date is not `YYYY-MM-DD` or `YYYY-MM`, a coordinate has more than two decimal places, `photos` has more than 10 entries, or `cover` is set and is not one of those `src` values.
@@ -45,7 +47,7 @@ places:
 ---
 ```
 
-`/travel` is a vertical timeline, newest year first. It lists a trip only when that trip has at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>`. That URL is a 404. `generateStaticParams` does not include it. Adding a `photos` list is enough for the trip to appear on the next build: the index, the sitemap, and the album page pick it up. No other file has to change. The home page does not list trips. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`.
+`/travel` is a vertical timeline, newest year first. It lists a trip only when that trip has at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>`. That URL is a 404. `generateStaticParams` does not include it. Adding a `photos` list is enough for the trip to appear on the next build once `travelSectionPublic` is true: the index, the sitemap, and the album page pick it up. No other file has to change. While the flag is false, the files stay in the repo and the URLs stay 404s. The home page does not list trips. Within a year, trips with dates are newest first. A missing start date sorts by the end date. Trips with no dates follow, in `order`.
 
 If nothing has photographs yet, the page keeps the heading and says photographs will show up here. A short list, even a single album, is the timeline on its own.
 

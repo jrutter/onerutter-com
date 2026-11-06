@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { TripGallery } from "@/components/trip-gallery";
 import { formatTripWhen, getPublishedTrips, getVisibleTrip, tripDateTime, tripHasPage, tripPhotoIndex } from "@/lib/trips";
-import { siteUrl } from "@/lib/site";
+import { siteUrl, travelSectionPublic } from "@/lib/site";
 
 export async function generateStaticParams() {
+  if (!travelSectionPublic) return [];
   const trips = await getPublishedTrips();
   return trips.filter((trip) => tripHasPage(trip)).map((trip) => ({ slug: trip.slug }));
 }
@@ -20,6 +21,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  if (!travelSectionPublic) return { robots: { index: false, follow: false } };
+
   const { slug } = await params;
   const trip = await getVisibleTrip(slug);
   if (!trip || !tripHasPage(trip)) return { title: "Trip" };
@@ -58,6 +61,8 @@ export default async function TripPage({
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ photo?: string | string[] }>;
 }) {
+  if (!travelSectionPublic) notFound();
+
   const { slug } = await params;
   const trip = await getVisibleTrip(slug);
   if (!trip || !tripHasPage(trip)) notFound();
