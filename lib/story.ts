@@ -120,9 +120,9 @@ export const storyYears: YearEntry[] = [
     text: "Senior Director, Global DTC Engineering from January 2025. I relocated to lead from the Battersea office after a year of remote leadership from the US. The work has been an in-house DTC engineering group, the Salesforce stack across EMEA and North America, and an agent-assisted way of building. SharkNinja recognized that work with a True Edge award in July 2025. In September 2026 the title became VP, DTC Engineering & Applied AI. I live in Barnes.",
   },
   {
-    when: "Present",
+    when: "2026",
     datetime: "2026",
-    place: "",
-    text: "Living abroad for a year, working with agents, and having a blast. SharkNinja, from the Battersea office. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
+    place: "Barnes, London",
+    text: "Living abroad for a year, working with agents, and having a blast. Home in Barnes. VP, DTC Engineering & Applied AI since September 2026.",
   },
 ];
