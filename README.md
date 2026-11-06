@@ -28,7 +28,9 @@ npm start
 
 `npm run lint` is ESLint. `npm run typecheck` is `tsc --noEmit`.
 
-Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. A draft trip with photographs is listed on `/travel` in those same places. A trip with no photographs stays off the index, the sitemap, and its album URL. Drafts are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
+Draft notes are visible when `NODE_ENV` is not `production` (so, during `npm run dev`) and on Vercel preview deployments. Drafts are omitted from the production site, `/feed.xml` (notes), and `/sitemap.xml`.
+
+Travel is hidden while `travelSectionPublic` in `lib/site.ts` is `false`. `/travel`, album URLs, and the photo files under `/travel/<slug>/` are 404s, and they are left out of `/sitemap.xml`. Trip files and photographs stay in the repo. Set that flag to `true` to publish the section again. When it is public, a draft trip with photographs is listed on `/travel` in dev and on preview, and a trip with no photographs stays off the index, the sitemap, and its album URL.
 
 The contact form on `/hello` sends through Resend. Variable names are in `.env.example`. Put the values in `.env.local`, which is gitignored. The page still renders without them.
 
@@ -41,8 +43,8 @@ The contact form on `/hello` sends through Resend. Variable names are in `.env.e
 - `/notes`
 - `/notes/[slug]`
 - `/notes/tag/[tag]`
-- `/travel`
-- `/travel/[slug]`
+- `/travel` (404 until `travelSectionPublic` is true)
+- `/travel/[slug]` (404 until `travelSectionPublic` is true)
 - `/feed.xml` RSS
 - `/sitemap.xml`
 - `/robots.txt`

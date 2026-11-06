@@ -78,13 +78,15 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 | `/notes` | `app/notes/page.tsx` | Dated note rows. |
 | `/notes/[slug]` | `app/notes/[slug]/page.tsx` | One note. Slug is the filename. |
 | `/notes/tag/[tag]` | `app/notes/tag/[tag]/page.tsx` | Notes with that tag. A tag with no visible notes is a 404. |
-| `/travel` | `app/travel/page.tsx` | Vertical timeline of trips that have photographs, newest year first. |
-| `/travel/[slug]` | `app/travel/[slug]/page.tsx` | Album, only when the trip has at least one photo. Other slugs 404. `dynamicParams` is `false`. |
+| `/travel` | `app/travel/page.tsx` | Site 404 while `travelSectionPublic` is false. When that flag is true: vertical timeline of trips that have photographs, newest year first. |
+| `/travel/[slug]` | `app/travel/[slug]/page.tsx` | Site 404 while Travel is hidden. When public: album, only when the trip has at least one photo. Other slugs 404. `dynamicParams` is `false`. |
 | `/hello` | `app/hello/page.tsx` | Contact form. Header label is “Say hello”. |
 | `/feed.xml` | `app/feed.xml/route.ts` | RSS 2.0 of published notes. |
-| `/sitemap.xml` | `app/sitemap.ts` | Static routes, published notes, published tags, and published trips that have photographs. |
+| `/sitemap.xml` | `app/sitemap.ts` | Static routes, published notes, and published tags. Trip URLs are included only while Travel is public. |
 | `/robots.txt` | `app/robots.ts` | Allow `/`, sitemap `https://onerutter.com/sitemap.xml`. |
-| `/trip-photos/[slug]/[...file]` | `app/trip-photos/.../route.ts` | Serves a photo that sits beside `index.mdx`, after the GPS check. Prefer `public/travel/`. |
+| `/trip-photos/[slug]/[...file]` | `app/trip-photos/.../route.ts` | Site 404 while Travel is hidden. Otherwise serves a photo that sits beside `index.mdx`, after the GPS check. Prefer `public/travel/`. |
+
+Travel is off the public site. `travelSectionPublic` in `lib/site.ts` is `false`. While it stays false, do not add a link to Travel. `/travel` and `/travel/[slug]` render the site 404 (`app/not-found.tsx`). `/trip-photos/...` does the same. Prepared JPEGs under `/travel/<slug>/` are not served (`proxy.ts` answers 404 before `public/`). Those URLs are left out of `/sitemap.xml`. `/feed.xml` lists notes only and does not mention trips. Files in `content/trips/` and `public/travel/` stay in the repo. Set `travelSectionPublic` to `true` to publish the section again. Do not delete trip content to keep it hidden.
 
 ## Content rules
 
@@ -98,7 +100,7 @@ node scripts/prepare-trip-photos.mjs <slug> <folder> --no-watermark
 
 Drafts render when `lib/drafts.ts` says so: `SHOW_DRAFTS=true`, or `VERCEL_ENV=preview`, or `NODE_ENV` is not `production` (local `npm run dev`). A production build (`npm run build` / `npm start`, and the Vercel production deploy) omits them.
 
-`generateStaticParams` for notes returns published notes, and those pages are static. Note and tag routes leave `dynamicParams` at the default, so a preview request can still render a draft. Trip albums set `dynamicParams` to false, and `generateStaticParams` returns only published trips that have at least one photograph. Any other slug, including a draft and a trip with no photographs, is a 404 in `next dev`, in `npm start`, and on Vercel. The `/travel` timeline lists a draft in dev and on preview only when that draft has photographs. The album route is dynamic (`ƒ` in `next build`) because the page reads `searchParams` for `?photo=`.
+`generateStaticParams` for notes returns published notes, and those pages are static. Note and tag routes leave `dynamicParams` at the default, so a preview request can still render a draft. Trip albums set `dynamicParams` to false, and `generateStaticParams` returns only published trips that have at least one photograph when `travelSectionPublic` is true. While that flag is false it returns no slugs, so every album URL is a 404. Any other slug, including a draft and a trip with no photographs, is a 404 in `next dev`, in `npm start`, and on Vercel. The `/travel` timeline lists a draft in dev and on preview only when Travel is public and that draft has photographs. The album route is dynamic (`ƒ` in `next build`) because the page reads `searchParams` for `?photo=`.
 
 ## Notes
 
@@ -154,7 +156,7 @@ Each photo needs `src` and `alt`. `alt` must be a real description; a value that
 
 The public date line is the month and year of `startDate`, from `formatTripWhen`. Days stay in the file and are what the sort uses. They are not shown. A trip that runs into the next month still shows the start month, so 22 June–5 July 2023 reads June 2023. `startDate: "2026-10"` reads October 2026. If only `endDate` is set, that month is used. With no dates, the line is the year.
 
-`/travel` is a vertical timeline, newest year first. It lists only trips with at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>` until a `photos` list is added. That URL is a 404. Adding the photographs is enough for it to appear on the next build. The home page does not list trips. Within a year, dated trips are newest first. A missing start date sorts by the end date. Undated trips follow, by `order`.
+`/travel` is a vertical timeline, newest year first, once `travelSectionPublic` is true. It lists only trips with at least one photograph. A trip with no photographs stays in `content/trips/` and is left off the index, the timeline, the sitemap, and `/travel/<slug>` until a `photos` list is added. That URL is a 404. Adding the photographs is enough for it to appear on the next build while Travel is public. The home page does not list trips. Within a year, dated trips are newest first. A missing start date sorts by the end date. Undated trips follow, by `order`.
 
 `src` is either `/travel/<slug>/01.jpg` (file in `public/travel/<slug>/`) or a relative path beside `index.mdx` such as `01.jpg` (served from `/trip-photos/<slug>/` after the same GPS check). Prefer the script and `public/travel/`.
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Timeline } from "@/components/timeline";
+import { travelSectionPublic } from "@/lib/site";
 import { storyYears } from "@/lib/story";
 
 export const metadata: Metadata = {
@@ -87,11 +88,13 @@ export default function StoryPage() {
               That is why I build things like Tails over Thames, a plane-spotting app for one spot in London; Mind the
               Timetable, for trains; and Three Today.
             </p>
-            <p className="more">
-              <Link className="text-link" href="/travel">
-                See my travels →
-              </Link>
-            </p>
+            {travelSectionPublic ? (
+              <p className="more">
+                <Link className="text-link" href="/travel">
+                  See my travels →
+                </Link>
+              </p>
+            ) : null}
           </div>
         </section>
 
