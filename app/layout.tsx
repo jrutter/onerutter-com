@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -6,6 +7,11 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteDescription, siteUrl } from "@/lib/site";
 import "./globals.css";
+
+// Preview builds also set NODE_ENV to production. When VERCEL_ENV is set, only production may load GA4.
+const loadGoogleAnalytics =
+  process.env.VERCEL_ENV === "production" ||
+  (process.env.NODE_ENV === "production" && process.env.VERCEL_ENV === undefined);
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -62,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Analytics />
         <SpeedInsights />
       </body>
+      {loadGoogleAnalytics ? <GoogleAnalytics gaId="G-QFFMGPLB3J" /> : null}
     </html>
   );
 }

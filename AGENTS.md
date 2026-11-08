@@ -25,6 +25,7 @@ Versions are the ones installed from `package-lock.json`.
 | Piece | Version | Role |
 | --- | --- | --- |
 | Next.js | 16.4.3 | App Router. Read `node_modules/next/dist/docs/` before using a Next API. |
+| `@next/third-parties` | 16.4.3 | Google Analytics 4 in the root layout. Production only. |
 | React / React DOM | 19.3.0 | Server Components by default. `"use client"` only where the file already needs it. |
 | TypeScript | 5.9.3 | `strict: true`. Path alias `@/*` → repo root. |
 | Tailwind CSS | 4.3.3 | Loaded from `app/globals.css` via `@import "tailwindcss"` and `@tailwindcss/turbopack` in `next.config.ts`. Page chrome is custom CSS in that file, not a component library. |
@@ -96,7 +97,7 @@ Travel is off the public site. `travelSectionPublic` in `lib/site.ts` is `false`
 - Keep Jake's wording for the story. The about paragraphs and the “What draws me in” section in `app/story/page.tsx` are his. The year-by-year sentences in `lib/story.ts` are drafted and marked “Needs an edit” on the page. Do not silently rewrite either. The story page lists those entries newest year first.
 - Drafts stay out of production. `draft: true` is omitted from production HTML, `/feed.xml` (notes), and `/sitemap.xml`. Publishing is an explicit `draft: false`.
 - Do not publish an email address or a `mailto:` link. `/hello` is how to reach Jake.
-- Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. The Story page shows one portrait, `public/jake-rutter.jpg`. No dark mode, résumé PDF, phone number, GPA, GitHub link, or analytics.
+- Light touch on operating detail. Team size, budget, site counts, and conversion figures stay off the page, as recorded in `PLAN.md`. The Story page shows one portrait, `public/jake-rutter.jpg`. No dark mode, résumé PDF, phone number, GPA, or GitHub link. Google Analytics 4 (`G-QFFMGPLB3J`) loads from the root layout only in production: `VERCEL_ENV` is `production`, or that variable is unset and `NODE_ENV` is `production`. Preview deploys do not load it.
 
 Drafts render when `lib/drafts.ts` says so: `SHOW_DRAFTS=true`, or `VERCEL_ENV=preview`, or `NODE_ENV` is not `production` (local `npm run dev`). A production build (`npm run build` / `npm start`, and the Vercel production deploy) omits them.
 
