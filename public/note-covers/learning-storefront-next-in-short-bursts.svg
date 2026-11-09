@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img">
+  <title>A striped neon sun setting over a cyan grid road, with two palm trees on a navy coast.</title>
+  <rect width="1200" height="750" fill="#0A1045"/>
+  <circle cx="150" cy="118" r="70" fill="#14352F"/>
+  <circle cx="1040" cy="96" r="46" fill="#1E4A42"/>
+  <ellipse cx="600" cy="430" rx="540" ry="78" fill="#ED33B9" opacity="0.22"/>
+  <ellipse cx="600" cy="408" rx="240" ry="36" fill="#F6AF65" opacity="0.4"/>
+
+  <defs>
+    <clipPath id="sun">
+      <circle cx="600" cy="368" r="156"/>
+    </clipPath>
+  </defs>
+  <circle cx="600" cy="368" r="176" fill="none" stroke="#ED33B9" stroke-width="12"/>
+  <circle cx="600" cy="368" r="156" fill="#F9E900"/>
+  <g clip-path="url(#sun)">
+    <rect x="400" y="268" width="400" height="22" fill="#0A1045"/>
+    <rect x="400" y="312" width="400" height="26" fill="#F6AF65"/>
+    <rect x="400" y="360" width="400" height="28" fill="#0A1045"/>
+    <rect x="400" y="412" width="400" height="32" fill="#ED33B9"/>
+    <rect x="400" y="468" width="400" height="40" fill="#0A1045"/>
+  </g>
+
+  <rect y="456" width="1200" height="294" fill="#14352F"/>
+  <rect y="448" width="1200" height="8" fill="#ED33B9"/>
+  <rect y="456" width="1200" height="4" fill="#00C2D1"/>
+
+  <path d="M0 520 C150 470 250 560 370 512 C450 480 510 540 590 548 L590 750 L0 750 Z" fill="#0A1045"/>
+  <path d="M1200 528 C1050 476 940 568 820 516 C740 484 680 546 610 552 L610 750 L1200 750 Z" fill="#0A1045"/>
+  <path d="M0 520 C150 470 250 560 370 512 C450 480 510 540 590 548" fill="none" stroke="#F9E900" stroke-width="12" stroke-linecap="round"/>
+  <path d="M0 520 C150 470 250 560 370 512 C450 480 510 540 590 548" fill="none" stroke="#ED33B9" stroke-width="5" stroke-linecap="round"/>
+  <path d="M1200 528 C1050 476 940 568 820 516 C740 484 680 546 610 552" fill="none" stroke="#F9E900" stroke-width="12" stroke-linecap="round"/>
+  <path d="M1200 528 C1050 476 940 568 820 516 C740 484 680 546 610 552" fill="none" stroke="#ED33B9" stroke-width="5" stroke-linecap="round"/>
+
+  <g fill="none" stroke="#00C2D1" stroke-linecap="round">
+    <path d="M600 468 L470 750" stroke-width="4"/>
+    <path d="M600 468 L540 750" stroke-width="4"/>
+    <path d="M600 468 L660 750" stroke-width="4"/>
+    <path d="M600 468 L730 750" stroke-width="4"/>
+    <path d="M545 530 H655" stroke-width="3"/>
+    <path d="M500 590 H700" stroke-width="3"/>
+    <path d="M445 660 H755" stroke-width="4"/>
+    <path d="M390 730 H810" stroke-width="4"/>
+  </g>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M248 560 C244 500 262 450 286 392" stroke="#F6AF65" stroke-width="16"/>
+    <path d="M286 392 C250 348 196 352 154 318" stroke="#00C2D1" stroke-width="12"/>
+    <path d="M286 392 C252 332 246 276 214 236" stroke="#ED33B9" stroke-width="12"/>
+    <path d="M286 392 C322 330 360 286 412 262" stroke="#F9E900" stroke-width="12"/>
+    <path d="M286 392 C338 366 392 372 438 342" stroke="#00C2D1" stroke-width="11"/>
+    <path d="M286 392 C246 368 210 392 176 374" stroke="#F6AF65" stroke-width="10"/>
+    <circle cx="286" cy="392" r="8" fill="#FBF7F1" stroke="none"/>
+  </g>
+  <g fill="none" stroke-linecap="round">
+    <path d="M948 548 C952 498 934 456 916 408" stroke="#F6AF65" stroke-width="14"/>
+    <path d="M916 408 C880 370 834 376 798 348" stroke="#00C2D1" stroke-width="11"/>
+    <path d="M916 408 C886 356 882 310 856 276" stroke="#ED33B9" stroke-width="11"/>
+    <path d="M916 408 C952 354 986 318 1030 298" stroke="#F9E900" stroke-width="11"/>
+    <path d="M916 408 C960 384 1004 390 1044 364" stroke="#00C2D1" stroke-width="10"/>
+    <path d="M916 408 C878 388 848 408 820 394" stroke="#F6AF65" stroke-width="9"/>
+    <circle cx="916" cy="408" r="7" fill="#FBF7F1" stroke="none"/>
+  </g>
+
+  <path d="M96 196 l7 18 18 7 -18 7 -7 18 -7 -18 -18 -7 18 -7 z" fill="#F9E900"/>
+  <path d="M220 96 l5 14 14 5 -14 5 -5 14 -5 -14 -14 -5 14 -5 z" fill="#00C2D1"/>
+  <path d="M980 168 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6 z" fill="#F6AF65"/>
+  <path d="M1088 250 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4 z" fill="#ED33B9"/>
+  <path d="M430 120 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4 z" fill="#FBF7F1"/>
+</svg>
