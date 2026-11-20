@@ -1,0 +1,23 @@
+---
+title: Agents in the wild
+date: "2026-11-08"
+summary: I found LogicStar's Agents in the Wild, which tracks every public GitHub pull request since May 2025 and splits them by humans, plain bots, and coding agents.
+tags:
+  - ai
+  - agents
+draft: true
+cover: /note-covers/agents-in-the-wild.svg
+coverAlt: A navy bar chart beside a person, a plain boxy bot, and a coding agent with an antenna.
+---
+
+I found [Agents in the Wild](https://insights.logicstar.ai/) from LogicStar, and I love the visualizations. It tracks every public pull request on GitHub since May 2025 and splits them by who wrote them: humans, plain bots, and coding agents like OpenAI Codex, Claude Code, GitHub Copilot, Google Jules, Cursor, and Devin. The charts break it down by repo popularity, change size, files touched, and language, and it updates hourly.
+
+## Why it matters to me
+
+I spend my days working with agents, so it's great to see the shift in real numbers. Agents are now around 5–10% of public PRs. They tend to add more code than they delete, while humans are more likely to refactor. And their merge rates drop on popular repos, where human PRs hold steady.
+
+One caveat they call out themselves: merge rate isn't a quality score, because some agents only open a PR after a human approves the work.
+
+Fun detail: they spot Cursor agents by branches starting with `cursor/`, so the PRs behind this site are in there too.
+
+[My take: TODO Jake]
